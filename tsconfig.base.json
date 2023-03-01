@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "esModuleInterop": true,
+    "paths": {
+      "@facts-kit/contract-kit": ["packages/contract-kit/src/index.ts"],
+      "@facts-kit/facts-sdk": ["packages/facts-sdk/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

@@ -2,14 +2,47 @@
   "name": "facts-kit",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "install:ngx-deploy-npm": "nx generate ngx-deploy-npm:install",
+    "generate:package": "nx generate @nrwl/js:library ${NAME} --unitTestRunner=vitest --bundler=vite --compiler=swc --publishable --importPath=@facts-kit/${NAME} && npm run install:ngx-deploy-npm"
+  },
   "private": true,
-  "dependencies": {},
   "devDependencies": {
+    "@bundlr-network/client": "0.10.4",
+    "@enio.ai/typedoc": "^1.0.6",
+    "@nrwl/eslint-plugin-nx": "15.7.2",
     "@nrwl/js": "15.7.2",
+    "@nrwl/linter": "15.7.2",
+    "@nrwl/vite": "15.7.2",
     "@nrwl/workspace": "15.7.2",
+    "@swc/cli": "~0.1.55",
+    "@swc/core": "^1.2.173",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
+    "@vitest/coverage-c8": "~0.25.8",
+    "@vitest/ui": "^0.25.8",
+    "eslint": "~8.15.0",
+    "eslint-config-prettier": "8.1.0",
+    "ethers": "^6.0.8",
+    "isomorphic-fetch": "^3.0.0",
+    "jsdom": "~20.0.3",
+    "ngx-deploy-npm": "^5.2.0",
     "nx": "15.7.2",
     "prettier": "^2.6.2",
-    "typescript": "~4.8.2"
+    "typedoc": "^0.23.20",
+    "typedoc-plugin-rename-defaults": "^0.6.4",
+    "typedoc-theme-hierarchy": "^3.0.0",
+    "typescript": "~4.8.2",
+    "vite": "^4.0.1",
+    "vite-plugin-dts": "~1.7.1",
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-tsconfig-paths": "^4.0.2",
+    "vitest": "^0.25.8",
+    "warp-contracts": "1.2.54"
+  },
+  "dependencies": {
+    "@swc/helpers": "~0.4.11",
+    "arweave": "1.13.1",
+    "bignumber.js": "^9.1.1"
   }
 }
