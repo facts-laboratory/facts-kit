@@ -4,7 +4,7 @@ This library was generated with [Nx](https://nx.dev).
 
 ## Install
 
-`npm i @ar-kit/facts-sdk@latest`
+`npm i @facts-kit/facts-sdk@latest`
 
 ## Use
 
@@ -19,12 +19,12 @@ Import Warp / Arweave in your `index.html`.
 </head>
 ```
 
-Import `@ar-kit/facts-sdk` and use.
+Import `@facts-kit/facts-sdk` and use.
 
 ```js
 // some-file.ts
 
-import { assert, attach, buy, sell } from '@ar-kit/facts-sdk';
+import { assert, attach, buy, sell } from '@facts-kit/facts-sdk';
 
 // attach
 const factMarket = await attachFactMarket({
