@@ -2,7 +2,7 @@ import * as warp from 'warp-contracts';
 import { FromSrcTxContractData } from 'warp-contracts';
 
 export function setupWarp() {
-  if (process.env.ENVIRONMENT === 'test') {
+  if (process.env['ENVIRONMENT'] === 'test') {
     (globalThis as any).warp = warp;
 
     // Sets warp to the real warp library.

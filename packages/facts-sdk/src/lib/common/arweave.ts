@@ -1,7 +1,7 @@
 import Arweave from 'arweave';
 
 export function getArweave() {
-  return process?.env?.NODE_ENV === 'test'
+  return process?.env['NODE_ENV'] === 'test'
     ? Arweave.init({
         host: 'localhost',
         port: 1984,

@@ -39,6 +39,17 @@
         "options": "typedoc.json"
       },
       "configurations": {}
+    },
+    "perma-deploy-docs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "node ./tools/scripts/perma-deploy.mjs ./docs/packages/facts-sdk"
+          }
+        ]
+      },
+      "dependsOn": ["typedoc"]
     }
   },
   "tags": []
