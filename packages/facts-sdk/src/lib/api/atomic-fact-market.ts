@@ -40,7 +40,7 @@ export async function deployAtomicFactMarket(
     data: JSON.stringify(data),
   });
   const tags = [
-    { name: 'Permafacts-Type', value: 'Assertion-Alpha-v2-0.0.7' },
+    { name: 'Permafacts-Type', value: 'Assertion-Alpha-v2-0.0.11' },
     { name: 'App-Name', value: 'SmartWeaveContract' },
     {
       name: 'Contract-Src',

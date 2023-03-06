@@ -23,7 +23,7 @@ describe.skip('get ans110 tags', () => {
     const tx = getAns110Tags([
       {
         name: 'Permafacts-Type',
-        value: 'Assertion-Alpha-v2-0.0.7',
+        value: 'Assertion-Alpha-v2-0.0.11',
       },
       {
         name: 'App-Name',
