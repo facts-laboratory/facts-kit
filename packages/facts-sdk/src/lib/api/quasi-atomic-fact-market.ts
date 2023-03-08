@@ -19,7 +19,6 @@ export interface DeployFactMarketInput {
   owner: string;
   attachTo: string;
   rebutTx?: string;
-  render_with?: string;
   use?: Use;
 }
 
@@ -39,12 +38,12 @@ async function deployFactMarket(input: DeployFactMarketInput): Promise<string> {
 }
 
 async function deployWithBundlr(input: DeployFactMarketInput) {
-  const { tags, owner, rebutTx, attachTo, render_with } = input;
+  const { tags, owner, rebutTx, attachTo } = input;
   const newTags = [
     ...tags,
-    { name: 'Content-Type', value: 'text/plain' },
-    { name: 'Fact-Market-Attached-To', value: attachTo },
-    { name: 'Render-With', value: `${render_with || 'facts-renderer'}` },
+    { name: 'Data-Source', value: attachTo },
+    { name: 'Protocol-Name', value: 'Facts' },
+    { name: 'Render-With', value: `${'render-attached-tx'}` },
     {
       name: 'Init-State',
       value: JSON.stringify({
@@ -70,12 +69,12 @@ async function deployWithBundlr(input: DeployFactMarketInput) {
   return tx.id;
 }
 async function deployWithWarp(input: DeployFactMarketInput) {
-  const { tags, owner, rebutTx, attachTo, render_with } = input;
+  const { tags, owner, rebutTx, attachTo } = input;
   const newTags = [
     ...tags,
-    { name: 'Fact-Market-Attached-To', value: attachTo },
-    { name: 'Render-With', value: `${render_with || 'facts-renderer'}` },
-    { name: 'Content-Type', value: 'text/plain' },
+    { name: 'Data-Source', value: attachTo },
+    { name: 'Protocol-Name', value: 'Facts' },
+    { name: 'Render-With', value: `${'render-attached-tx'}` },
   ];
   if (rebutTx) tags.push({ name: 'Fact-Rebuts', value: rebutTx });
 
@@ -110,7 +109,7 @@ async function deployWithArweaveWallet(
   input: DeployFactMarketInput
 ): Promise<string> {
   const wallet = getArweaveWallet();
-  const { tags, owner, attachTo, rebutTx, render_with } = input;
+  const { tags, owner, attachTo, rebutTx } = input;
   if (!(await isVouched(owner))) throw new Error('non-vouched');
   const arweave = getArweave();
   const tx = await arweave.createTransaction({
@@ -118,9 +117,9 @@ async function deployWithArweaveWallet(
   });
   tags.forEach((t) => tx.addTag(t.name, t.value));
   if (rebutTx) tx.addTag('Fact-Rebuts', rebutTx);
-  tx.addTag('Content-Type', 'text/html');
-  tx.addTag('Render-With', `${render_with || 'facts-renderer'}`);
-  tx.addTag('Fact-Market-Attached-To', attachTo);
+  tx.addTag('Render-With', `${'render-attached-tx'}`);
+  tx.addTag('Data-Source', attachTo);
+  tx.addTag('Protocol-Name', 'Facts');
 
   if (!wallet) throw new Error('Unable to find arweave wallet.');
   await wallet.disconnect();
@@ -148,7 +147,6 @@ export interface AttachFactMarketInput {
   tx: string;
   wallet: string;
   rebutTx?: string;
-  render_with?: string;
   use?: Use;
 }
 export async function attachFactMarket(

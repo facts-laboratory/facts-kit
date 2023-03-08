@@ -21,6 +21,13 @@ export function getAns110Tags(tags: { name: string; value: string }[]) {
         tags?.filter((t) => t.name === 'Description')[0]?.value
       ),
     },
+    {
+      name: 'Content-Type',
+      value: checkTag(
+        'Content-Type',
+        tags?.filter((t) => t.name === 'Content-Type')[0]?.value
+      ),
+    },
   ];
 
   const standardTags = [{ name: 'Implements', value: 'ANS-110' }];

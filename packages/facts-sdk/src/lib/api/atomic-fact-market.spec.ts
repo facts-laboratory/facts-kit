@@ -1,5 +1,18 @@
 import { deployAtomicFactMarket } from './atomic-fact-market';
 import { setupGlobals } from '../mock/setup-globals';
+import { setupBundlr } from '../mock/setup-bundlr';
+
+vi.mock('../common/bundlr', () => {
+  const originalModule = vi.importActual('../common/bundlr');
+
+  //Mock the default export and named export 'foo'
+  return {
+    __esModule: true,
+    ...originalModule,
+    getBundlrClient: vi.fn(async () => setupBundlr()),
+  };
+});
+
 const assertion = {
   content: [
     {
@@ -61,8 +74,6 @@ describe.skip('create-tx', () => {
       rebutTx: 'vZmKZjjxw26J7R28RhsN9m5I7FXsS3q63WwT-Qqb6IM',
       topic: 'technology',
     });
-    console.log('WALLET', process.env.PATH_TO_WALLET);
-    console.log('FACT MARKET ========', factMarket);
     expect('facts-sdk').toEqual('facts-sdk');
     // expect(factMarket.tx).toEqual('facts-sdk');
   });
