@@ -16,7 +16,6 @@ export type Use = 'bundlr' | 'warp' | 'arweaveWallet';
 
 export interface DeployFactMarketInput {
   tags: { name: string; value: string }[];
-  owner: string;
   attachTo: string;
   rebutTx?: string;
   use?: Use;
@@ -38,12 +37,12 @@ async function deployFactMarket(input: DeployFactMarketInput): Promise<string> {
 }
 
 async function deployWithBundlr(input: DeployFactMarketInput) {
-  const { tags, owner, rebutTx, attachTo } = input;
+  const { tags, rebutTx, attachTo } = input;
   const newTags = [
     ...tags,
     { name: 'Data-Source', value: attachTo },
     { name: 'Protocol-Name', value: 'Facts' },
-    { name: 'Render-With', value: `${'render-attached-tx'}` },
+    { name: 'Render-With', value: `${'facts-card-renderer'}` },
     {
       name: 'Init-State',
       value: JSON.stringify({
@@ -51,7 +50,7 @@ async function deployWithBundlr(input: DeployFactMarketInput) {
         name: `${
           tags.filter((t) => t.name === 'Title')[0]?.value || 'No title.'
         }`,
-        creator: owner,
+        creator: 'TODO',
       }),
     },
   ];
@@ -69,12 +68,13 @@ async function deployWithBundlr(input: DeployFactMarketInput) {
   return tx.id;
 }
 async function deployWithWarp(input: DeployFactMarketInput) {
-  const { tags, owner, rebutTx, attachTo } = input;
+  const { tags, rebutTx, attachTo } = input;
+
   const newTags = [
     ...tags,
     { name: 'Data-Source', value: attachTo },
     { name: 'Protocol-Name', value: 'Facts' },
-    { name: 'Render-With', value: `${'render-attached-tx'}` },
+    { name: 'Render-With', value: `${'facts-card-renderer'}` },
   ];
   if (rebutTx) tags.push({ name: 'Fact-Rebuts', value: rebutTx });
 
@@ -86,7 +86,7 @@ async function deployWithWarp(input: DeployFactMarketInput) {
         name: `${
           tags.filter((t) => t.name === 'Title')[0]?.value || 'No title.'
         }`,
-        creator: owner,
+        creator: 'TODO',
       }),
       srcTxId: FACT_MARKET_SRC,
       wallet: 'use_wallet',
@@ -109,7 +109,8 @@ async function deployWithArweaveWallet(
   input: DeployFactMarketInput
 ): Promise<string> {
   const wallet = getArweaveWallet();
-  const { tags, owner, attachTo, rebutTx } = input;
+  const { tags, attachTo, rebutTx } = input;
+  const owner = await wallet.getActiveAddress();
   if (!(await isVouched(owner))) throw new Error('non-vouched');
   const arweave = getArweave();
   const tx = await arweave.createTransaction({
@@ -117,7 +118,7 @@ async function deployWithArweaveWallet(
   });
   tags.forEach((t) => tx.addTag(t.name, t.value));
   if (rebutTx) tx.addTag('Fact-Rebuts', rebutTx);
-  tx.addTag('Render-With', `${'render-attached-tx'}`);
+  tx.addTag('Render-With', `${'facts-card-renderer'}`);
   tx.addTag('Data-Source', attachTo);
   tx.addTag('Protocol-Name', 'Facts');
 
@@ -126,7 +127,6 @@ async function deployWithArweaveWallet(
   await wallet.connect(['ACCESS_ADDRESS', 'SIGN_TRANSACTION', 'DISPATCH'], {
     name: 'facts-sdk',
   });
-  const addr = await wallet.getActiveAddress();
 
   tx.addTag(
     'Init-State',
@@ -134,7 +134,7 @@ async function deployWithArweaveWallet(
       ...initialState,
       name:
         tags.filter((t) => t.name === 'Title')[0]?.value || 'bug: no title.',
-      creator: addr,
+      creator: owner,
     })
   );
 
@@ -153,13 +153,12 @@ export async function attachFactMarket(
   input: AttachFactMarketInput
 ): Promise<{ tx: string } | { error: string }> {
   try {
-    const { tx, wallet } = input;
+    const { tx } = input;
     const transaction = await getTx(tx);
     const ans110tags = getAns110Tags(transaction?.tags);
     const factMarketTx = await deployFactMarket({
       tags: [...ans110tags, ...getSmartweaveTags(), ...getPermafactsTags()],
       attachTo: tx,
-      owner: wallet,
       ...input,
     });
     return { tx: factMarketTx };
