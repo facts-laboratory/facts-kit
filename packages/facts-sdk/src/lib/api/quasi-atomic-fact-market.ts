@@ -110,8 +110,8 @@ async function deployWithArweaveWallet(
 ): Promise<string> {
   const wallet = getArweaveWallet();
   const { tags, attachTo, rebutTx } = input;
-  const owner = await wallet.getActiveAddress();
-  if (!(await isVouched(owner))) throw new Error('non-vouched');
+  const creator = await wallet.getActiveAddress();
+  if (!(await isVouched(creator))) throw new Error('non-vouched');
   const arweave = getArweave();
   const tx = await arweave.createTransaction({
     data: JSON.stringify({ facts: 'sdk' }),
@@ -134,7 +134,7 @@ async function deployWithArweaveWallet(
       ...initialState,
       name:
         tags.filter((t) => t.name === 'Title')[0]?.value || 'bug: no title.',
-      creator: owner,
+      creator,
     })
   );
 
@@ -145,7 +145,6 @@ async function deployWithArweaveWallet(
 
 export interface AttachFactMarketInput {
   tx: string;
-  wallet: string;
   rebutTx?: string;
   use?: Use;
 }
