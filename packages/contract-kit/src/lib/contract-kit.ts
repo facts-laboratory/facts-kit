@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import { BigNumber } from 'bignumber.js';
 import Arweave from 'arweave';
 import Transaction from 'arweave/node/lib/transaction';
@@ -331,4 +332,47 @@ export function addTags(
       }`,
     });
   return tags;
+}
+
+export async function fetchTx(tx: string) {
+  const response = await fetch(getUrl(), {
+    headers: {
+      accept: '*/*',
+      'accept-language': 'en-US,en;q=0.8',
+      'content-type': 'application/json',
+    },
+    body: `{\"operationName\":null,\"variables\":{},\"query\":\"{\\n  transactions(first: 1, ids: [\\\"${tx}\\\"]) {\\n    edges {\\n      node {\\n        id\\n        owner {\\n          address\\n        }\\n        block {\\n          timestamp\\n          height\\n        }\\n        tags {\\n          name\\n          value\\n        }\\n      }\\n    }\\n  }\\n}\\n\"}`,
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'omit',
+  });
+
+  return getEdges(await response.json());
+}
+
+export function getEdges(res: any) {
+  if (!res?.data?.transactions?.edges) throw new Error('no edges');
+  return res.data.transactions.edges;
+}
+
+/**
+ * Creates the correct fetch url for gql using arweave config.
+ *
+ * @author mogulx_operates
+ * @param {Config} config
+ * @return {*}  {string}
+ */
+function getUrl() {
+  return `https://arweave.net/graphql`;
+}
+export function parseQuery(queryString: string) {
+  const query: any = {};
+  const pairs: any = (
+    queryString[0] === '?' ? queryString.substr(1) : queryString
+  ).split('&');
+  for (let i = 0; i < pairs.length; i++) {
+    const pair: any = pairs[i].split('=');
+    query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+  }
+  return query;
 }
