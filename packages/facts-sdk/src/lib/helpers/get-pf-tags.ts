@@ -9,5 +9,6 @@ export function getPermafactsTags() {
     },
     { name: 'Permafacts-Version', value: 'Alpha-2' },
     { name: 'Contract-Src', value: FACT_MARKET_SRC },
+    { name: 'Content-Type', value: 'text/plain' },
   ];
 }

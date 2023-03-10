@@ -12,6 +12,20 @@ export function setupBundlr() {
     return new Bundlr.default('http://node2.bundlr.network', 'arweave', jwk);
   }
   return {
-    upload: (data: any, obj: any) => ({ id: '<bundlr-tx>' }),
+    // upload: (data: any, obj: any) => ({ id: '<bundlr-tx>' }),
+    upload: async (data: any, obj: any) => {
+      const jwk = JSON.parse(
+        fs.readFileSync(process.env['PATH_TO_WALLET'] as string).toString()
+      );
+
+      console.log('ABOUT TO DO IT============');
+      // TODO: setup a way to just mock this locally
+      const bundlr = new Bundlr.default(
+        'http://node2.bundlr.network',
+        'arweave',
+        jwk
+      );
+      return await bundlr.upload(data, obj);
+    },
   };
 }

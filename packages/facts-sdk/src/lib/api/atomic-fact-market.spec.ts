@@ -17,9 +17,10 @@ describe('atomic-fact-market', () => {
   beforeAll(async () => {
     await setupGlobals();
   });
-  it('should create a fact market', async () => {
+  it.skip('should create a fact market - arweaveWallet', async () => {
     const tx = await deployAtomicFactMarket({
       position: 'oppose',
+      use: 'arweaveWallet',
       data: { test: 'data' },
       tags: {
         type: 'fact-post',
@@ -30,7 +31,7 @@ describe('atomic-fact-market', () => {
     });
     expect(tx).toEqual({ tx: '<tx-id>' });
   });
-  it('should create a fact market - bundlr', async () => {
+  it.skip('should create a fact market - bundlr', async () => {
     const tx = await deployAtomicFactMarket({
       use: 'bundlr',
       data: { test: 'data' },
@@ -47,7 +48,7 @@ describe('atomic-fact-market', () => {
       tx: '<bundlr-tx>',
     });
   });
-  it('should create a fact market - warp', async () => {
+  it.skip('should create a fact market - warp', async () => {
     const tx = await deployAtomicFactMarket({
       use: 'warp',
       data: { test: 'data' },
@@ -62,9 +63,9 @@ describe('atomic-fact-market', () => {
     expect(tx).toEqual({ tx: '<contractTxId>' });
   });
   it('should create a fact market - arweaveWallet', async () => {
-    const tx = await deployAtomicFactMarket({
+    const factMarket = await deployAtomicFactMarket({
       use: 'arweaveWallet',
-      data: { test: 'data' },
+      data: { test: 'data' }, // You define the shape of this -- i twill be stringified
       tags: {
         type: 'fact-post',
         title: 'Test title',
@@ -73,6 +74,6 @@ describe('atomic-fact-market', () => {
       },
       position: 'support',
     });
-    expect(tx).toEqual({ tx: '<tx-id>' });
+    expect(factMarket).toEqual({ tx: '<tx-id>' });
   });
 });

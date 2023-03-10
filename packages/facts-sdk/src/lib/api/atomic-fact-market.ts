@@ -5,7 +5,7 @@ import {
   isVouched,
 } from '@facts-kit/contract-kit';
 import { getBundlrClient } from '../common/bundlr';
-import { getWarpFactory, httpRegister } from '../common/warp';
+import { getWarpFactory, register } from '../common/warp';
 import { FACT_MARKET_SRC, getPermafactsTags } from '../helpers/get-pf-tags';
 import { getSmartweaveTags } from '../helpers/get-smartweave-tags';
 import { initialState } from './interface';
@@ -63,7 +63,7 @@ async function deployWithBundlr(input: DeployFactMarketInput) {
   if (!tx.id) {
     throw new Error('Failed to deploy assertion.');
   }
-  await httpRegister(tx.id);
+  await register(tx.id);
   return tx.id;
 }
 async function deployWithWarp(input: DeployFactMarketInput) {
@@ -140,7 +140,7 @@ async function deployWithArweaveWallet(
 
   const id = await dispatch(tx);
   console.log(`Transaction id: ${id}`);
-  return httpRegister(id).then((tx) => tx);
+  return register(id).then((tx) => tx);
 }
 
 export interface ANS110Tags {
@@ -182,13 +182,16 @@ export async function deployAtomicFactMarket(
 }
 
 function getAns110TagsFromUser(tags: ANS110Tags) {
-  const topics = [];
-  tags.topics?.forEach((t) => {
-    topics.push({ name: `Topic:${t}`, value: t });
-  });
+  const topics: { name: string; value: string }[] = [];
+  if (tags.topics) {
+    tags?.topics?.forEach((t) => {
+      topics.push({ name: `Topic:${t}`, value: t });
+    });
+  }
   return [
     { name: 'Type', value: tags.type },
     { name: 'Title', value: tags.title },
     { name: 'Description', value: tags.description },
+    ...topics,
   ];
 }

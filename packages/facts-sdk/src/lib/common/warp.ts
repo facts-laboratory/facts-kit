@@ -1,10 +1,31 @@
+import { DeployPlugin } from 'warp-contracts-plugin-deploy';
 import Transaction from 'arweave/node/lib/transaction';
 const WARP_GATEWAY = 'https://gateway.warp.cc';
 
 export function getWarpFactory() {
-  return globalThis
-    ? (globalThis as unknown as any).warp.WarpFactory.forMainnet()
-    : (window as unknown as any).warp.WarpFactory.forMainnet();
+  // if (process?.env['ENVIRONMENT'] === 'test') {
+  //   console.log('TEST ENVIRONMENT');
+  //   return (globalThis as any)?.warp.WarpFactory.forMainnet();
+  // }
+  // Makes sure to not overwrite warp if it already exists
+  if ((window as any)?.warp)
+    return (window as any)?.warp.WarpFactory.forMainnet().use(
+      new DeployPlugin()
+    );
+  return fetch(
+    'https://5t6kvshi7ih6e572itxnml4tlxw6qzakb3fpw67ibjcyuvfp6poq.arweave.net/7PyqyOj6D-J3-kTu1i-TXe3oZAoOyvt76ApFilSv890/warp.js'
+  )
+    .then((response) => response.text())
+    .then((text) => {
+      const script = document.createElement('script');
+      script.textContent = text;
+      document.body.appendChild(script);
+      console.log('Warp loaded. Using DeployPlugin');
+      return (window as any)?.warp.WarpFactory.forMainnet().use(
+        new DeployPlugin()
+      );
+    })
+    .catch((error) => console.error(error));
 }
 
 export type PermissionType =
@@ -26,23 +47,24 @@ export async function connect() {
 }
 
 export async function register(tx: string) {
-  const warp = getWarpFactory();
+  const warp = await getWarpFactory();
   await warp.register(tx, 'node2');
   return tx;
 }
 
 export async function httpRegister(tx: string) {
-  const REDSTONE_GATEWAY = 'https://gateway.redstone.finance';
-
-  return fetch(`${REDSTONE_GATEWAY}/gateway/contracts/register`, {
-    method: 'POST',
-    body: JSON.stringify({ contractId: tx, bundlrNode: 'node2' }),
-    headers: {
-      'Accept-Encoding': 'gzip, deflate, br',
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-  }).then((res) => (res.ok ? res.json() : Promise.reject(res)));
+  const res = await fetch(
+    `https://gateway.warp.cc/gateway/contracts/register`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({ contractId: tx, bundlrNode: 'node2' }),
+    }
+  );
+  console.log('res', res);
 }
 
 export function writeInteraction(tx: Transaction) {

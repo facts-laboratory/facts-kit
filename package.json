@@ -44,6 +44,7 @@
   "dependencies": {
     "@swc/helpers": "~0.4.11",
     "arweave": "1.13.1",
-    "bignumber.js": "^9.1.1"
+    "bignumber.js": "^9.1.1",
+    "warp-contracts-plugin-deploy": "^1.0.0"
   }
 }

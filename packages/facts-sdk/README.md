@@ -1,6 +1,6 @@
 # facts-sdk
 
-This library was generated with [Nx](https://nx.dev).
+Currently `attach` and `assert` are the only tested functions.
 
 ## Install
 
@@ -8,23 +8,12 @@ This library was generated with [Nx](https://nx.dev).
 
 ## Use
 
-Import Warp / Arweave in your `index.html`.
-
-```html
-<!-- index.html -->
-
-<head>
-  <script src="https://unpkg.com/arweave@1.13.1/bundles/web.bundle.min.js"></script>
-  <script src="https://unpkg.com/warp-contracts@1.2.53/bundles/web.iife.bundle.min.js"></script>
-</head>
-```
-
-Import `@facts-kit/facts-sdk` and use.
+import `@facts-kit/facts-sdk` and use.
 
 ```js
 // some-file.ts
 
-import { assert, attach, buy, sell } from '@facts-kit/facts-sdk';
+import { assert, attach } from '@facts-kit/facts-sdk';
 
 // attach
 const factMarket = await attachFactMarket({
@@ -34,9 +23,20 @@ const factMarket = await attachFactMarket({
 
 console.log(factMarket.tx);
 
-// TODO: attach
-// TODO: buy
-// TODO: sell
+// Deploy
+const factMarket = await deployAtomicFactMarket({
+  use: 'arweaveWallet',
+  data: { test: 'data' }, // You define the shape of this -- i twill be stringified
+  tags: {
+    type: 'fact-post',
+    title: 'Test title',
+    description: 'test description',
+    topics: ['topic-1', 'topic-2'],
+  },
+  position: 'support',
+});
+
+console.log(factMarket.tx);
 ```
 
 ## Test
