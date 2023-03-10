@@ -347,7 +347,7 @@ export async function fetchTx(tx: string) {
     credentials: 'omit',
   });
 
-  return getEdges(await response.json());
+  return getEdges(await response.json())[0].node;
 }
 
 export function getEdges(res: any) {
