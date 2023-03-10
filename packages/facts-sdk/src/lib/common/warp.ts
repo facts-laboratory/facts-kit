@@ -42,12 +42,7 @@ export async function httpRegister(tx: string) {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     },
-  })
-    .then(async (res) => {
-      console.log('REGISTER RES =================', res.statusText, res.status);
-    })
-    .catch((e) => console.log('REGISTER ERR =================', e));
-  // .then((res) => (res.ok ? res.json() : Promise.reject(res)));
+  }).then((res) => (res.ok ? res.json() : Promise.reject(res)));
 }
 
 export function writeInteraction(tx: Transaction) {

@@ -1,35 +1,24 @@
-/* eslint-disable no-useless-escape */
 import { BigNumber } from 'bignumber.js';
 import Arweave from 'arweave';
 import Transaction from 'arweave/node/lib/transaction';
 
-// TODO: MOVE THESE TO environment.ts
-// const GATEWAY = 'https://arweave.net';
 const REDSTONE_GATEWAY = 'https://gateway.redstone.finance';
-// const TRADE_SOURCE_ID = 'BzNLxND_nJEMfcLWShyhU4i9BnzEWaATo6FYFsfsO0Q';
-// const CACHE = 'https://cache.permapages.app';
 const BAR_CACHE = 'https://bar-cache.onrender.com';
-// const WARP_URL =
-//   'https://d1o5nlqr4okus2.cloudfront.net/gateway/contracts/deploy';
-// const STAMP_CONTRACT = 'aSMILD7cEJr93i7TAVzzMjtci_sGkXcWnqpDkG6UGcA';
 export const BAR = 'VFr3Bk-uM-motpNNkkFg4lNW1BMmSfzqsVO551Ho4hA';
 
 export const atomicToBar = (atomic: any) =>
   BigNumber.clone({ DECIMAL_PLACES: 6 })(atomic).shiftedBy(-6).toFixed(6);
 
 export const getBARBalance = async (addr: string, barContractId: string) => {
-  return (
-    fetch(`${BAR_CACHE}/${barContractId}`)
-      .then((res) =>
-        res.ok
-          ? res.json()
-          : Promise.reject(new Error('could not get bar balance'))
-      )
-      //return warp.contract(BAR).readState().then(res => res.state)
-      .then((state) => (state.balances[addr] ? state.balances[addr] : 0))
-      .then(atomicToBar)
-      .then((x) => Number(x).toFixed(4))
-  );
+  return fetch(`${BAR_CACHE}/${barContractId}`)
+    .then((res) =>
+      res.ok
+        ? res.json()
+        : Promise.reject(new Error('could not get bar balance'))
+    )
+    .then((state) => (state.balances[addr] ? state.balances[addr] : 0))
+    .then(atomicToBar)
+    .then((x) => Number(x).toFixed(4));
 };
 
 export async function allow(
@@ -40,8 +29,6 @@ export async function allow(
 ) {
   const tx = await arweave.createTransaction({
     data: Math.random().toString().slice(-4),
-    // reward: "72600854",
-    // last_tx: "p7vc1iSP6bvH_fCeUFa9LqoV5qiyW-jdEKouAT0XMoSwrNraB9mgpi29Q10waEpO",
   });
   tx.addTag('App-Name', 'SmartWeaveAction');
   tx.addTag('App-Version', '0.3.0');
@@ -144,7 +131,6 @@ export async function mint(
   const tx = await client.createTransaction({
     data: Math.random().toString().slice(-4),
     reward: client.ar.arToWinston(reward.toString()),
-    // last_tx: "p7vc1iSP6bvH_fCeUFa9LqoV5qiyW-jdEKouAT0XMoSwrNraB9mgpi29Q10waEpO",
   });
   tx.addTag('App-Name', 'SmartWeaveAction');
   tx.addTag('App-Version', '0.3.0');

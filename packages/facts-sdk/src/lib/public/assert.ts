@@ -1,5 +1,5 @@
-import { atomicFactMarket } from './api';
-import { DeployAtomicFactMarketInput } from './api/atomic-fact-market';
+import { atomicFactMarket } from './../api';
+import { DeployAtomicFactMarketInput } from './../api/atomic-fact-market';
 
 /**
  * Deploys a new assertion with fact markets.
@@ -10,7 +10,7 @@ import { DeployAtomicFactMarketInput } from './api/atomic-fact-market';
  * @return {*}  {Promise<{ tx: string }>}
  */
 export async function assert(input: DeployAtomicFactMarketInput) {
-  await atomicFactMarket.deployAtomicFactMarket({
+  return await atomicFactMarket.deployAtomicFactMarket({
     ...input,
   });
 }

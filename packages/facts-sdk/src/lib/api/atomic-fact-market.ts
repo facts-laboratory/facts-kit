@@ -5,7 +5,7 @@ import {
   isVouched,
 } from '@facts-kit/contract-kit';
 import { getBundlrClient } from '../common/bundlr';
-import { getWarpFactory, register } from '../common/warp';
+import { getWarpFactory, httpRegister } from '../common/warp';
 import { FACT_MARKET_SRC, getPermafactsTags } from '../helpers/get-pf-tags';
 import { getSmartweaveTags } from '../helpers/get-smartweave-tags';
 import { initialState } from './interface';
@@ -63,7 +63,7 @@ async function deployWithBundlr(input: DeployFactMarketInput) {
   if (!tx.id) {
     throw new Error('Failed to deploy assertion.');
   }
-  await register(tx.id);
+  await httpRegister(tx.id);
   return tx.id;
 }
 async function deployWithWarp(input: DeployFactMarketInput) {
@@ -140,7 +140,7 @@ async function deployWithArweaveWallet(
 
   const id = await dispatch(tx);
   console.log(`Transaction id: ${id}`);
-  return register(id).then((tx) => tx);
+  return httpRegister(id).then((tx) => tx);
 }
 
 export interface ANS110Tags {
