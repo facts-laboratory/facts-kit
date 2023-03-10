@@ -9,12 +9,8 @@ import { DeployAtomicFactMarketInput } from './api/atomic-fact-market';
  * @param {DeployAtomicFactMarketInput} input
  * @return {*}  {Promise<{ tx: string }>}
  */
-export async function assert(
-  input: DeployAtomicFactMarketInput
-): Promise<{ tx: string }> {
-  const factMarket = await atomicFactMarket.deployAtomicFactMarket({
+export async function assert(input: DeployAtomicFactMarketInput) {
+  await atomicFactMarket.deployAtomicFactMarket({
     ...input,
   });
-  return factMarket;
-  return { tx: '' };
 }

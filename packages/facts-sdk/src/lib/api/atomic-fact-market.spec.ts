@@ -1,6 +1,6 @@
-import { deployAtomicFactMarket } from './atomic-fact-market';
 import { setupGlobals } from '../mock/setup-globals';
 import { setupBundlr } from '../mock/setup-bundlr';
+import { deployAtomicFactMarket } from './atomic-fact-market';
 
 vi.mock('../common/bundlr', () => {
   const originalModule = vi.importActual('../common/bundlr');
@@ -13,68 +13,66 @@ vi.mock('../common/bundlr', () => {
   };
 });
 
-const assertion = {
-  content: [
-    {
-      type: 'h1',
-      __source: {
-        fileName:
-          '/Users/jshaw/workbench/arweave/permafacts/libs/components/src/lib/assert/common/basicMarksValue.tsx',
-        lineNumber: 10,
-        columnNumber: 5,
-      },
-      children: [
-        {
-          text: 'THIS IS A SPECIAL ONE',
-          __source: {
-            fileName:
-              '/Users/jshaw/workbench/arweave/permafacts/libs/components/src/lib/assert/common/basicMarksValue.tsx',
-            lineNumber: 11,
-            columnNumber: 7,
-          },
-        },
-      ],
-    },
-    { type: 'p', children: [{ text: 'test' }] },
-    {
-      type: 'p',
-      __source: {
-        fileName:
-          '/Users/jshaw/workbench/arweave/permafacts/libs/components/src/lib/assert/common/basicMarksValue.tsx',
-        lineNumber: 13,
-        columnNumber: 5,
-      },
-      children: [
-        {
-          text: '',
-          __source: {
-            fileName:
-              '/Users/jshaw/workbench/arweave/permafacts/libs/components/src/lib/assert/common/basicMarksValue.tsx',
-            lineNumber: 14,
-            columnNumber: 7,
-          },
-        },
-      ],
-    },
-  ],
-  timestamp: 1676824206,
-};
-describe.skip('create-tx', () => {
+describe('atomic-fact-market', () => {
   beforeAll(async () => {
     await setupGlobals();
   });
-
-  it('should work query a tx', async () => {
-    (globalThis as any).warp = {};
-    const factMarket = await deployAtomicFactMarket({
-      data: assertion,
-      description: 'Testing assertion from facts-sdk',
-      owner: '9x24zjvs9DA5zAz2DmqBWAg6XcxrrE-8w3EkpwRm4e4',
-      title: 'Testing assertion from facts-sdk',
-      rebutTx: 'vZmKZjjxw26J7R28RhsN9m5I7FXsS3q63WwT-Qqb6IM',
-      topic: 'technology',
+  it('should create a fact market', async () => {
+    const tx = await deployAtomicFactMarket({
+      position: 'oppose',
+      data: { test: 'data' },
+      tags: {
+        type: 'fact-post',
+        title: 'Test title',
+        description: 'test description',
+        topics: ['topic-1', 'topic-2'],
+      },
     });
-    expect('facts-sdk').toEqual('facts-sdk');
-    // expect(factMarket.tx).toEqual('facts-sdk');
+    expect(tx).toEqual({ tx: '<tx-id>' });
+  });
+  it('should create a fact market - bundlr', async () => {
+    const tx = await deployAtomicFactMarket({
+      use: 'bundlr',
+      data: { test: 'data' },
+      tags: {
+        type: 'fact-post',
+        title: 'Test title',
+        description: 'test description',
+        topics: ['topic-1', 'topic-2'],
+      },
+      position: 'support',
+    });
+    console.log(`bundlr id: ${JSON.stringify(tx)}`);
+    expect(tx).toEqual({
+      tx: '<bundlr-tx>',
+    });
+  });
+  it('should create a fact market - warp', async () => {
+    const tx = await deployAtomicFactMarket({
+      use: 'warp',
+      data: { test: 'data' },
+      tags: {
+        type: 'fact-post',
+        title: 'Test title',
+        description: 'test description',
+        topics: ['topic-1', 'topic-2'],
+      },
+      position: 'oppose',
+    });
+    expect(tx).toEqual({ tx: '<contractTxId>' });
+  });
+  it('should create a fact market - arweaveWallet', async () => {
+    const tx = await deployAtomicFactMarket({
+      use: 'arweaveWallet',
+      data: { test: 'data' },
+      tags: {
+        type: 'fact-post',
+        title: 'Test title',
+        description: 'test description',
+        topics: ['topic-1', 'topic-2'],
+      },
+      position: 'support',
+    });
+    expect(tx).toEqual({ tx: '<tx-id>' });
   });
 });
