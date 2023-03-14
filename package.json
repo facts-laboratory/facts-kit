@@ -4,6 +4,8 @@
   "license": "MIT",
   "scripts": {
     "install:ngx-deploy-npm": "nx generate ngx-deploy-npm:install",
+    "fund": "bundlr fund 500000000000 -h https://node2.bundlr.network -w ${PATH_TO_WALLET} -c arweave",
+    "balance": "bundlr balance ${WALLET} -h https://node2.bundlr.network -c arweave",
     "generate:package": "nx generate @nrwl/js:library ${NAME} --unitTestRunner=vitest --bundler=vite --compiler=swc --publishable --importPath=@facts-kit/${NAME} && npm run install:ngx-deploy-npm"
   },
   "private": true,
