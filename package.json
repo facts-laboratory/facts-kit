@@ -32,6 +32,7 @@
     "ngx-deploy-npm": "^5.2.0",
     "nx": "15.7.2",
     "prettier": "^2.6.2",
+    "tslib": "^2.5.0",
     "typedoc": "^0.23.20",
     "typedoc-plugin-rename-defaults": "^0.6.4",
     "typedoc-theme-hierarchy": "^3.0.0",
