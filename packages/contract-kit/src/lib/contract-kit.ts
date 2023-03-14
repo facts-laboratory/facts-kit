@@ -3,23 +3,23 @@ import Arweave from 'arweave';
 import Transaction from 'arweave/node/lib/transaction';
 
 const REDSTONE_GATEWAY = 'https://gateway.redstone.finance';
-const BAR_CACHE = 'https://bar-cache.onrender.com';
+// const BAR_CACHE = 'https://bar-cache.onrender.com';
 export const BAR = 'VFr3Bk-uM-motpNNkkFg4lNW1BMmSfzqsVO551Ho4hA';
 
 export const atomicToBar = (atomic: any) =>
   BigNumber.clone({ DECIMAL_PLACES: 6 })(atomic).shiftedBy(-6).toFixed(6);
 
-export const getBARBalance = async (addr: string, barContractId: string) => {
-  return fetch(`${BAR_CACHE}/${barContractId}`)
-    .then((res) =>
-      res.ok
-        ? res.json()
-        : Promise.reject(new Error('could not get bar balance'))
-    )
-    .then((state) => (state.balances[addr] ? state.balances[addr] : 0))
-    .then(atomicToBar)
-    .then((x) => Number(x).toFixed(4));
-};
+// export const getBARBalance = async (addr: string, barContractId: string) => {
+//   return fetch(`${BAR_CACHE}/${barContractId}`)
+//     .then((res) =>
+//       res.ok
+//         ? res.json()
+//         : Promise.reject(new Error('could not get bar balance'))
+//     )
+//     .then((state) => (state.balances[addr] ? state.balances[addr] : 0))
+//     .then(atomicToBar)
+//     .then((x) => Number(x).toFixed(4));
+// };
 
 export async function allow(
   amount: number,
@@ -64,13 +64,13 @@ function writeInteraction(tx: Transaction) {
 
 // const REDSTONE_GATEWAY = 'https://gateway.redstone.finance'
 
-export const isVouched = async (tx: string) => {
-  // get the state of the vouch contract
-  const state = await readState('_z0ch80z_daDUFqC9jHjfOL8nekJcok4ZRkE_UesYsk');
+// export const isVouched = async (tx: string) => {
+//   // get the state of the vouch contract
+//   const state = await readState('_z0ch80z_daDUFqC9jHjfOL8nekJcok4ZRkE_UesYsk');
 
-  // Return whether or not the tx is vouched
-  return state.vouched[tx] !== undefined;
-};
+//   // Return whether or not the tx is vouched
+//   return state.vouched[tx] !== undefined;
+// };
 
 export const readState = (contract: string) => {
   const CACHE = 'https://cache.permapages.app';
