@@ -2,33 +2,23 @@ import { BigNumber } from 'bignumber.js';
 import Arweave from 'arweave';
 import Transaction from 'arweave/node/lib/transaction';
 
-// TODO: MOVE THESE TO environment.ts
-// const GATEWAY = 'https://arweave.net';
 const REDSTONE_GATEWAY = 'https://gateway.redstone.finance';
-// const TRADE_SOURCE_ID = 'BzNLxND_nJEMfcLWShyhU4i9BnzEWaATo6FYFsfsO0Q';
-// const CACHE = 'https://cache.permapages.app';
 const BAR_CACHE = 'https://bar-cache.onrender.com';
-// const WARP_URL =
-//   'https://d1o5nlqr4okus2.cloudfront.net/gateway/contracts/deploy';
-// const STAMP_CONTRACT = 'aSMILD7cEJr93i7TAVzzMjtci_sGkXcWnqpDkG6UGcA';
 export const BAR = 'VFr3Bk-uM-motpNNkkFg4lNW1BMmSfzqsVO551Ho4hA';
 
 export const atomicToBar = (atomic: any) =>
   BigNumber.clone({ DECIMAL_PLACES: 6 })(atomic).shiftedBy(-6).toFixed(6);
 
 export const getBARBalance = async (addr: string, barContractId: string) => {
-  return (
-    fetch(`${BAR_CACHE}/${barContractId}`)
-      .then((res) =>
-        res.ok
-          ? res.json()
-          : Promise.reject(new Error('could not get bar balance'))
-      )
-      //return warp.contract(BAR).readState().then(res => res.state)
-      .then((state) => (state.balances[addr] ? state.balances[addr] : 0))
-      .then(atomicToBar)
-      .then((x) => Number(x).toFixed(4))
-  );
+  return fetch(`${BAR_CACHE}/${barContractId}`)
+    .then((res) =>
+      res.ok
+        ? res.json()
+        : Promise.reject(new Error('could not get bar balance'))
+    )
+    .then((state) => (state.balances[addr] ? state.balances[addr] : 0))
+    .then(atomicToBar)
+    .then((x) => Number(x).toFixed(4));
 };
 
 export async function allow(
@@ -39,8 +29,6 @@ export async function allow(
 ) {
   const tx = await arweave.createTransaction({
     data: Math.random().toString().slice(-4),
-    // reward: "72600854",
-    // last_tx: "p7vc1iSP6bvH_fCeUFa9LqoV5qiyW-jdEKouAT0XMoSwrNraB9mgpi29Q10waEpO",
   });
   tx.addTag('App-Name', 'SmartWeaveAction');
   tx.addTag('App-Version', '0.3.0');
@@ -143,7 +131,6 @@ export async function mint(
   const tx = await client.createTransaction({
     data: Math.random().toString().slice(-4),
     reward: client.ar.arToWinston(reward.toString()),
-    // last_tx: "p7vc1iSP6bvH_fCeUFa9LqoV5qiyW-jdEKouAT0XMoSwrNraB9mgpi29Q10waEpO",
   });
   tx.addTag('App-Name', 'SmartWeaveAction');
   tx.addTag('App-Version', '0.3.0');
@@ -331,4 +318,47 @@ export function addTags(
       }`,
     });
   return tags;
+}
+
+export async function fetchTx(tx: string) {
+  const response = await fetch(getUrl(), {
+    headers: {
+      accept: '*/*',
+      'accept-language': 'en-US,en;q=0.8',
+      'content-type': 'application/json',
+    },
+    body: `{\"operationName\":null,\"variables\":{},\"query\":\"{\\n  transactions(first: 1, ids: [\\\"${tx}\\\"]) {\\n    edges {\\n      node {\\n        id\\n        owner {\\n          address\\n        }\\n        block {\\n          timestamp\\n          height\\n        }\\n        tags {\\n          name\\n          value\\n        }\\n      }\\n    }\\n  }\\n}\\n\"}`,
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'omit',
+  });
+
+  return getEdges(await response.json())[0].node;
+}
+
+export function getEdges(res: any) {
+  if (!res?.data?.transactions?.edges) throw new Error('no edges');
+  return res.data.transactions.edges;
+}
+
+/**
+ * Creates the correct fetch url for gql using arweave config.
+ *
+ * @author mogulx_operates
+ * @param {Config} config
+ * @return {*}  {string}
+ */
+function getUrl() {
+  return `https://arweave.net/graphql`;
+}
+export function parseQuery(queryString: string) {
+  const query: any = {};
+  const pairs: any = (
+    queryString[0] === '?' ? queryString.substr(1) : queryString
+  ).split('&');
+  for (let i = 0; i < pairs.length; i++) {
+    const pair: any = pairs[i].split('=');
+    query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+  }
+  return query;
 }

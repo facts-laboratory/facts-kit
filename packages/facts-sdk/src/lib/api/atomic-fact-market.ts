@@ -1,82 +1,197 @@
-import { initialState } from './interface';
-import { register } from '../common/warp';
 import {
-  addTags,
+  dispatch,
   getArweave,
   getArweaveWallet,
   isVouched,
 } from '@facts-kit/contract-kit';
+import { getBundlrClient } from '../common/bundlr';
+import { getWarpFactory, register } from '../common/warp';
+import { FACT_MARKET_SRC, getPermafactsTags } from '../helpers/get-pf-tags';
+import { getSmartweaveTags } from '../helpers/get-smartweave-tags';
+import { initialState } from './interface';
 
-/**
- *
- * @author mogulx_operates
- * @export
- * @interface DeployAtomicFactMarketInput
- */
-export interface DeployAtomicFactMarketInput {
-  title: string;
-  owner: string;
-  data: any;
-  topic?: string;
-  description: string;
+export type Use = 'bundlr' | 'warp' | 'arweaveWallet';
+
+export interface DeployFactMarketInput {
+  tags: { name: string; value: string }[];
   rebutTx?: string;
+  use?: Use;
+  position: 'support' | 'oppose';
+  data: any;
 }
 
-/**
- * Deploys a fact market with atomic data
- *
- * @author mogulx_operates
- * @export
- * @param {DeployAtomicFactMarketInput} input
- * @return {*}  {Promise<{ tx: string }>}
- */
-export async function deployAtomicFactMarket(
-  input: DeployAtomicFactMarketInput
-): Promise<{ tx: string }> {
-  const { title, owner, data, topic, description, rebutTx } = input;
-  if (!(await isVouched(owner))) throw new Error('non-vouched');
-  const arweave = getArweave();
-  const tx = await arweave.createTransaction({
-    data: JSON.stringify(data),
-  });
-  const tags = [
-    { name: 'Permafacts-Type', value: 'Assertion-Alpha-v2-0.0.11' },
-    { name: 'App-Name', value: 'SmartWeaveContract' },
-    {
-      name: 'Contract-Src',
-      value: 'xLaL1bE6hYETzBdKZYzlyKJUhn7I5J-Oye609sW3qTU',
-    },
-    { name: 'App-Version', value: '0.3.0' },
-    { name: 'Implements', value: 'ANS-110' },
-    { name: 'Type', value: 'fact-post' },
-    { name: 'Title', value: `${title}` },
-    { name: 'Permafacts-Version', value: 'TODO' },
-    { name: 'Render-With', value: 'facts-renderer' },
-    { name: 'Content-Type', value: 'text/plain' },
+async function deployFactMarket(input: DeployFactMarketInput): Promise<string> {
+  const { use } = input;
+  switch (use) {
+    case 'arweaveWallet':
+    case undefined:
+      return deployWithArweaveWallet(input);
+    case 'warp':
+      return deployWithWarp(input);
+    case 'bundlr':
+      return deployWithBundlr(input);
+    default:
+      throw new Error(`Wallet ${use} not supported.`);
+  }
+}
+
+async function deployWithBundlr(input: DeployFactMarketInput) {
+  const { tags, rebutTx, position } = input;
+  const newTags = [
+    ...tags,
+    { name: 'Protocol-Name', value: 'Facts' },
+    { name: 'Render-With', value: `${'facts-card-renderer'}` },
     {
       name: 'Init-State',
       value: JSON.stringify({
         ...initialState,
-        name: `${title}`,
-        creator: owner,
+        name: `${
+          tags.filter((t) => t.name === 'Title')[0]?.value || 'No title.'
+        }`,
+        creator: 'TODO',
+        position,
       }),
     },
-    ...addTags(topic, description),
   ];
-
   if (rebutTx) tags.push({ name: 'Fact-Rebuts', value: rebutTx });
-  tags.forEach((t) => tx.addTag(t.name, t.value));
-  console.log('TAGS ================= TAGS', tags);
-  const wallet = getArweaveWallet();
-  if (!wallet) throw new Error('Unable to find arweave wallet.');
-  const result = await wallet.dispatch(tx);
 
-  if (!result.id) {
+  const bundlr = await getBundlrClient();
+  const tx = await bundlr.upload(JSON.stringify({ facts: 'sdk' }), {
+    tags: newTags,
+  });
+
+  if (!tx.id) {
+    throw new Error('Failed to deploy assertion.');
+  }
+  await register(tx.id);
+  return tx.id;
+}
+async function deployWithWarp(input: DeployFactMarketInput) {
+  const { tags, rebutTx, position } = input;
+
+  const newTags = [
+    ...tags,
+    { name: 'Protocol-Name', value: 'Facts' },
+    { name: 'Render-With', value: `${'facts-card-renderer'}` },
+  ];
+  if (rebutTx) tags.push({ name: 'Fact-Rebuts', value: rebutTx });
+
+  const warp = getWarpFactory();
+  const factMarket = await warp.deployFromSourceTx(
+    {
+      initState: JSON.stringify({
+        ...initialState,
+        name: `${
+          tags.filter((t) => t.name === 'Title')[0]?.value || 'No title.'
+        }`,
+        creator: 'TODO',
+        position,
+      }),
+      srcTxId: FACT_MARKET_SRC,
+      wallet: 'use_wallet',
+      data: {
+        'Content-Type': 'text/plain',
+        body: JSON.stringify({ facts: 'sdk' }),
+      },
+      newTags,
+    },
+    false
+  );
+  if (!factMarket.contractTxId) {
     throw new Error('Failed to deploy assertion.');
   }
 
-  // await warp.register(result.id, 'node2');
-  await register(result.id);
-  console.log('AFTER REGISTER ==========', { tx: result.id });
-  return { tx: result.id };
+  return factMarket.contractTxId;
+}
+
+async function deployWithArweaveWallet(
+  input: DeployFactMarketInput
+): Promise<string> {
+  const wallet = getArweaveWallet();
+  const { tags, rebutTx, position, data } = input;
+
+  const arweave = getArweave();
+  const tx = await arweave.createTransaction({
+    data: JSON.stringify(data),
+  });
+  tags.forEach((t) => tx.addTag(t.name, t.value));
+  if (rebutTx) tx.addTag('Fact-Rebuts', rebutTx);
+  tx.addTag('Render-With', `${'facts-card-renderer'}`);
+  // tx.addTag('Data-Source', attachTo);
+  tx.addTag('Protocol-Name', 'Facts');
+
+  if (!wallet) throw new Error('Unable to find arweave wallet.');
+  await wallet.disconnect();
+  await wallet.connect(['ACCESS_ADDRESS', 'SIGN_TRANSACTION', 'DISPATCH'], {
+    name: 'facts-sdk',
+  });
+  const creator = await wallet.getActiveAddress();
+  if (!(await isVouched(creator))) throw new Error('non-vouched');
+  tx.addTag(
+    'Init-State',
+    JSON.stringify({
+      ...initialState,
+      name:
+        tags.filter((t) => t.name === 'Title')[0]?.value || 'bug: no title.',
+      creator,
+      position,
+    })
+  );
+
+  const id = await dispatch(tx);
+  console.log(`Transaction id: ${id}`);
+  return register(id).then((tx) => tx);
+}
+
+export interface ANS110Tags {
+  topics?: string[];
+  type: string;
+  title: string;
+  description: string;
+}
+export interface DeployAtomicFactMarketInput {
+  rebutTx?: string;
+  use?: Use;
+  position: 'support' | 'oppose';
+  tags: ANS110Tags;
+  data: any;
+}
+export async function deployAtomicFactMarket(
+  input: DeployAtomicFactMarketInput
+): Promise<{ tx: string } | { error: string }> {
+  const { tags, data, position, rebutTx, use } = input;
+  try {
+    const factMarketTx = await deployFactMarket({
+      tags: [
+        ...getAns110TagsFromUser(tags),
+        ...getSmartweaveTags(),
+        ...getPermafactsTags(),
+      ],
+      data,
+      position,
+      rebutTx,
+      use,
+    });
+    return { tx: factMarketTx };
+  } catch (e: any) {
+    console.log(e);
+    return {
+      error: e.message,
+    };
+  }
+}
+
+function getAns110TagsFromUser(tags: ANS110Tags) {
+  const topics: { name: string; value: string }[] = [];
+  if (tags.topics) {
+    tags?.topics?.forEach((t) => {
+      topics.push({ name: `Topic:${t}`, value: t });
+    });
+  }
+  return [
+    { name: 'Type', value: tags.type },
+    { name: 'Title', value: tags.title },
+    { name: 'Description', value: tags.description },
+    ...topics,
+  ];
 }

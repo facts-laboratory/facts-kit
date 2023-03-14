@@ -4,11 +4,13 @@
   "license": "MIT",
   "scripts": {
     "install:ngx-deploy-npm": "nx generate ngx-deploy-npm:install",
+    "fund": "bundlr fund 500000000000 -h https://node2.bundlr.network -w ${PATH_TO_WALLET} -c arweave",
+    "balance": "bundlr balance ${WALLET} -h https://node2.bundlr.network -c arweave",
     "generate:package": "nx generate @nrwl/js:library ${NAME} --unitTestRunner=vitest --bundler=vite --compiler=swc --publishable --importPath=@facts-kit/${NAME} && npm run install:ngx-deploy-npm"
   },
   "private": true,
   "devDependencies": {
-    "@bundlr-network/client": "0.10.4",
+    "@bundlr-network/client": "0.10.5",
     "@enio.ai/typedoc": "^1.0.6",
     "@nrwl/eslint-plugin-nx": "15.7.2",
     "@nrwl/js": "15.7.2",
@@ -44,6 +46,7 @@
   "dependencies": {
     "@swc/helpers": "~0.4.11",
     "arweave": "1.13.1",
-    "bignumber.js": "^9.1.1"
+    "bignumber.js": "^9.1.1",
+    "warp-contracts-plugin-deploy": "^1.0.0"
   }
 }

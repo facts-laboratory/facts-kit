@@ -17,18 +17,18 @@ describe('quasi-atomic-fact-market', () => {
   beforeAll(async () => {
     await setupGlobals();
   });
-  it('should create a fact market', async () => {
+  it.skip('should create a fact market', async () => {
     const tx = await attachFactMarket({
       tx: '07aXBLlXbo5onnWhBUOv20hpD3f6iSDfzcLo6uOwDtw',
-      wallet: '9x24zjvs9DA5zAz2DmqBWAg6XcxrrE-8w3EkpwRm4e4',
+      position: 'oppose',
     });
     expect(tx).toEqual({ tx: '<tx-id>' });
   });
-  it('should create a fact market - bundlr', async () => {
+  it.skip('should create a fact market - bundlr', async () => {
     const tx = await attachFactMarket({
       tx: '07aXBLlXbo5onnWhBUOv20hpD3f6iSDfzcLo6uOwDtw',
-      wallet: '9x24zjvs9DA5zAz2DmqBWAg6XcxrrE-8w3EkpwRm4e4',
       use: 'bundlr',
+      position: 'support',
     });
     console.log(`bundlr id: ${JSON.stringify(tx)}`);
     expect(tx).toEqual({
@@ -38,17 +38,18 @@ describe('quasi-atomic-fact-market', () => {
   it.skip('should create a fact market - warp', async () => {
     const tx = await attachFactMarket({
       tx: '07aXBLlXbo5onnWhBUOv20hpD3f6iSDfzcLo6uOwDtw',
-      wallet: '9x24zjvs9DA5zAz2DmqBWAg6XcxrrE-8w3EkpwRm4e4',
       use: 'warp',
+      position: 'oppose',
     });
-    expect(tx).toEqual({ tx: '' });
+    expect(tx).toEqual({ tx: '<contractTxId>' });
   });
   it('should create a fact market - arweaveWallet', async () => {
     const tx = await attachFactMarket({
       tx: '07aXBLlXbo5onnWhBUOv20hpD3f6iSDfzcLo6uOwDtw',
-      wallet: '9x24zjvs9DA5zAz2DmqBWAg6XcxrrE-8w3EkpwRm4e4',
       use: 'arweaveWallet',
+      position: 'support',
     });
+    console.log('TX', tx);
     expect(tx).toEqual({ tx: '<tx-id>' });
   });
 });

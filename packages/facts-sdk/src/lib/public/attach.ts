@@ -1,4 +1,4 @@
-import { quasiAtomicFactMarket } from './api';
+import { quasiAtomicFactMarket } from './../api';
 
 export async function attach(
   input: quasiAtomicFactMarket.AttachFactMarketInput

@@ -19,6 +19,7 @@ export interface DeployFactMarketInput {
   attachTo: string;
   rebutTx?: string;
   use?: Use;
+  position: 'support' | 'oppose';
 }
 
 async function deployFactMarket(input: DeployFactMarketInput): Promise<string> {
@@ -37,7 +38,7 @@ async function deployFactMarket(input: DeployFactMarketInput): Promise<string> {
 }
 
 async function deployWithBundlr(input: DeployFactMarketInput) {
-  const { tags, rebutTx, attachTo } = input;
+  const { tags, rebutTx, attachTo, position } = input;
   const newTags = [
     ...tags,
     { name: 'Data-Source', value: attachTo },
@@ -51,6 +52,7 @@ async function deployWithBundlr(input: DeployFactMarketInput) {
           tags.filter((t) => t.name === 'Title')[0]?.value || 'No title.'
         }`,
         creator: 'TODO',
+        position,
       }),
     },
   ];
@@ -68,7 +70,7 @@ async function deployWithBundlr(input: DeployFactMarketInput) {
   return tx.id;
 }
 async function deployWithWarp(input: DeployFactMarketInput) {
-  const { tags, rebutTx, attachTo } = input;
+  const { tags, rebutTx, attachTo, position } = input;
 
   const newTags = [
     ...tags,
@@ -87,6 +89,7 @@ async function deployWithWarp(input: DeployFactMarketInput) {
           tags.filter((t) => t.name === 'Title')[0]?.value || 'No title.'
         }`,
         creator: 'TODO',
+        position,
       }),
       srcTxId: FACT_MARKET_SRC,
       wallet: 'use_wallet',
@@ -109,9 +112,8 @@ async function deployWithArweaveWallet(
   input: DeployFactMarketInput
 ): Promise<string> {
   const wallet = getArweaveWallet();
-  const { tags, attachTo, rebutTx } = input;
-  const owner = await wallet.getActiveAddress();
-  if (!(await isVouched(owner))) throw new Error('non-vouched');
+  const { tags, attachTo, rebutTx, position } = input;
+
   const arweave = getArweave();
   const tx = await arweave.createTransaction({
     data: JSON.stringify({ facts: 'sdk' }),
@@ -127,14 +129,16 @@ async function deployWithArweaveWallet(
   await wallet.connect(['ACCESS_ADDRESS', 'SIGN_TRANSACTION', 'DISPATCH'], {
     name: 'facts-sdk',
   });
-
+  const creator = await wallet.getActiveAddress();
+  if (!(await isVouched(creator))) throw new Error('non-vouched');
   tx.addTag(
     'Init-State',
     JSON.stringify({
       ...initialState,
       name:
         tags.filter((t) => t.name === 'Title')[0]?.value || 'bug: no title.',
-      creator: owner,
+      creator,
+      position,
     })
   );
 
@@ -145,9 +149,9 @@ async function deployWithArweaveWallet(
 
 export interface AttachFactMarketInput {
   tx: string;
-  wallet: string;
   rebutTx?: string;
   use?: Use;
+  position: 'support' | 'oppose';
 }
 export async function attachFactMarket(
   input: AttachFactMarketInput
