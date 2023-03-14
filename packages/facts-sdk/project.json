@@ -38,7 +38,8 @@
       "options": {
         "options": "typedoc.json"
       },
-      "configurations": {}
+      "configurations": {},
+      "dependsOn": ["remove-old-docs"]
     },
     "perma-deploy-docs": {
       "executor": "nx:run-commands",
@@ -50,6 +51,16 @@
         ]
       },
       "dependsOn": ["typedoc"]
+    },
+    "remove-old-docs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "rm -rf ./docs/packages/facts-sdk"
+          }
+        ]
+      }
     }
   },
   "tags": []
