@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import { BigNumber } from 'bignumber.js';
 import Arweave from 'arweave';
 import Transaction from 'arweave/node/lib/transaction';
