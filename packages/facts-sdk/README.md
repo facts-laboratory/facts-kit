@@ -16,17 +16,16 @@ import `@facts-kit/facts-sdk` and use.
 import { assert, attach } from '@facts-kit/facts-sdk';
 
 // attach
-const factMarket = await attachFactMarket({
+const factMarket = await attach({
   tx: '07aXBLlXbo5onnWhBUOv20hpD3f6iSDfzcLo6uOwDtw',
-  wallet: '9x24zjvs9DA5zAz2DmqBWAg6XcxrrE-8w3EkpwRm4e4',
+  position: 'support',
 });
-
 console.log(factMarket.tx);
 
 // Deploy
-const factMarket = await deployAtomicFactMarket({
+const factMarket = await assert({
   use: 'arweaveWallet',
-  data: { test: 'data' }, // You define the shape of this -- i twill be stringified
+  data: { test: 'data' }, // You define the shape of this -- it will be stringified
   tags: {
     type: 'fact-post',
     title: 'Test title',
