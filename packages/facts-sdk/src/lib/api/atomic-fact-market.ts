@@ -2,7 +2,6 @@ import {
   dispatch,
   getArweave,
   getArweaveWallet,
-  isVouched,
 } from '@facts-kit/contract-kit';
 import { getBundlrClient } from '../common/bundlr';
 import { getWarpFactory, register } from '../common/warp';
@@ -126,7 +125,6 @@ async function deployWithArweaveWallet(
     name: 'facts-sdk',
   });
   const creator = await wallet.getActiveAddress();
-  if (!(await isVouched(creator))) throw new Error('non-vouched');
   tx.addTag(
     'Init-State',
     JSON.stringify({
