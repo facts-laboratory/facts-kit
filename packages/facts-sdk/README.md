@@ -11,7 +11,7 @@ Currently `attach` and `assert` are the only tested functions.
 import `@facts-kit/facts-sdk` and use.
 
 ```js
-// some-file.ts
+// some-file.<ts | js>
 
 import { assert, attach } from '@facts-kit/facts-sdk';
 
@@ -19,6 +19,10 @@ import { assert, attach } from '@facts-kit/facts-sdk';
 const factMarket = await attach({
   tx: '07aXBLlXbo5onnWhBUOv20hpD3f6iSDfzcLo6uOwDtw',
   position: 'support',
+  // This tells the SDK to use the wallet that's connected.
+  // It's the callers responsibility to make sure the wallet
+  // is connected.
+  // useConnectedWallet: true,
 });
 console.log(factMarket.tx);
 
