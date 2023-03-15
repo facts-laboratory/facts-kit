@@ -13,7 +13,16 @@ import `@facts-kit/facts-sdk` and use.
 ```js
 // some-file.<ts | js>
 
-import { assert, attach } from '@facts-kit/facts-sdk';
+import { assert, attach, getAssets, hasFactMarket } from '@facts-kit/facts-sdk';
+
+// hasFactMarket
+// returns { tx: undefined, link: undefined } if no fact market exists.
+const factMarket = await hasFactMarket(
+  'cbOtLP1GPOgFQgQxQVXiM-fV2rAC1H-QW4b9dJkRVgs'
+); // {tx: "<tx>", "link": "<link>"}
+
+// getAssets
+const factsets = getAssets();
 
 // attach
 const factMarket = await attach({
