@@ -14,7 +14,6 @@ export default defineConfig({
       tsConfigFilePath: join(__dirname, 'tsconfig.lib.json'),
       skipDiagnostics: true,
     }),
-
     viteTsConfigPaths({
       root: '../../',
     }),
