@@ -5,6 +5,7 @@ import {
 } from '@facts-kit/contract-kit';
 import { getBundlrClient } from '../common/bundlr';
 import { getWarpFactory, register } from '../common/warp';
+import { connectArweaveWallet } from '../helpers/connect-wallet';
 import { getAns110Tags } from '../helpers/get-ans110-tags';
 import { FACT_MARKET_SRC, getPermafactsTags } from '../helpers/get-pf-tags';
 import { getSmartweaveTags } from '../helpers/get-smartweave-tags';
@@ -125,11 +126,12 @@ async function deployWithArweaveWallet(
   tx.addTag('Protocol-Name', 'Facts');
 
   if (!wallet) throw new Error('Unable to find arweave wallet.');
+  /**
+   * URGENT!
+   * Move this out of here because it will be used in multiple places
+   */
   if (!useConnectedWallet) {
-    await wallet.disconnect();
-    await wallet.connect(['ACCESS_ADDRESS', 'SIGN_TRANSACTION', 'DISPATCH'], {
-      name: 'facts-sdk',
-    });
+    await connectArweaveWallet(wallet);
   }
 
   const creator = await wallet.getActiveAddress();
