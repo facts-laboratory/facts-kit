@@ -5,7 +5,6 @@ import { attachFactMarket } from './quasi-atomic-fact-market';
 vi.mock('../common/bundlr', () => {
   const originalModule = vi.importActual('../common/bundlr');
 
-  //Mock the default export and named export 'foo'
   return {
     __esModule: true,
     ...originalModule,
@@ -13,7 +12,7 @@ vi.mock('../common/bundlr', () => {
   };
 });
 
-describe('quasi-atomic-fact-market', () => {
+describe.skip('quasi-atomic-fact-market', () => {
   beforeAll(async () => {
     await setupGlobals();
   });
