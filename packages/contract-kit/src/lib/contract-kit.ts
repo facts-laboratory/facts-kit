@@ -321,8 +321,8 @@ export function addTags(
   return tags;
 }
 
-export async function fetchTx(tx: string) {
-  const response = await fetch(getUrl(), {
+export async function fetchTxById(tx: string) {
+  const response = await fetch(getGraphqlUrl(), {
     headers: {
       accept: '*/*',
       'accept-language': 'en-US,en;q=0.8',
@@ -349,7 +349,7 @@ export function getEdges(res: any) {
  * @param {Config} config
  * @return {*}  {string}
  */
-function getUrl() {
+export function getGraphqlUrl() {
   return `https://arweave.net/graphql`;
 }
 export function parseQuery(queryString: string) {
