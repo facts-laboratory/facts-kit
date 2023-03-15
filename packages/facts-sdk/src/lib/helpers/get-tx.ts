@@ -12,7 +12,7 @@ import { Config } from 'arweave/node/common';
  */
 export async function getTx(tx: string): Promise<Transaction> {
   const arweave = getArweave();
-  const output = await fetchTx(tx, arweave.getConfig());
+  const output = await fetchTxById(tx, arweave.getConfig());
   return output;
 }
 
@@ -24,7 +24,7 @@ export async function getTx(tx: string): Promise<Transaction> {
  * @param {Config} config
  * @return {*}  {Promise<Transaction>}
  */
-async function fetchTx(tx: string, config: Config): Promise<Transaction> {
+async function fetchTxById(tx: string, config: Config): Promise<Transaction> {
   return fetch(getUrl(config), {
     headers: {
       accept: '*/*',
