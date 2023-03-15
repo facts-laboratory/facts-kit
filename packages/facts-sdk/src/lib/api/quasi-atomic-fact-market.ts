@@ -18,6 +18,7 @@ export interface DeployFactMarketInput {
   attachTo: string;
   rebutTx?: string;
   use?: Use;
+  useConnectedWallet?: boolean;
   position: 'support' | 'oppose';
 }
 
@@ -111,7 +112,7 @@ async function deployWithArweaveWallet(
   input: DeployFactMarketInput
 ): Promise<string> {
   const wallet = getArweaveWallet();
-  const { tags, attachTo, rebutTx, position } = input;
+  const { tags, attachTo, rebutTx, position, useConnectedWallet } = input;
 
   const arweave = getArweave();
   const tx = await arweave.createTransaction({
@@ -124,10 +125,13 @@ async function deployWithArweaveWallet(
   tx.addTag('Protocol-Name', 'Facts');
 
   if (!wallet) throw new Error('Unable to find arweave wallet.');
-  await wallet.disconnect();
-  await wallet.connect(['ACCESS_ADDRESS', 'SIGN_TRANSACTION', 'DISPATCH'], {
-    name: 'facts-sdk',
-  });
+  if (!useConnectedWallet) {
+    await wallet.disconnect();
+    await wallet.connect(['ACCESS_ADDRESS', 'SIGN_TRANSACTION', 'DISPATCH'], {
+      name: 'facts-sdk',
+    });
+  }
+
   const creator = await wallet.getActiveAddress();
   tx.addTag(
     'Init-State',
@@ -150,6 +154,7 @@ export interface AttachFactMarketInput {
   rebutTx?: string;
   use?: Use;
   position: 'support' | 'oppose';
+  useConnectedWallet?: boolean;
 }
 export async function attachFactMarket(
   input: AttachFactMarketInput
