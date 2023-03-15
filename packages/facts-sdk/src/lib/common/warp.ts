@@ -3,15 +3,10 @@ import Transaction from 'arweave/node/lib/transaction';
 const WARP_GATEWAY = 'https://gateway.warp.cc';
 
 export function getWarpFactory() {
-  // if (process?.env['ENVIRONMENT'] === 'test') {
-  //   console.log('TEST ENVIRONMENT');
-  //   return (globalThis as any)?.warp.WarpFactory.forMainnet();
-  // }
-  // Makes sure to not overwrite warp if it already exists
-  if ((window as any)?.warp)
-    return (window as any)?.warp.WarpFactory.forMainnet().use(
-      new DeployPlugin()
-    );
+  if (process?.env['IS_LOCAL'] === 'true') {
+    return (globalThis as any)?.warp.WarpFactory.forMainnet();
+  }
+
   return fetch(
     'https://5t6kvshi7ih6e572itxnml4tlxw6qzakb3fpw67ibjcyuvfp6poq.arweave.net/7PyqyOj6D-J3-kTu1i-TXe3oZAoOyvt76ApFilSv890/warp.js'
   )
