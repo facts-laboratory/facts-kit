@@ -15,7 +15,10 @@ export async function hasFactMarket(
   tx: string
 ): Promise<{ tx?: string; link?: string }> {
   return fetchAttachedFactMarket(tx)
-    .then((f: any) => ({ tx: f.id, link: getFactsLink(f.id) }))
+    .then((f: any) => ({
+      tx: f?.id,
+      link: f?.id ? getFactsLink(f.id) : undefined,
+    }))
     .catch((e: any) => {
       console.log(e);
       return {
