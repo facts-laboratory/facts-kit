@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "nx": "nx",
+    "version": "npm run nx -- run workspace:version --releaseAs=${RELEASE_AS}",
     "install:ngx-deploy-npm": "nx generate ngx-deploy-npm:install",
     "fund": "bundlr fund 500000000000 -h https://node2.bundlr.network -w ${PATH_TO_WALLET} -c arweave",
     "balance": "bundlr balance ${WALLET} -h https://node2.bundlr.network -c arweave",
