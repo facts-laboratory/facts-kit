@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.0](https://github.com/permafacts/facts-kit/compare/contract-kit-0.1.0...contract-kit-0.2.0) (2023-03-17)
+
 ## 0.1.0 (2023-03-17)
 
 
