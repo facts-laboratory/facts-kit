@@ -23,6 +23,12 @@ export interface DeployFactMarketInput {
   position: 'support' | 'oppose';
 }
 
+/**
+ *
+ * @author @mogulx_operates
+ * @param {DeployFactMarketInput} input
+ * @return {*}  {Promise<string>}
+ */
 async function deployFactMarket(input: DeployFactMarketInput): Promise<string> {
   const { use } = input;
   switch (use) {
@@ -38,6 +44,12 @@ async function deployFactMarket(input: DeployFactMarketInput): Promise<string> {
   }
 }
 
+/**
+ *
+ * @author mogulx_operates
+ * @param {DeployFactMarketInput} input
+ * @return {*}
+ */
 async function deployWithBundlr(input: DeployFactMarketInput) {
   const { tags, rebutTx, attachTo, position } = input;
   const newTags = [
@@ -70,6 +82,12 @@ async function deployWithBundlr(input: DeployFactMarketInput) {
   await register(tx.id);
   return tx.id;
 }
+
+/**
+ * @author mogulx_operates
+ * @param {DeployFactMarketInput} input
+ * @return {*}
+ */
 async function deployWithWarp(input: DeployFactMarketInput) {
   const { tags, rebutTx, attachTo, position } = input;
 
