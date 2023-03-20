@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "nx": "nx",
-    "generate:lib": "nx generate @nrwl/js:library ${NAME} --unitTestRunner=vitest --bundler=swc --publishable --importPath=@facts-kit/${NAME} --compiler=swc && npm run setup-typedoc",
+    "generate:lib": "npm run generate:js && npm run setup-typedoc",
+    "generate:js": "nx generate @nrwl/js:library ${NAME} --unitTestRunner=vitest --bundler=swc --publishable --importPath=@facts-kit/${NAME} --compiler=swc",
     "setup-typedoc": "nx generate @enio.ai/typedoc:config ${NAME} && npm run update-typedoc-branch",
     "update-typedoc-branch": "node ./tools/scripts/setup-typedoc-config.mjs ${NAME}",
     "upgrade": "nx migrate latest && nx migrate --run-migrations",
