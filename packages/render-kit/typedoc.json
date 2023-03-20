@@ -30,7 +30,7 @@
   "excludeTags": [],
   "cname": "",
   "sourceLinkTemplate": "",
-  "gitRevision": "develop",
+  "gitRevision": "main",
   "gitRemote": "origin",
   "htmlLang": "en",
   "githubPages": true,
@@ -39,7 +39,12 @@
   "searchInComments": false,
   "cleanOutputDir": true,
   "titleLink": "",
-  "navigationLinks": {},
+  "navigationLinks": {
+    "github": "https://github.com/permafacts/ar-kit", 
+    "dapp": "https://facts.g8way.io",
+    "twitter": "https://twitter.com/permafacts",
+    "discord": "https://discord.com/invite/uGg8VAvqU7"
+  },
   "sidebarLinks": {},
   "commentStyle": "all",
   "categorizeByGroup": true,
