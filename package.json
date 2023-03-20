@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "nx": "nx",
-    "generate:lib": "nx generate @nrwl/js:library ${NAME} --unitTestRunner=vitest --bundler=swc --publishable --importPath=@facts-kit/${NAME} --compiler=swc",
+    "generate:lib": "nx generate @nrwl/js:library ${NAME} --unitTestRunner=vitest --bundler=swc --publishable --importPath=@facts-kit/${NAME} --compiler=swc && npm run setup-typedoc",
+    "setup-typedoc": "nx generate @enio.ai/typedoc:config ${NAME}",
     "upgrade": "nx migrate latest && nx migrate --run-migrations",
     "install:ngx-deploy-npm": "nx generate ngx-deploy-npm:install",
     "fund": "bundlr fund 500000000000 -h https://node2.bundlr.network -w ${PATH_TO_WALLET} -c arweave",
