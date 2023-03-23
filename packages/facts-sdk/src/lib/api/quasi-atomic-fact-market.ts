@@ -5,14 +5,13 @@ import {
 } from '@facts-kit/contract-kit';
 import { getBundlrClient } from '../common/bundlr';
 import { getWarpFactory, register } from '../common/warp';
+import { Use } from '../faces/assert';
 import { connectArweaveWallet } from '../helpers/connect-wallet';
 import { getAns110Tags } from '../helpers/get-ans110-tags';
 import { FACT_MARKET_SRC, getPermafactsTags } from '../helpers/get-pf-tags';
 import { getSmartweaveTags } from '../helpers/get-smartweave-tags';
 import { getTx } from '../helpers/get-tx';
 import { initialState } from './interface';
-
-export type Use = 'bundlr' | 'warp' | 'arweaveWallet';
 
 export interface DeployFactMarketInput {
   tags: { name: string; value: string }[];

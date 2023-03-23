@@ -5,11 +5,10 @@ import {
 } from '@facts-kit/contract-kit';
 import { getBundlrClient } from '../common/bundlr';
 import { getWarpFactory, register } from '../common/warp';
+import { DeployAtomicFactMarketInput, Use } from '../faces/assert';
 import { FACT_MARKET_SRC, getPermafactsTags } from '../helpers/get-pf-tags';
 import { getSmartweaveTags } from '../helpers/get-smartweave-tags';
 import { initialState } from './interface';
-
-export type Use = 'bundlr' | 'warp' | 'arweaveWallet';
 
 export interface DeployFactMarketInput {
   tags: { name: string; value: string }[];
@@ -147,13 +146,7 @@ export interface ANS110Tags {
   title: string;
   description: string;
 }
-export interface DeployAtomicFactMarketInput {
-  rebutTx?: string;
-  use?: Use;
-  position: 'support' | 'oppose';
-  tags: ANS110Tags;
-  data: any;
-}
+
 export async function deployAtomicFactMarket(
   input: DeployAtomicFactMarketInput
 ): Promise<{ tx: string } | { error: string }> {

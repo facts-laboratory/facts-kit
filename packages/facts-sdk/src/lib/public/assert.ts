@@ -1,5 +1,5 @@
+import { DeployAtomicFactMarketInput } from '../faces';
 import { atomicFactMarket } from './../api';
-import { DeployAtomicFactMarketInput } from './../api/atomic-fact-market';
 
 /**
  * Deploys a new assertion with fact markets.
