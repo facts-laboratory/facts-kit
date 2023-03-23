@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.3.2](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.3.1...facts-sdk-0.3.2) (2023-03-23)
+
 ### [0.3.1](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.3.0...facts-sdk-0.3.1) (2023-03-23)
 
 
