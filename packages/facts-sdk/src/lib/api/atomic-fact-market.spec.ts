@@ -13,7 +13,7 @@ vi.mock('../common/bundlr', () => {
   };
 });
 
-describe.skip('atomic-fact-market', () => {
+describe('atomic-fact-market', () => {
   beforeAll(async () => {
     await setupGlobals();
   });
