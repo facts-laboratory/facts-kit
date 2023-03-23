@@ -32,6 +32,13 @@
         "access": "public"
       }
     },
+    "deploy:wp": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public",
+        "packageVersion": "0.3.1-wp"
+      }
+    },
     "typedoc": {
       "executor": "@enio.ai/typedoc:typedoc",
       "outputs": ["docs/packages/facts-sdk"],
