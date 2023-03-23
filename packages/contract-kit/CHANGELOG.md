@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.3.1](https://github.com/permafacts/facts-kit/compare/contract-kit-0.3.0...contract-kit-0.3.1) (2023-03-23)
+
+
+### Features
+
+* getTx (move to render-kit) ([72285fe](https://github.com/permafacts/facts-kit/commit/72285fef73b90a4e953532256ea0b0fc109ee8e2))
+
 ## [0.3.0](https://github.com/permafacts/facts-kit/compare/contract-kit-0.2.0...contract-kit-0.3.0) (2023-03-18)
 
 ## [0.2.0](https://github.com/permafacts/facts-kit/compare/contract-kit-0.1.0...contract-kit-0.2.0) (2023-03-17)
