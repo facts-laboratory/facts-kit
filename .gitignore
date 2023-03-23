@@ -39,4 +39,5 @@ testem.log
 Thumbs.db
 
 #Project Docs
+docs/packages/render-kit
 docs/packages/facts-sdk
