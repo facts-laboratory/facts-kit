@@ -20,7 +20,7 @@ export function calculatePriceBits(
   // Return the difference between the values of the antiderivative at x1 and x2
   // This calculates the "Area under the curve"
   // Calculates the "Definite Integral"
-  return Math.ceil(F(x2) - F(x1));
+  return F(x2) - F(x1);
 }
 
 /**

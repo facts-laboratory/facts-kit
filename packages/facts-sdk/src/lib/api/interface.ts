@@ -35,9 +35,9 @@ export interface BuyAction {
 export interface BuyInput {
   function: 'buy';
   positionType: 'support' | 'oppose';
-  qtyBar: number;
+  price: number;
   fee: number;
-  amountToMint: number;
+  qty: number;
   txId: string;
 }
 

@@ -25,9 +25,9 @@ export const atomicToBar = (atomic: any) =>
 export async function allow(
   amount: number,
   target: string,
-  arweave: Arweave,
   barContractId: string
 ) {
+  const arweave = getArweave();
   const tx = await arweave.createTransaction({
     data: Math.random().toString().slice(-4),
   });
