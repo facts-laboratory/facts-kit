@@ -31,6 +31,7 @@
     "@nrwl/workspace": "15.8.6",
     "@swc/cli": "~0.1.55",
     "@swc/core": "^1.2.173",
+    "@types/ramda": "0.28.23",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
     "@vitest/coverage-c8": "~0.25.8",
@@ -61,6 +62,7 @@
     "@swc/helpers": "~0.4.11",
     "arweave": "1.13.1",
     "bignumber.js": "^9.1.1",
+    "ramda": "0.28.0",
     "warp-contracts-plugin-deploy": "^1.0.0"
   }
 }
