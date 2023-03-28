@@ -1,7 +1,7 @@
 import { readState } from '@facts-kit/contract-kit';
 import { compose, values, sum } from 'ramda';
 
-import { BuyInput, State } from '../interface';
+import { BuyInput, State } from '../../faces/state';
 import { InteractionInput } from './interact';
 import {
   calculateFeeBits,
@@ -33,13 +33,18 @@ export function getTotalFactMarketSupply(state: State) {
 export async function getPrice(input: {
   funcInput: Partial<BuyInput>;
   contract: string;
-  positionType: 'support' | 'oppose';
   state?: State;
-}): Promise<InteractionInput> {
-  const { funcInput, contract, positionType, state } = input;
+}): Promise<{
+  funcInput: Partial<BuyInput>;
+  contract: string;
+  state?: State;
+}> {
+  const { funcInput, contract, state } = input;
+  const positionType = funcInput.positionType as 'support' | 'oppose';
   const qty = funcInput.qty || 0;
   if (qty < 1) throw new Error('Invalid quantity.');
   const newState = state || ((await readState(contract)) as State);
+  console.log('========= GETPRICE', JSON.stringify(newState));
   const supply = getSupply(getBalances(positionType, newState));
   const newQty = Math.floor(qty);
   const price = Math.ceil(calculatePriceBits(1, 1, supply, supply + newQty));

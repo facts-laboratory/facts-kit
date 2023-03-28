@@ -28,6 +28,8 @@ export async function allow(
   barContractId: string
 ) {
   const arweave = getArweave();
+
+  console.log('========== ALLOW');
   const tx = await arweave.createTransaction({
     data: Math.random().toString().slice(-4),
   });
@@ -46,23 +48,35 @@ export async function allow(
 
   await arweave.transactions.sign(tx);
 
-  return await writeInteraction(tx)
-    .then((_) => tx.id)
-    .then((x) => (console.log('allowTx: ', x), x));
+  const interaction = (await writeInteraction(tx)) as unknown as any;
+  console.log('============ INTERACTION', interaction);
+  return interaction.id;
 }
 
-function writeInteraction(tx: Transaction) {
-  return fetch(`${REDSTONE_GATEWAY}/gateway/sequencer/register`, {
-    method: 'POST',
-    body: JSON.stringify(tx),
-    headers: {
-      'Accept-Encoding': 'gzip, deflate, br',
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-  }).then((res) => (res.ok ? res.json() : Promise.reject(res)));
-}
+async function writeInteraction(tx: Transaction) {
+  console.log('============ WRITE INTERACTION');
+  const res = await fetch(
+    `https://gateway.warp.cc/gateway/sequencer/register`,
+    {
+      method: 'POST',
+      body: JSON.stringify(tx),
+      headers: {
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    }
+  );
 
+  console.log('WRITE STATUS', res.status);
+
+  if (res.ok) {
+    console.log('OKAY');
+    const data = await res.json();
+    return data;
+  }
+  return Promise.reject('Invalid response.');
+}
 // const REDSTONE_GATEWAY = 'https://gateway.redstone.finance'
 
 // export const isVouched = async (tx: string) => {
@@ -75,7 +89,25 @@ function writeInteraction(tx: Transaction) {
 
 export const readState = (contract: string) => {
   const CACHE = 'https://cache.permapages.app';
-  return fetch(`${CACHE}/${contract}`).then((res) => res.json());
+  console.log('=============== READ STATE');
+  return fetch(`${CACHE}/${contract}`)
+    .then((r) => {
+      console.log('WHAT THE FUCK');
+      console.log('READ STATUS', r.status);
+
+      if (r.ok) {
+        console.log('============= CHICKEN NUGGETS');
+        const data = r.json();
+        return data;
+      }
+      throw new Error('Fuck this');
+    })
+    .catch((e) => {
+      console.log('A FUCKING ERROR', e);
+    })
+    .finally(() => {
+      console.log('FINALLY');
+    });
 };
 
 export const getContent = (contract: string) => {
@@ -239,7 +271,7 @@ async function connect(name?: string, callback?: any) {
  * You can pass a custom config.
  *
  * [Test]{@link ./contract-kit.spec.ts}
- * @author mogulx_operates
+ * @author @jshaw-ar
  * @export
  * @param {({
  *   host: string;
@@ -276,7 +308,7 @@ export async function dispatch(tx: Transaction) {
 /**
  *
  *
- * @author mogulx_operates
+ * @author @jshaw-ar
  * @export
  * @return {*}  {Arweave}
  */
@@ -299,7 +331,7 @@ export function getBundlrClient(): any {
 /**
  * Adds tags to a transaction
  *
- * @author mogulx_operates
+ * @author @jshaw-ar
  * @export
  * @param {string} [category]
  * @param {string} [leadStatement]
@@ -345,7 +377,7 @@ export function getEdges(res: any) {
 /**
  * Creates the correct fetch url for gql using arweave config.
  *
- * @author mogulx_operates
+ * @author @jshaw-ar
  * @param {Config} config
  * @return {*}  {string}
  */

@@ -1,5 +1,5 @@
 /**
- * @author mogulx_operates
+ * @author @jshaw-ar
  * @export
  * @interface AssetsOutput
  */
@@ -12,7 +12,7 @@ export interface AssetsOutput {
 /**
  * @description Returns an object with links to logos on arweave
  *
- * @author mogulx_operates
+ * @author @jshaw-ar
  * @export
  * @return {*}  {AssetsOutput}
  */

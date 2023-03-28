@@ -5,7 +5,7 @@ import { Config } from 'arweave/node/common';
 /**
  * Gets arweave config and fetches a tx.
  *
- * @author mogulx_operates
+ * @author @jshaw-ar
  * @export
  * @param {string} tx
  * @return {*}  {Promise<Transaction>}
@@ -19,7 +19,7 @@ export async function getTx(tx: string): Promise<Transaction> {
 /**
  * Runs the fetch for the tx
  *
- * @author mogulx_operates
+ * @author @jshaw-ar
  * @param {string} tx
  * @param {Config} config
  * @return {*}  {Promise<Transaction>}
@@ -43,7 +43,7 @@ async function fetchTxById(tx: string, config: Config): Promise<Transaction> {
 /**
  * Pulls the node from the edge of the gql query response.
  *
- * @author mogulx_operates
+ * @author @jshaw-ar
  * @param {{ node: Transaction }} edge
  * @return {*}  {Transaction}
  */
@@ -54,7 +54,7 @@ function getNode(edge: { node: Transaction }): Transaction {
 /**
  * Pulls the edges out of the gql res.
  *
- * @author mogulx_operates
+ * @author @jshaw-ar
  * @param {{
  *   data: { transactions: { edges: { node: Transaction }[] } };
  * }} res
@@ -70,7 +70,7 @@ function getEdges(res: {
 /**
  * Creates the correct fetch url for gql using arweave config.
  *
- * @author mogulx_operates
+ * @author @jshaw-ar
  * @param {Config} config
  * @return {*}  {string}
  */

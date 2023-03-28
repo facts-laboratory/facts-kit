@@ -3,7 +3,7 @@ import Transaction from 'arweave/node/lib/transaction';
 
 import { getArweave } from '@facts-kit/contract-kit';
 
-import { BuyInput, SellInput } from '../interface';
+import { BuyInput, SellInput } from '../../faces/state';
 
 /**
  * @jshaw-ar
@@ -45,6 +45,7 @@ export interface InteractionInput {
  * @return {*}
  */
 export async function interact(input: InteractionInput) {
+  console.log('============ INTERACT', input);
   const fn = pipeP([createTx, addSmartweaveTags, signTx, writeInteraction]);
   return fn(input);
 }
@@ -52,7 +53,7 @@ export async function interact(input: InteractionInput) {
 /**
  * @description Creates the transaction
  *
- * @author mogulx_operates
+ * @author @jshaw-ar
  * @param {InteractionInput} interactionInput
  * @return {*}
  */
@@ -70,7 +71,7 @@ async function createTx(interactionInput: InteractionInput) {
  * @description Adds smartweave tags for the tx and any
  * additional tags that are passed to the function
  *
- * @author mogulx_operates
+ * @author @jshaw-ar
  * @param {{
  *   interactionInput: InteractionInput;
  *   tx: Transaction;
@@ -105,7 +106,7 @@ function addSmartweaveTags(input: {
 /**
  * @description Just signs it and returns it.
  *
- * @author mogulx_operates
+ * @author @jshaw-ar
  * @param {Transaction} tx
  * @return {*}
  */
@@ -118,24 +119,27 @@ function signTx(tx: Transaction) {
 /**
  * @description Posts the tx to the warp sequencer.
  *
- * @author mogulx_operates
+ * @author @jshaw-ar
  * @param {Transaction} tx
  * @return {*}
  */
-function writeInteraction(tx: Transaction) {
-  // TODO: MOVE TO INDEXER
-  // NEEDS TO USE AN ALGORITH TO "RANK" THE ASSERTION
-  /**
-   * 1. Calculate a "Score" based on oppositionBalances and balances
-   * 2. Update position / order in database based on score
-   */
-  return fetch(`${REDSTONE_GATEWAY}/gateway/sequencer/register`, {
-    method: 'POST',
-    body: JSON.stringify(tx),
-    headers: {
-      'Accept-Encoding': 'gzip, deflate, br',
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-  }).then((res) => (res.ok ? res.json() : Promise.reject(res)));
+async function writeInteraction(tx: Transaction) {
+  const res = await fetch(
+    `https://gateway.warp.cc/gateway/sequencer/register`,
+    {
+      method: 'POST',
+      body: JSON.stringify(tx),
+      headers: {
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    }
+  );
+
+  if (res.ok) {
+    const data = await res.json();
+    return data;
+  }
+  return Promise.reject('Invalid response.');
 }

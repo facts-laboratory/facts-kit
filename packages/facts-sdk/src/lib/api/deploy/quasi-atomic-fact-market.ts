@@ -3,21 +3,31 @@ import {
   getArweave,
   getArweaveWallet,
 } from '@facts-kit/contract-kit';
-import { getBundlrClient } from '../common/bundlr';
-import { getWarpFactory, register } from '../common/warp';
-import { DeployAtomicFactMarketInput, Use } from '../faces/assert';
-import { FACT_MARKET_SRC, getPermafactsTags } from '../helpers/get-pf-tags';
-import { getSmartweaveTags } from '../helpers/get-smartweave-tags';
-import { initialState } from './interface';
+import { getBundlrClient } from '../../common/bundlr';
+import { getWarpFactory, register } from '../../common/warp';
+import { Use } from '../../faces/assert';
+import { connectArweaveWallet } from '../../helpers/connect-wallet';
+import { getAns110Tags } from '../../helpers/get-ans110-tags';
+import { FACT_MARKET_SRC, getPermafactsTags } from '../../helpers/get-pf-tags';
+import { getSmartweaveTags } from '../../helpers/get-smartweave-tags';
+import { getTx } from '../../helpers/get-tx';
+import { initialState } from '../../faces';
 
 export interface DeployFactMarketInput {
   tags: { name: string; value: string }[];
+  attachTo: string;
   rebutTx?: string;
   use?: Use;
+  useConnectedWallet?: boolean;
   position: 'support' | 'oppose';
-  data: any;
 }
 
+/**
+ *
+ * @author @mogulx_operates
+ * @param {DeployFactMarketInput} input
+ * @return {*}  {Promise<string>}
+ */
 async function deployFactMarket(input: DeployFactMarketInput): Promise<string> {
   const { use } = input;
   switch (use) {
@@ -33,10 +43,17 @@ async function deployFactMarket(input: DeployFactMarketInput): Promise<string> {
   }
 }
 
+/**
+ *
+ * @author @jshaw-ar
+ * @param {DeployFactMarketInput} input
+ * @return {*}
+ */
 async function deployWithBundlr(input: DeployFactMarketInput) {
-  const { tags, rebutTx, position } = input;
+  const { tags, rebutTx, attachTo, position } = input;
   const newTags = [
     ...tags,
+    { name: 'Data-Source', value: attachTo },
     { name: 'Protocol-Name', value: 'Facts' },
     { name: 'Render-With', value: `${'facts-card-renderer'}` },
     {
@@ -64,11 +81,18 @@ async function deployWithBundlr(input: DeployFactMarketInput) {
   await register(tx.id);
   return tx.id;
 }
+
+/**
+ * @author @jshaw-ar
+ * @param {DeployFactMarketInput} input
+ * @return {*}
+ */
 async function deployWithWarp(input: DeployFactMarketInput) {
-  const { tags, rebutTx, position } = input;
+  const { tags, rebutTx, attachTo, position } = input;
 
   const newTags = [
     ...tags,
+    { name: 'Data-Source', value: attachTo },
     { name: 'Protocol-Name', value: 'Facts' },
     { name: 'Render-With', value: `${'facts-card-renderer'}` },
   ];
@@ -106,23 +130,27 @@ async function deployWithArweaveWallet(
   input: DeployFactMarketInput
 ): Promise<string> {
   const wallet = getArweaveWallet();
-  const { tags, rebutTx, position, data } = input;
+  const { tags, attachTo, rebutTx, position, useConnectedWallet } = input;
 
   const arweave = getArweave();
   const tx = await arweave.createTransaction({
-    data: JSON.stringify(data),
+    data: JSON.stringify({ facts: 'sdk' }),
   });
   tags.forEach((t) => tx.addTag(t.name, t.value));
   if (rebutTx) tx.addTag('Fact-Rebuts', rebutTx);
   tx.addTag('Render-With', `${'facts-card-renderer'}`);
-  // tx.addTag('Data-Source', attachTo);
+  tx.addTag('Data-Source', attachTo);
   tx.addTag('Protocol-Name', 'Facts');
 
   if (!wallet) throw new Error('Unable to find arweave wallet.');
-  await wallet.disconnect();
-  await wallet.connect(['ACCESS_ADDRESS', 'SIGN_TRANSACTION', 'DISPATCH'], {
-    name: 'facts-sdk',
-  });
+  /**
+   * URGENT!
+   * Move this out of here because it will be used in multiple places
+   */
+  if (!useConnectedWallet) {
+    await connectArweaveWallet(wallet);
+  }
+
   const creator = await wallet.getActiveAddress();
   tx.addTag(
     'Init-State',
@@ -140,28 +168,24 @@ async function deployWithArweaveWallet(
   return register(id).then((tx) => tx);
 }
 
-export interface ANS110Tags {
-  topics?: string[];
-  type: string;
-  title: string;
-  description: string;
+export interface AttachFactMarketInput {
+  tx: string;
+  rebutTx?: string;
+  use?: Use;
+  position: 'support' | 'oppose';
+  useConnectedWallet?: boolean;
 }
-
-export async function deployAtomicFactMarket(
-  input: DeployAtomicFactMarketInput
+export async function attachFactMarket(
+  input: AttachFactMarketInput
 ): Promise<{ tx: string } | { error: string }> {
-  const { tags, data, position, rebutTx, use } = input;
   try {
+    const { tx } = input;
+    const transaction = await getTx(tx);
+    const ans110tags = getAns110Tags(transaction?.tags);
     const factMarketTx = await deployFactMarket({
-      tags: [
-        ...getAns110TagsFromUser(tags),
-        ...getSmartweaveTags(),
-        ...getPermafactsTags(),
-      ],
-      data,
-      position,
-      rebutTx,
-      use,
+      tags: [...ans110tags, ...getSmartweaveTags(), ...getPermafactsTags()],
+      attachTo: tx,
+      ...input,
     });
     return { tx: factMarketTx };
   } catch (e: any) {
@@ -170,19 +194,4 @@ export async function deployAtomicFactMarket(
       error: e.message,
     };
   }
-}
-
-function getAns110TagsFromUser(tags: ANS110Tags) {
-  const topics: { name: string; value: string }[] = [];
-  if (tags.topics) {
-    tags?.topics?.forEach((t) => {
-      topics.push({ name: `Topic:${t}`, value: t });
-    });
-  }
-  return [
-    { name: 'Type', value: tags.type },
-    { name: 'Title', value: tags.title },
-    { name: 'Description', value: tags.description },
-    ...topics,
-  ];
 }

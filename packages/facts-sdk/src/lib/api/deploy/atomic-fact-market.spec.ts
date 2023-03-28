@@ -1,5 +1,5 @@
-import { setupGlobals } from '../mock/setup-globals';
-import { setupBundlr } from '../mock/setup-bundlr';
+import { setupGlobals } from '../../mock/setup-globals';
+import { setupBundlr } from '../../mock/setup-bundlr';
 import { deployAtomicFactMarket } from './atomic-fact-market';
 
 vi.mock('../common/bundlr', () => {
