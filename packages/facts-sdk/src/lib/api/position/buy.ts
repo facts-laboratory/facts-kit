@@ -10,13 +10,7 @@ export async function buy(input: {
   contract: string;
   state?: State;
 }) {
-  console.log('STARTING BUY PIPE');
-  const fn = pipeP([
-    getPrice,
-    payFactMarket,
-    waitForSec,
-    getSequencerTx /*interact*/,
-  ]);
+  const fn = pipeP([getPrice, payFactMarket, interact]);
   return fn(input);
 }
 
@@ -25,8 +19,7 @@ export const waitForSec = async (input: {
   contract: string;
   state?: State;
 }) => {
-  console.log('WAIT A MINUTE', input.funcInput.txId);
-  return new Promise((res) => setTimeout(() => res(input), 10000));
+  return new Promise((res) => setTimeout(() => res(input), 5500));
 };
 
 export const getSequencerTx = async (input: {
@@ -36,7 +29,8 @@ export const getSequencerTx = async (input: {
 }) => {
   const { funcInput } = input;
   const { txId } = funcInput;
-  console.log('FETCH SEQUENCER ID', txId);
+  console.log('🐘🐘🐘🐘🐘 getSequencerTx', txId);
+
   const res = await fetch('https://arweave.net/graphql', {
     headers: {
       accept: '*/*',
@@ -67,7 +61,6 @@ export const getSequencerTx = async (input: {
   const tx = getEdges(data)[0]?.node?.tags?.filter(
     (t: { name: string; value: string }) => t.name === 'Sequencer-Tx-Id'
   )[0]?.value;
-  console.log('TX', tx);
   if (!tx) throw new Error('Error fetching sequencer tx.');
   return {
     ...input,

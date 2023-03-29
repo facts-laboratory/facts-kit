@@ -7,7 +7,6 @@ export async function buy(input: {
   state?: State;
 }) {
   const { contract, qty, positionType, state } = input;
-  console.log('RUNNING BUY');
   return await position.buy({
     funcInput: {
       positionType,

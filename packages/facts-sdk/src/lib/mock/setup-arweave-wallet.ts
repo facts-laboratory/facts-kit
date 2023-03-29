@@ -1,10 +1,27 @@
+import Arweave from 'arweave';
+import fs from 'fs';
 import Transaction from 'arweave/node/lib/transaction';
 
 export async function setupArweaveWallet() {
+  const jwk = JSON.parse(
+    fs.readFileSync(process.env['PATH_TO_WALLET'] || '').toString()
+  );
+
+  const arweave = Arweave.init({
+    host: 'arweave.net',
+    port: 443,
+    protocol: 'https',
+    timeout: 60000,
+  });
+
   const arweaveWallet = {
     dispatch: async (tx: Transaction) => {
       console.log(`dispatch -- ${JSON.stringify(tx.last_tx)}`);
       return { id: `<tx-id>` };
+    },
+    sign: async (tx: Transaction) => {
+      console.log('TX SIGNING', tx);
+      return await arweave.transactions.sign(tx, jwk);
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     connect: async (permissions: any, obj: any) => {

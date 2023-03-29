@@ -5,7 +5,6 @@ import Transaction from 'arweave/node/lib/transaction';
 import fs from 'fs';
 
 export function setupArweave() {
-  console.log('============ SETTING UP ARWEAVE');
   if (!process.env['PATH_TO_WALLET'])
     throw new Error(
       'Set the env var PATH_TO_WALLET to ~/path/to/your/wallet.json'
@@ -26,7 +25,6 @@ export function setupArweave() {
   (globalThis as any).Arweave = {
     init: (input: any) => ({
       createTransaction: async (input: any) => {
-        console.log('CREATING', input);
         const tx = await await arweave.createTransaction(
           {
             data: Math.random().toString().slice(-4),
@@ -35,12 +33,10 @@ export function setupArweave() {
           },
           jwk
         );
-        console.log('CREATED TX');
         return tx;
       },
       transactions: {
         sign: async (tx: Transaction) => {
-          console.log('SIGNING');
           return await arweave.transactions.sign(tx, jwk);
         },
       },

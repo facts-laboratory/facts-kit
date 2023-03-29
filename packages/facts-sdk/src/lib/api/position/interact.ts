@@ -25,7 +25,7 @@ export const pipeP = pipeWith((f, res) => {
   return f(res);
 });
 
-const REDSTONE_GATEWAY = 'https://gateway.redstone.finance';
+const WARP_SEQUENCER = 'https://gateway.redstone.finance';
 
 /**
  * @author @jshaw-ar
@@ -65,117 +65,34 @@ export async function warpWriteInteraction(input: InteractionInput) {
       ...funcInput,
     });
 
-  console.log('INTERACTION', interaction);
   return interaction;
 }
-/**
- * @description Creates the transaction
- *
- * @author @jshaw-ar
- * @param {InteractionInput} interactionInput
- * @return {*}
- */
-async function createTx(interactionInput: InteractionInput) {
-  console.log('🐘🐘🐘🐘🐘 Interact: 1 (createTx)');
-  const arweave = getArweave();
-  const tx = await arweave.createTransaction({
-    data: 'facts-sdk',
-    // reward: "72600854",
-    // last_tx: "p7vc1iSP6bvH_fCeUFa9LqoV5qiyW-jdEKouAT0XMoSwrNraB9mgpi29Q10waEpO",
-  });
-  return { tx, interactionInput: interactionInput };
-}
 
-/**
- * @description Adds smartweave tags for the tx and any
- * additional tags that are passed to the function
- *
- * @author @jshaw-ar
- * @param {{
- *   interactionInput: InteractionInput;
- *   tx: Transaction;
- * }} input
- * @return {*}  {{
- *   tx: Transaction;
- *   input: InteractionInput;
- * }}
- */
-function addSmartweaveTags(input: {
-  interactionInput: InteractionInput;
-  tx: Transaction;
-}): Transaction {
-  console.log(
-    '🐘🐘🐘🐘🐘 Interact: 2 (addSmartweaveTags)',
-    input.interactionInput
-  );
+export async function warpAllow(
+  amount: number,
+  target: string,
+  barContractId: string
+) {
+  const CACHE = 'https://cache.permapages.app';
+  const warp = getWarpFactory() as Warp;
 
-  const { tx, interactionInput } = input;
-  const { contract, tags, funcInput } = interactionInput;
-  console.log('func Input', input.interactionInput.funcInput);
-  tx.addTag('App-Name', 'SmartWeaveAction');
-  tx.addTag('App-Version', '0.3.0');
-  tx.addTag('Contract', contract);
-  tx.addTag('Input', JSON.stringify(funcInput));
-  tx.addTag('SDK', 'Warp');
-
-  if (tags)
-    tags.map((t) => {
-      tx.addTag(t.name, t.value);
+  console.log('WHEN DO WE TX SIGN?');
+  await warp
+    .contract(barContractId)
+    .syncState(CACHE + '/contract', { validity: true });
+  console.log('TEST');
+  const contract = warp
+    .contract(barContractId)
+    .connect('use_wallet')
+    .setEvaluationOptions({
+      internalWrites: true,
     });
-  console.log('TX BEFORE WRITE', tx);
-  return tx;
-}
-
-/**
- * @description Just signs it and returns it.
- *
- * @author @jshaw-ar
- * @param {Transaction} tx
- * @return {*}
- */
-function signTx(tx: Transaction) {
-  console.log('🐘🐘🐘🐘🐘 Interact: 3 (signTx)');
-  const arweave = getArweave();
-  arweave.transactions.sign(tx);
-  return tx;
-}
-
-/**
- * @description Posts the tx to the warp sequencer.
- *
- * @author @jshaw-ar
- * @param {Transaction} tx
- * @return {*}
- */
-async function writeInteraction(tx: Transaction) {
-  console.log('🐘🐘🐘🐘🐘 Interact: 4 (writeInteraction FINAL)');
-  const REDSTONE_GATEWAY = 'https://gateway.redstone.finance';
-
-  const res = await fetch(`${REDSTONE_GATEWAY}/gateway/sequencer/register`, {
-    method: 'POST',
-    body: JSON.stringify(tx),
-    headers: {
-      'Accept-Encoding': 'gzip, deflate, br',
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
+  console.log('=================== DO WE GET HERE?');
+  const action = await contract.writeInteraction({
+    function: 'allow',
+    target,
+    qty: amount,
   });
-
-  if (!res.ok) {
-    console.log('Bad response:', res.status, res.statusText);
-    throw new Error(res.statusText);
-  }
-
-  const data = await res.json();
-  if (!data) {
-    console.log(
-      'Invalid data received.',
-      res.status,
-      res.statusText,
-      JSON.stringify(data)
-    );
-
-    throw new Error('Invalid data received.');
-  }
-  return data;
+  console.log('Written', action);
+  return 'TEST';
 }

@@ -11,7 +11,6 @@ describe.skip('calculate price', () => {
       z: 3,
     };
     const supply = getSupply(balances);
-    console.log('======== TEST');
     expect(supply).toEqual(6);
   });
 });

@@ -33,15 +33,14 @@ export async function allow(
 
   await arweave.transactions.sign(tx);
   const interaction = (await writeInteraction(tx)) as unknown as any;
-  console.log('ALLOW INTERACTION TX', interaction.id);
   return interaction.id;
 }
 
 export const writeInteraction = async (tx: Transaction) => {
   console.log('🐘🐘🐘🐘🐘 Step 4 (writeInteraction)');
-  const REDSTONE_GATEWAY = 'https://gateway.redstone.finance';
+  const WARP_SEQUENCER = 'https://gateway.redstone.finance';
 
-  const res = await fetch(`${REDSTONE_GATEWAY}/gateway/sequencer/register`, {
+  const res = await fetch(`${WARP_SEQUENCER}/gateway/sequencer/register`, {
     method: 'POST',
     body: JSON.stringify(tx),
     headers: {
@@ -67,7 +66,6 @@ export const writeInteraction = async (tx: Transaction) => {
 
     throw new Error('Invalid data received.');
   }
-  console.log('DATA', data);
   return data;
 };
 
@@ -142,7 +140,6 @@ export async function claim(
       txID: claim.txID,
       qty: claim.qty,
     };
-    console.log('INPUT', input);
     tx.addTag('Input', JSON.stringify(input));
     tx.addTag('SDK', 'Warp');
 
@@ -215,7 +212,6 @@ export async function transfer(
     target: target.trim(),
     qty: amount * 1000000,
   });
-  console.log('INPUT', input);
   tx.addTag('Input', input);
   tx.addTag('SDK', 'Warp');
 
