@@ -1,7 +1,11 @@
-import { FromSrcTxContractData } from 'warp-contracts';
+import warp, { FromSrcTxContractData } from 'warp-contracts';
 import { httpRegister } from '../common/warp';
 
 export function setupWarp() {
+  if (process.env['IS_LOCAL'] === 'true') {
+    (globalThis as any).warp = warp;
+    return;
+  }
   (globalThis as any).warp = {
     WarpFactory: {
       forMainnet: () => {

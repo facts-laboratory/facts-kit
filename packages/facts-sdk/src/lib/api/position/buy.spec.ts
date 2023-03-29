@@ -1,9 +1,10 @@
-describe.skip('calculate price', () => {
-  it('should calculate price', async () => {
+import { getSequencerTx } from './buy';
+
+describe.skip('buy', () => {
+  it('should get sequencer tx', async () => {
+    // const obj =  await getSequencerTx({
+    //   contract: ''
+    // })
     expect('facts-sdk').toEqual('facts-sdk');
-  });
-  it('should calculate fee', async () => {
-    const price = 100;
-    expect(price).toEqual(100);
   });
 });

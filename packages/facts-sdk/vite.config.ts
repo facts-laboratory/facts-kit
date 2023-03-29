@@ -46,12 +46,18 @@ export default defineConfig({
     },
   },
 
+  // DONT TOUCH THIS WITHOUT A REAL REASON!
   test: {
     globals: true,
     cache: {
       dir: '../../node_modules/.vitest',
     },
-    environment: 'jsdom',
+    environment: 'node',
     include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    teardownTimeout: 15000,
+    testTimeout: 15000,
+    hookTimeout: 10000,
+    useAtomics: true,
+    threads: false,
   },
 });

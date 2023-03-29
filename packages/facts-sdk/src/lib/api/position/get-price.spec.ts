@@ -1,8 +1,6 @@
 import { getSupply, getPrice } from './get-price';
 
 export const MOCK_STATE = `{"pf":0,"name":"Hello WordPress","pair":"VFr3Bk-uM-motpNNkkFg4lNW1BMmSfzqsVO551Ho4hA","price":1,"author":0,"evolve":null,"creator":"n-8SHNBiuu0AMQzpK1Aig843PFp5JkCyvT7H4TlJCzE","balances":{},"position":"support","canEvolve":true,"oppositionBalances":{}}`;
-// import this if your test uses fetch
-import 'isomorphic-fetch';
 
 describe.skip('calculate price', () => {
   it('should calculate price', () => {

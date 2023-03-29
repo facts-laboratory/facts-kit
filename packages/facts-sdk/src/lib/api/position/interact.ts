@@ -3,7 +3,9 @@ import Transaction from 'arweave/node/lib/transaction';
 
 import { getArweave } from '@facts-kit/contract-kit';
 
-import { BuyInput, SellInput } from '../../faces/state';
+import { BuyInput, SellInput, State } from '../../faces/state';
+import { getWarpFactory } from '../../common/warp';
+import { Warp } from 'warp-contracts';
 
 /**
  * @jshaw-ar
@@ -45,11 +47,27 @@ export interface InteractionInput {
  * @return {*}
  */
 export async function interact(input: InteractionInput) {
-  console.log('============ INTERACT', input);
-  const fn = pipeP([createTx, addSmartweaveTags, signTx, writeInteraction]);
+  console.log('===🐘🐘🐘🐘🐘 Step 4 (interact)', input);
+  const fn = pipeP([warpWriteInteraction]);
   return fn(input);
 }
 
+export async function warpWriteInteraction(input: InteractionInput) {
+  const { funcInput, contract } = input;
+  const warp = getWarpFactory() as Warp;
+  const interaction = await warp
+    .contract<State>(contract)
+    .connect('use_wallet')
+    .setEvaluationOptions({
+      internalWrites: true,
+    })
+    .writeInteraction({
+      ...funcInput,
+    });
+
+  console.log('INTERACTION', interaction);
+  return interaction;
+}
 /**
  * @description Creates the transaction
  *
@@ -58,13 +76,14 @@ export async function interact(input: InteractionInput) {
  * @return {*}
  */
 async function createTx(interactionInput: InteractionInput) {
+  console.log('🐘🐘🐘🐘🐘 Interact: 1 (createTx)');
   const arweave = getArweave();
   const tx = await arweave.createTransaction({
     data: 'facts-sdk',
     // reward: "72600854",
     // last_tx: "p7vc1iSP6bvH_fCeUFa9LqoV5qiyW-jdEKouAT0XMoSwrNraB9mgpi29Q10waEpO",
   });
-  return { tx, input: interactionInput };
+  return { tx, interactionInput: interactionInput };
 }
 
 /**
@@ -84,23 +103,27 @@ async function createTx(interactionInput: InteractionInput) {
 function addSmartweaveTags(input: {
   interactionInput: InteractionInput;
   tx: Transaction;
-}): {
-  tx: Transaction;
-  input: InteractionInput;
-} {
+}): Transaction {
+  console.log(
+    '🐘🐘🐘🐘🐘 Interact: 2 (addSmartweaveTags)',
+    input.interactionInput
+  );
+
   const { tx, interactionInput } = input;
-  const { contract, tags } = input.interactionInput;
+  const { contract, tags, funcInput } = interactionInput;
+  console.log('func Input', input.interactionInput.funcInput);
   tx.addTag('App-Name', 'SmartWeaveAction');
   tx.addTag('App-Version', '0.3.0');
   tx.addTag('Contract', contract);
-  tx.addTag('Input', JSON.stringify(input));
+  tx.addTag('Input', JSON.stringify(funcInput));
   tx.addTag('SDK', 'Warp');
 
   if (tags)
     tags.map((t) => {
       tx.addTag(t.name, t.value);
     });
-  return { tx, input: interactionInput };
+  console.log('TX BEFORE WRITE', tx);
+  return tx;
 }
 
 /**
@@ -111,6 +134,7 @@ function addSmartweaveTags(input: {
  * @return {*}
  */
 function signTx(tx: Transaction) {
+  console.log('🐘🐘🐘🐘🐘 Interact: 3 (signTx)');
   const arweave = getArweave();
   arweave.transactions.sign(tx);
   return tx;
@@ -124,22 +148,34 @@ function signTx(tx: Transaction) {
  * @return {*}
  */
 async function writeInteraction(tx: Transaction) {
-  const res = await fetch(
-    `https://gateway.warp.cc/gateway/sequencer/register`,
-    {
-      method: 'POST',
-      body: JSON.stringify(tx),
-      headers: {
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    }
-  );
+  console.log('🐘🐘🐘🐘🐘 Interact: 4 (writeInteraction FINAL)');
+  const REDSTONE_GATEWAY = 'https://gateway.redstone.finance';
 
-  if (res.ok) {
-    const data = await res.json();
-    return data;
+  const res = await fetch(`${REDSTONE_GATEWAY}/gateway/sequencer/register`, {
+    method: 'POST',
+    body: JSON.stringify(tx),
+    headers: {
+      'Accept-Encoding': 'gzip, deflate, br',
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+  });
+
+  if (!res.ok) {
+    console.log('Bad response:', res.status, res.statusText);
+    throw new Error(res.statusText);
   }
-  return Promise.reject('Invalid response.');
+
+  const data = await res.json();
+  if (!data) {
+    console.log(
+      'Invalid data received.',
+      res.status,
+      res.statusText,
+      JSON.stringify(data)
+    );
+
+    throw new Error('Invalid data received.');
+  }
+  return data;
 }

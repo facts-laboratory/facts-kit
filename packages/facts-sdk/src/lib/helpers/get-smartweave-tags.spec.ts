@@ -1,9 +1,6 @@
 import { getTx } from './get-tx';
 import Arweave from 'arweave';
 
-// import this if your test uses fetch
-import 'isomorphic-fetch';
-
 describe.skip('TODO: create a test if it is needed. i dont see a big reason on this one at this date.', () => {
   beforeAll(() => {
     // Setup so our arweave function can access Arweave in a node runtime.

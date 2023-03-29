@@ -1,8 +1,5 @@
 import { hasFactMarket } from './has-fact-market';
 
-// import this if your test uses fetch
-import 'isomorphic-fetch';
-
 describe.skip('has fact market', () => {
   it('should work', async () => {
     const factMarket = await hasFactMarket(

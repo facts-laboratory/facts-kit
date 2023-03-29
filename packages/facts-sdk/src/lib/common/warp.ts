@@ -1,10 +1,11 @@
 import { DeployPlugin } from 'warp-contracts-plugin-deploy';
 import Transaction from 'arweave/node/lib/transaction';
-const WARP_GATEWAY = 'https://gateway.warp.cc';
-
+const REDSTONE_GATEWAY = 'https://gateway.redstone.finance';
+import warp from 'warp-contracts';
 export function getWarpFactory() {
   if (process?.env['IS_LOCAL'] === 'true') {
-    return (globalThis as any)?.warp.WarpFactory.forMainnet();
+    console.log('YEP LOCAL');
+    return warp.WarpFactory.forMainnet();
   }
 
   return fetch(
@@ -63,7 +64,7 @@ export async function httpRegister(tx: string) {
 }
 
 export function writeInteraction(tx: Transaction) {
-  return fetch(`${WARP_GATEWAY}/gateway/sequencer/register`, {
+  return fetch(`${REDSTONE_GATEWAY}/gateway/sequencer/register`, {
     method: 'POST',
     body: JSON.stringify(tx),
     headers: {

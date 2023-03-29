@@ -14,7 +14,7 @@ export async function payFactMarket(input: {
   positionType: 'support' | 'oppose';
   state?: State;
 }> {
-  console.log('========= PAY FACT MARKET');
+  console.log('🐘🐘🐘🐘🐘 Step 3 payFactMarket');
   const { funcInput, contract } = input;
   const { fee, price } = funcInput;
   const newFee = fee || 0;
