@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.5.0](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.4.0...facts-sdk-0.5.0) (2023-03-30)
+
+
+### Features
+
+* getHost (`ramda` from tom) ([81f22f8](https://github.com/permafacts/facts-kit/commit/81f22f80306875075f0353a5581e7bb5f53cf8b3))
+
 ## [0.4.0](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.3.2...facts-sdk-0.4.0) (2023-03-30)
 
 
