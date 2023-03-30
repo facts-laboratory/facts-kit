@@ -8,7 +8,6 @@ describe.skip('read-state', () => {
   test('should calculate fee', async () => {
     const contract = 'gUyxs7pM-D15jBV64WYB-qOzwT8n-AzFmA5gjSA4kTs';
     const state = await newReadState(contract);
-    console.log('STATE', state);
     expect((state as any).canEvolve).toBeTruthy();
   });
 });

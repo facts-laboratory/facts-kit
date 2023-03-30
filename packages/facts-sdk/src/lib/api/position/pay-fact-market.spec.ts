@@ -16,7 +16,6 @@ describe.skip('pay-fact-market', () => {
       },
     });
 
-    console.log('============ OUTPUT', output);
     expect(output.funcInput?.txId?.length).toBe(43);
   });
 });

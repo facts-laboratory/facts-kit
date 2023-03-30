@@ -1,6 +1,6 @@
 import { compose, values, sum } from 'ramda';
 
-import { BuyInput, State } from '../../faces/state';
+import { BuyInput, SellInput, State } from '../../faces/state';
 import {
   calculateFeeBits,
   calculatePriceBits,
@@ -29,31 +29,29 @@ export function getTotalFactMarketSupply(state: State) {
  * @param {State} [state]
  * @return {*}
  */
-export async function getPrice(input: {
-  funcInput: Partial<BuyInput>;
+export async function getPrice<T>(input: {
+  funcInput: T;
   contract: string;
   state?: State;
+  positionType: 'support' | 'oppose';
+  qty: number;
 }): Promise<{
-  funcInput: Partial<BuyInput>;
+  funcInput: T;
   contract: string;
   state?: State;
 }> {
   console.log('🐘🐘🐘🐘🐘 Step 1 (getPrice)', JSON.stringify(input));
-  const { funcInput, contract, state } = input;
-  const positionType = funcInput.positionType as 'support' | 'oppose';
-  const qty = funcInput.qty || 0;
-  if (qty < 1) throw new Error('Invalid quantity.');
+  const { funcInput, contract, state, positionType, qty } = input;
+  if (!qty || qty < 1) throw new Error('Invalid quantity.');
 
   const newState = state || ((await newReadState(contract)) as State);
   const supply = getSupply(getBalances(positionType, newState));
-  const newQty = Math.floor(qty);
-  const price = Math.ceil(calculatePriceBits(1, 1, supply, supply + newQty));
+  const price = Math.ceil(calculatePriceBits(1, 1, supply, supply + qty));
 
   return {
     contract,
     funcInput: {
       ...funcInput,
-      qty: newQty,
       price,
       fee: calculateFeeBits(price),
     },
@@ -65,6 +63,7 @@ function getBalances(positionType: 'support' | 'oppose', state: State) {
 }
 
 export async function getReturns(
+  input: SellInput,
   contract: string,
   positionType: 'support' | 'oppose',
   qty: number,
@@ -77,6 +76,6 @@ export async function getReturns(
     Math.floor(calculatePriceBits(1, 1, supply, supply - newQty)) * -1;
 
   return {
-    receive: price,
+    receive: input.qty,
   };
 }

@@ -7,9 +7,7 @@ export async function getBundlrClient() {
     console.log('MetaMask not installed.');
     throw new Error(`Metamask isn't installed.`);
   } else {
-    console.log('ENABLING');
     await (window as any).ethereum.enable();
-    console.log('AFTER ENABLING');
     const bundlr = new Bundlr.default(
       'http://node2.bundlr.network',
       'matic',

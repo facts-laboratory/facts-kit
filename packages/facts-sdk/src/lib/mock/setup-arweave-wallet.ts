@@ -20,7 +20,6 @@ export async function setupArweaveWallet() {
       return { id: `<tx-id>` };
     },
     sign: async (tx: Transaction) => {
-      console.log('TX SIGNING', tx);
       return await arweave.transactions.sign(tx, jwk);
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

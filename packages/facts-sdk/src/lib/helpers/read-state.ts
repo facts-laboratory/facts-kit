@@ -5,10 +5,12 @@ import { State } from '../faces';
 export const newReadState = async (tx: string) => {
   const CACHE = 'https://cache.permapages.app';
   const warp = getWarpFactory() as Warp;
-  const contract = await warp
+  await warp
     .contract<State>(tx)
     .syncState(CACHE + '/contract', { validity: true });
-  const state = await contract
+  const contract = await warp
+    .contract<State>(tx)
+    .connect('use_wallet')
     .setEvaluationOptions({
       internalWrites: true,
       allowBigInt: true,
@@ -16,5 +18,5 @@ export const newReadState = async (tx: string) => {
     })
     .readState();
 
-  return state.cachedValue.state;
+  return contract.cachedValue.state;
 };

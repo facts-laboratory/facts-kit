@@ -1,8 +1,4 @@
 import { pipeWith } from 'ramda';
-import Transaction from 'arweave/node/lib/transaction';
-
-import { getArweave } from '@facts-kit/contract-kit';
-
 import { BuyInput, SellInput, State } from '../../faces/state';
 import { getWarpFactory } from '../../common/warp';
 import { Warp } from 'warp-contracts';
@@ -24,8 +20,6 @@ export const pipeP = pipeWith((f, res) => {
   // pure function
   return f(res);
 });
-
-const WARP_SEQUENCER = 'https://gateway.redstone.finance';
 
 /**
  * @author @jshaw-ar
@@ -76,23 +70,20 @@ export async function warpAllow(
   const CACHE = 'https://cache.permapages.app';
   const warp = getWarpFactory() as Warp;
 
-  console.log('WHEN DO WE TX SIGN?');
   await warp
     .contract(barContractId)
     .syncState(CACHE + '/contract', { validity: true });
-  console.log('TEST');
   const contract = warp
     .contract(barContractId)
     .connect('use_wallet')
     .setEvaluationOptions({
       internalWrites: true,
     });
-  console.log('=================== DO WE GET HERE?');
   const action = await contract.writeInteraction({
     function: 'allow',
     target,
     qty: amount,
   });
-  console.log('Written', action);
-  return 'TEST';
+  console.log('Written', action?.originalTxId);
+  return action?.originalTxId;
 }

@@ -1,4 +1,3 @@
-import { allow } from '@facts-kit/contract-kit';
 import { BuyInput, State } from '../../faces/state';
 import { warpAllow } from './interact';
 
@@ -21,12 +20,12 @@ export async function payFactMarket(input: {
   const newFee = fee || 0;
   const newPrice = price || 0;
   const tx = await warpAllow(newPrice + newFee, contract, BAR_TX);
-  console.log('TX', tx);
+  if (!tx) throw new Error('Failed to pay the Fact Market.');
   return {
     ...input,
     funcInput: {
       ...funcInput,
-      txId: 'tx',
+      txId: tx,
     },
   };
 }

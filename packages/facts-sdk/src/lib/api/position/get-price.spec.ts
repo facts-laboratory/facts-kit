@@ -29,7 +29,6 @@ describe.skip('calculate price', () => {
       funcInput: { positionType: 'support', qty: 1 },
       state: JSON.parse(MOCK_STATE),
     });
-    console.log('================ PRICE', output.funcInput.price);
     expect(output.funcInput.price).toEqual(1);
     expect(output.funcInput.fee).toEqual(1);
   });

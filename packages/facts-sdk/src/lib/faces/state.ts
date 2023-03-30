@@ -65,6 +65,7 @@ export interface SellAction {
 export interface SellInput {
   function: 'sell';
   positionType: 'support' | 'oppose';
+  expected: number;
   qty?: number;
 }
 export interface EvolveAction {
