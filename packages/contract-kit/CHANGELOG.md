@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.4.0](https://github.com/permafacts/facts-kit/compare/contract-kit-0.3.1...contract-kit-0.4.0) (2023-03-30)
+
+
+### Features
+
+* (wip) fetching sequencer tx ([aa43654](https://github.com/permafacts/facts-kit/commit/aa43654ce63d3d10e1e896a85fa4f35f65502a0e))
+* getHost (`ramda` from tom) ([81f22f8](https://github.com/permafacts/facts-kit/commit/81f22f80306875075f0353a5581e7bb5f53cf8b3))
+* positions price / buy feature ([ece3a2b](https://github.com/permafacts/facts-kit/commit/ece3a2b598f027c814c08f1c648916c8bcd941b5))
+
+
+### Bug Fixes
+
+* latest with LevelDB error ([0f7cd2f](https://github.com/permafacts/facts-kit/commit/0f7cd2f8e8c208cd61f2664ffca604e60d8f9850))
+
 ### [0.3.1](https://github.com/permafacts/facts-kit/compare/contract-kit-0.3.0...contract-kit-0.3.1) (2023-03-23)
 
 
