@@ -2,6 +2,21 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.4.0](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.3.2...facts-sdk-0.4.0) (2023-03-30)
+
+
+### Features
+
+* (wip) fetching sequencer tx ([aa43654](https://github.com/permafacts/facts-kit/commit/aa43654ce63d3d10e1e896a85fa4f35f65502a0e))
+* positions price / buy feature ([ece3a2b](https://github.com/permafacts/facts-kit/commit/ece3a2b598f027c814c08f1c648916c8bcd941b5))
+
+
+### Bug Fixes
+
+* latest with LevelDB error ([0f7cd2f](https://github.com/permafacts/facts-kit/commit/0f7cd2f8e8c208cd61f2664ffca604e60d8f9850))
+* stub get price with tests ([6fdb1f1](https://github.com/permafacts/facts-kit/commit/6fdb1f14b9394d71768d07cb23393b9e3469b84e))
+* stub positions ([1d42364](https://github.com/permafacts/facts-kit/commit/1d423641a5ec6902eaaefeab1657a49d9dd2e1e9))
+
 ### [0.3.2](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.3.1...facts-sdk-0.3.2) (2023-03-23)
 
 ### [0.3.1](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.3.0...facts-sdk-0.3.1) (2023-03-23)
