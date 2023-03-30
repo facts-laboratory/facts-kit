@@ -29,14 +29,14 @@ export function getTotalFactMarketSupply(state: State) {
  * @param {State} [state]
  * @return {*}
  */
-export async function getPrice<T>(input: {
-  funcInput: T;
+export async function getPrice(input: {
+  funcInput: BuyInput;
   contract: string;
   state?: State;
   positionType: 'support' | 'oppose';
   qty: number;
 }): Promise<{
-  funcInput: T;
+  funcInput: BuyInput;
   contract: string;
   state?: State;
 }> {
@@ -62,13 +62,14 @@ function getBalances(positionType: 'support' | 'oppose', state: State) {
   return positionType === 'support' ? state.balances : state.oppositionBalances;
 }
 
-export async function getReturns(
-  input: SellInput,
-  contract: string,
-  positionType: 'support' | 'oppose',
-  qty: number,
-  state?: State
-) {
+export async function getReturns(input: {
+  funcInput: SellInput;
+  contract: string;
+  state?: State;
+  positionType: 'support' | 'oppose';
+  qty: number;
+}) {
+  const { state, contract, qty, positionType, funcInput } = input;
   const newState = state || ((await newReadState(contract)) as State);
   const supply = getSupply(getBalances(positionType, newState));
   const newQty = Math.floor(qty);
@@ -76,6 +77,10 @@ export async function getReturns(
     Math.floor(calculatePriceBits(1, 1, supply, supply - newQty)) * -1;
 
   return {
-    receive: input.qty,
+    contract,
+    funcInput: {
+      ...funcInput,
+      expected: price,
+    },
   };
 }

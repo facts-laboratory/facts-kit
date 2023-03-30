@@ -3,7 +3,17 @@ import { BigNumber } from 'bignumber.js';
 import Arweave from 'arweave';
 import Transaction from 'arweave/node/lib/transaction';
 export const BAR = 'VFr3Bk-uM-motpNNkkFg4lNW1BMmSfzqsVO551Ho4hA';
-
+import {
+  always,
+  compose,
+  cond,
+  equals,
+  T,
+  takeLast,
+  join,
+  split,
+  identity,
+} from 'ramda';
 export const atomicToBar = (atomic: any) =>
   BigNumber.clone({ DECIMAL_PLACES: 6 })(atomic).shiftedBy(-6).toFixed(6);
 
@@ -34,6 +44,20 @@ export async function allow(
   await arweave.transactions.sign(tx);
   const interaction = (await writeInteraction(tx)) as unknown as any;
   return interaction.id;
+}
+
+function getHost() {
+  return compose(
+    cond([
+      [equals('gitpod.io'), always('arweave.net')],
+      [equals('arweave.dev'), always('arweave.net')],
+      [equals('localhost'), always('arweave.net')],
+      [T, identity],
+    ]),
+    join('.'),
+    takeLast(2),
+    split('.')
+  )(location.hostname);
 }
 
 export const writeInteraction = async (tx: Transaction) => {

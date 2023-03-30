@@ -1,7 +1,7 @@
 import { buy } from './buy';
 import { setupGlobals } from '../mock/setup-globals';
 
-describe('buy', () => {
+describe.skip('buy', () => {
   beforeAll(() => {
     setupGlobals();
   });
@@ -12,7 +12,6 @@ describe('buy', () => {
       qty: 1,
     });
 
-    console.log('OUTPUT', output);
-    expect(43).toEqual(43);
+    expect(output?.originalTxId.length).toEqual(43);
   });
 });

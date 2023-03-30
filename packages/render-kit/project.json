@@ -27,13 +27,6 @@
         "access": "public"
       }
     },
-    "deploy:wp": {
-      "executor": "ngx-deploy-npm:deploy",
-      "options": {
-        "access": "public",
-        "packageVersion": "0.3.1-wp"
-      }
-    },
     "test": {
       "executor": "@nrwl/vite:test",
       "outputs": ["coverage/packages/render-kit"],

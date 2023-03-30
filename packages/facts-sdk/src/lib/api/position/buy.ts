@@ -10,8 +10,16 @@ export async function buy(input: {
   contract: string;
   state?: State;
 }) {
+  const { funcInput } = input;
   const fn = pipeP([getPrice, payFactMarket, interact]);
-  return fn(input);
+  return fn({
+    ...input,
+    funcInput: {
+      ...(funcInput as BuyInput),
+    },
+    positionType: funcInput.positionType as 'support' | 'oppose',
+    qty: funcInput.qty as number,
+  });
 }
 
 export const waitForSec = async (input: {
