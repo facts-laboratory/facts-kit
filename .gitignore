@@ -43,3 +43,6 @@ docs/packages/render-kit
 docs/packages/facts-sdk
 
 cache/
+docs/packages/facts-sdk-id.txt
+docs/packages/facts-sdk-manifest.csv
+docs/packages/facts-sdk-manifest.json
