@@ -6,13 +6,12 @@ describe('buy', () => {
     setupGlobals();
   });
   test('should work', async () => {
-    const output = await buy({
-      contract: 'gUyxs7pM-D15jBV64WYB-qOzwT8n-AzFmA5gjSA4kTs',
+    const position = await buy({
+      contract: 'VDcJqs6_mfUTQuoTYvxTtzRDLFenHkaQUOVkmIJF4tA',
       positionType: 'support',
       qty: 1,
     });
 
-    console.log('OUTPUT', output);
-    expect(43).toEqual(43);
+    expect(position?.originalTxId.length).toEqual(43);
   });
 });
