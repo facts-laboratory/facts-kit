@@ -68,19 +68,29 @@ export async function getReturns(input: {
   state?: State;
   positionType: 'support' | 'oppose';
   qty: number;
+  expected?: number;
 }) {
-  const { state, contract, qty, positionType, funcInput } = input;
+  const { state, contract, qty, positionType, funcInput, expected } = input;
+  if (expected) {
+    return {
+      contract,
+      funcInput: {
+        ...funcInput,
+        expected,
+      },
+    };
+  }
   const newState = state || ((await newReadState(contract)) as State);
   const supply = getSupply(getBalances(positionType, newState));
   const newQty = Math.floor(qty);
-  const price =
+  const returns =
     Math.floor(calculatePriceBits(1, 1, supply, supply - newQty)) * -1;
 
   return {
     contract,
     funcInput: {
       ...funcInput,
-      expected: price,
+      expected: returns,
     },
   };
 }
