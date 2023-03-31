@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Arweave from 'arweave';
 import Transaction from 'arweave/node/lib/transaction';
 import fs from 'fs';
@@ -40,6 +38,11 @@ export function setupArweave() {
           return await arweave.transactions.sign(tx, jwk);
         },
       },
+      getConfig: () => ({
+        api: {
+          host: 'arweave.net',
+        },
+      }),
     }),
   };
 }
