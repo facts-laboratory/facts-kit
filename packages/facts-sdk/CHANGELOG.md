@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.6.1](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.6.0...facts-sdk-0.6.1) (2023-03-31)
+
+
+### Bug Fixes
+
+* put the initialState back ([ce18d3c](https://github.com/permafacts/facts-kit/commit/ce18d3cb5b2b1e81420cc745029341505c07caf5))
+
 ## [0.6.0](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.5.0...facts-sdk-0.6.0) (2023-03-31)
 
 
