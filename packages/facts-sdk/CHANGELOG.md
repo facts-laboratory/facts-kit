@@ -2,6 +2,21 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.6.0](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.5.0...facts-sdk-0.6.0) (2023-03-31)
+
+
+### Features
+
+* getPrice, getReturns ([d5aabd5](https://github.com/permafacts/facts-kit/commit/d5aabd5e64ce56d3ef845aa0fac76325884a3362))
+* getReturns on sell (calculate exact if it's not there) ([9ff47d4](https://github.com/permafacts/facts-kit/commit/9ff47d4ae194f626f92b8523ed21f8f6550f1a4c))
+* sell ([d7c65c8](https://github.com/permafacts/facts-kit/commit/d7c65c8100dd56eed74fd98e71800652feec1a13))
+* sell position ([87d395c](https://github.com/permafacts/facts-kit/commit/87d395c2fde73ed825eb6c29501645f974293326))
+
+
+### Bug Fixes
+
+* export new funcs out of index ([832184e](https://github.com/permafacts/facts-kit/commit/832184e378ed0a520f90e083814a868705a26039))
+
 ## [0.5.0](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.4.0...facts-sdk-0.5.0) (2023-03-30)
 
 
