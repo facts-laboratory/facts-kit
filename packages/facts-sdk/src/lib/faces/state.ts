@@ -81,3 +81,14 @@ export type ContractResult =
   | { state: State }
   | { result: Result }
   | { price: number; fee: number };
+export const initialState: State = {
+  creator: '',
+  creator_cut: 0,
+  facts: 0,
+  position: 'support',
+  balances: {},
+  oppositionBalances: {},
+  pair: 'VFr3Bk-uM-motpNNkkFg4lNW1BMmSfzqsVO551Ho4hA',
+  canEvolve: true,
+  evolve: null,
+};
