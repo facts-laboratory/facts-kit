@@ -4,15 +4,17 @@ import { State } from '../faces/state';
 export async function sell(input: {
   contract: string;
   qty: number;
+  expected?: number;
   positionType: 'support' | 'oppose';
   state?: State;
 }) {
-  const { contract, qty, positionType, state } = input;
-  return await position.buy({
+  const { contract, qty, positionType, state, expected } = input;
+  return await position.sell({
     funcInput: {
       positionType,
       qty,
-      function: 'buy',
+      function: 'sell',
+      expected,
     },
     contract,
     state,

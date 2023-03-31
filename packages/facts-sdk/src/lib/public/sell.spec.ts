@@ -1,17 +1,23 @@
-import { buy } from './buy';
-import { setupGlobals } from '../mock/setup-globals';
+import { sell } from './sell';
+// import { setupGlobals } from '../mock/setup-globals';
+import { newReadState } from '../helpers/read-state';
 
-describe.skip('buy', () => {
+describe.skip('sell', () => {
   beforeAll(() => {
-    setupGlobals();
+    // setupGlobals();
   });
   test('should work', async () => {
-    const output = await buy({
-      contract: 'gUyxs7pM-D15jBV64WYB-qOzwT8n-AzFmA5gjSA4kTs',
+    const position = await sell({
+      contract: 'VDcJqs6_mfUTQuoTYvxTtzRDLFenHkaQUOVkmIJF4tA',
       positionType: 'support',
       qty: 1,
     });
 
-    expect(output?.originalTxId.length).toEqual(43);
+    const state = await newReadState(
+      'VDcJqs6_mfUTQuoTYvxTtzRDLFenHkaQUOVkmIJF4tA'
+    );
+    console.log('State', state);
+
+    expect(position?.originalTxId.length).toEqual(43);
   });
 });
