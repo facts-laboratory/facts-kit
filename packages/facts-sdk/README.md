@@ -1,6 +1,6 @@
 # facts-sdk
 
-Currently `attach` and `assert` are the only tested functions.
+Currently `attach`, `assert`, `buy`, `sell` are the only tested functions. Withdraw (and more) coming soon.
 
 ## Install
 
@@ -13,7 +13,15 @@ import `@facts-kit/facts-sdk` and use.
 ```js
 // some-file.<ts | js>
 
-import { assert, attach, getAssets, hasFactMarket } from '@facts-kit/facts-sdk';
+import {
+  assert,
+  attach,
+  getAssets,
+  hasFactMarket,
+  getPrice,
+  buy,
+  sell,
+} from '@facts-kit/facts-sdk';
 
 // hasFactMarket
 // returns { tx: undefined, link: undefined } if no fact market exists.
@@ -35,7 +43,7 @@ const factMarket = await attach({
 });
 console.log(factMarket.tx);
 
-// Deploy
+// assert
 const factMarket = await assert({
   use: 'arweaveWallet',
   data: { test: 'data' }, // You define the shape of this -- it will be stringified
@@ -46,18 +54,38 @@ const factMarket = await assert({
     topics: ['topic-1', 'topic-2'],
   },
   position: 'support',
+  // This tells the SDK to use the wallet that's connected.
+  // It's the callers responsibility to make sure the wallet
+  // is connected.
+  // useConnectedWallet: true,
 });
 
 console.log(factMarket.tx);
+
+// buy
+const position = await buy({
+  contract: 'VDcJqs6_mfUTQuoTYvxTtzRDLFenHkaQUOVkmIJF4tA',
+  positionType: 'support',
+  qty: 1,
+});
+console.log(position.originalTxId);
+
+// sell
+const position = await sell({
+  contract: 'VDcJqs6_mfUTQuoTYvxTtzRDLFenHkaQUOVkmIJF4tA',
+  positionType: 'support',
+  qty: 1,
+});
+console.log(position.originalTxId);
 ```
 
 ## Test
 
-Run `nx test node-facts-sdk` to execute the unit tests via [Jest](https://jestjs.io).
+Run `nx test node-facts-sdk`
 
 ## Lint
 
-Run `nx lint node-facts-sdk` to execute the lint via [ESLint](https://eslint.org/).
+Run `nx lint node-facts-sdk`
 
 ## More
 
