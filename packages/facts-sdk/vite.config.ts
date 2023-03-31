@@ -59,5 +59,6 @@ export default defineConfig({
     hookTimeout: 10000,
     useAtomics: true,
     threads: false,
+    // globalSetup: ['./packages/facts-sdk/src/lib/mock/setup-globals.ts'],
   },
 });
