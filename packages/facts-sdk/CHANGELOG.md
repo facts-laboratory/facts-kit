@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.6.2](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.6.1...facts-sdk-0.6.2) (2023-04-03)
+
+
+### Bug Fixes
+
+* update FACT_MARKET_SRC to latest contract ([385990c](https://github.com/permafacts/facts-kit/commit/385990c30a04fecf708f778b55a972e6c13ab75c))
+
 ### [0.6.1](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.6.0...facts-sdk-0.6.1) (2023-03-31)
 
 
