@@ -1,5 +1,5 @@
 import * as packageJson from '../../../package.json';
-export const FACT_MARKET_SRC = 'xLaL1bE6hYETzBdKZYzlyKJUhn7I5J-Oye609sW3qTU';
+export const FACT_MARKET_SRC = 'ZHXEHvTFbklHB1eV9PFsHc12QZnf09creVHtWZAl64g';
 
 export function getPermafactsTags() {
   return [
