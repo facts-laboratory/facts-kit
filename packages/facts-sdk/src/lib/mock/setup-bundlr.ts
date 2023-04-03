@@ -7,7 +7,6 @@ export function setupBundlr() {
       fs.readFileSync(process.env['PATH_TO_WALLET'] as string).toString()
     );
 
-    console.log('ABOUT TO DO IT============');
     // TODO: setup a way to just mock this locally
     return new Bundlr.default('http://node2.bundlr.network', 'arweave', jwk);
   }
@@ -18,7 +17,6 @@ export function setupBundlr() {
         fs.readFileSync(process.env['PATH_TO_WALLET'] as string).toString()
       );
 
-      console.log('ABOUT TO DO IT============');
       // TODO: setup a way to just mock this locally
       const bundlr = new Bundlr.default(
         'http://node2.bundlr.network',

@@ -4,6 +4,9 @@
   "license": "MIT",
   "scripts": {
     "nx": "nx",
+    "lint": "nx run ${NAME}:lint",
+    "build": "nx run ${NAME}:build",
+    "test": "nx run ${NAME}:test --verbose",
     "generate:lib": "npm run generate:js && npm run setup-typedoc",
     "generate:js": "nx generate @nrwl/js:library ${NAME} --unitTestRunner=vitest --bundler=swc --publishable --importPath=@facts-kit/${NAME} --compiler=swc",
     "setup-typedoc": "nx generate @enio.ai/typedoc:config ${NAME} && npm run update-typedoc-branch",
@@ -31,6 +34,7 @@
     "@nrwl/workspace": "15.8.6",
     "@swc/cli": "~0.1.55",
     "@swc/core": "^1.2.173",
+    "@types/ramda": "0.28.23",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
     "@vitest/coverage-c8": "~0.25.8",
@@ -40,7 +44,6 @@
     "eslint-config-prettier": "8.1.0",
     "ethers": "^5.5.3",
     "husky": "^8.0.0",
-    "isomorphic-fetch": "^3.0.0",
     "jsdom": "~20.0.3",
     "ngx-deploy-npm": "^5.2.0",
     "nx": "15.8.6",
@@ -54,13 +57,14 @@
     "vite-plugin-dts": "~1.7.1",
     "vite-plugin-eslint": "^1.8.1",
     "vite-tsconfig-paths": "^4.0.2",
-    "vitest": "^0.25.8",
-    "warp-contracts": "1.2.54"
+    "vitest": "0.29.8",
+    "warp-contracts": "1.2.56"
   },
   "dependencies": {
     "@swc/helpers": "~0.4.11",
     "arweave": "1.13.1",
     "bignumber.js": "^9.1.1",
+    "ramda": "0.28.0",
     "warp-contracts-plugin-deploy": "^1.0.0"
   }
 }

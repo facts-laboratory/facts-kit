@@ -1,7 +1,17 @@
 import { buy } from './buy';
+import { setupGlobals } from '../mock/setup-globals';
 
-describe.skip('buy', () => {
-  it('should work', () => {
-    expect(buy()).toEqual('facts-sdk');
+describe('buy', () => {
+  beforeAll(() => {
+    setupGlobals();
+  });
+  test('should work', async () => {
+    const position = await buy({
+      contract: 'VDcJqs6_mfUTQuoTYvxTtzRDLFenHkaQUOVkmIJF4tA',
+      positionType: 'support',
+      qty: 1,
+    });
+
+    expect(position?.originalTxId.length).toEqual(43);
   });
 });

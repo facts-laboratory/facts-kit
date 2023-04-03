@@ -1,7 +1,5 @@
 import { fetchAttachedFactMarket } from './fetch-attached-fact-market';
 
-// import this if your test uses fetch
-import 'isomorphic-fetch';
 describe.skip('fetch attached fact markets', () => {
   it('should fetch 1 transaction (gql node)', async () => {
     const factMarket = await fetchAttachedFactMarket(

@@ -1,6 +1,6 @@
 import { DeployPlugin } from 'warp-contracts-plugin-deploy';
 import Transaction from 'arweave/node/lib/transaction';
-const WARP_GATEWAY = 'https://gateway.warp.cc';
+const WARP_SEQUENCER = 'https://gateway.warp.cc';
 
 export function getWarpFactory() {
   if (process?.env['IS_LOCAL'] === 'true') {
@@ -63,7 +63,7 @@ export async function httpRegister(tx: string) {
 }
 
 export function writeInteraction(tx: Transaction) {
-  return fetch(`${WARP_GATEWAY}/gateway/sequencer/register`, {
+  return fetch(`${WARP_SEQUENCER}/gateway/sequencer/register`, {
     method: 'POST',
     body: JSON.stringify(tx),
     headers: {

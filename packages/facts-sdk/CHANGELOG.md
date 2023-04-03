@@ -2,6 +2,57 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.6.2](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.6.1...facts-sdk-0.6.2) (2023-04-03)
+
+
+### Bug Fixes
+
+* update FACT_MARKET_SRC to latest contract ([385990c](https://github.com/permafacts/facts-kit/commit/385990c30a04fecf708f778b55a972e6c13ab75c))
+
+### [0.6.1](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.6.0...facts-sdk-0.6.1) (2023-03-31)
+
+
+### Bug Fixes
+
+* put the initialState back ([ce18d3c](https://github.com/permafacts/facts-kit/commit/ce18d3cb5b2b1e81420cc745029341505c07caf5))
+
+## [0.6.0](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.5.0...facts-sdk-0.6.0) (2023-03-31)
+
+
+### Features
+
+* getPrice, getReturns ([d5aabd5](https://github.com/permafacts/facts-kit/commit/d5aabd5e64ce56d3ef845aa0fac76325884a3362))
+* getReturns on sell (calculate exact if it's not there) ([9ff47d4](https://github.com/permafacts/facts-kit/commit/9ff47d4ae194f626f92b8523ed21f8f6550f1a4c))
+* sell ([d7c65c8](https://github.com/permafacts/facts-kit/commit/d7c65c8100dd56eed74fd98e71800652feec1a13))
+* sell position ([87d395c](https://github.com/permafacts/facts-kit/commit/87d395c2fde73ed825eb6c29501645f974293326))
+
+
+### Bug Fixes
+
+* export new funcs out of index ([832184e](https://github.com/permafacts/facts-kit/commit/832184e378ed0a520f90e083814a868705a26039))
+
+## [0.5.0](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.4.0...facts-sdk-0.5.0) (2023-03-30)
+
+
+### Features
+
+* getHost (`ramda` from tom) ([81f22f8](https://github.com/permafacts/facts-kit/commit/81f22f80306875075f0353a5581e7bb5f53cf8b3))
+
+## [0.4.0](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.3.2...facts-sdk-0.4.0) (2023-03-30)
+
+
+### Features
+
+* (wip) fetching sequencer tx ([aa43654](https://github.com/permafacts/facts-kit/commit/aa43654ce63d3d10e1e896a85fa4f35f65502a0e))
+* positions price / buy feature ([ece3a2b](https://github.com/permafacts/facts-kit/commit/ece3a2b598f027c814c08f1c648916c8bcd941b5))
+
+
+### Bug Fixes
+
+* latest with LevelDB error ([0f7cd2f](https://github.com/permafacts/facts-kit/commit/0f7cd2f8e8c208cd61f2664ffca604e60d8f9850))
+* stub get price with tests ([6fdb1f1](https://github.com/permafacts/facts-kit/commit/6fdb1f14b9394d71768d07cb23393b9e3469b84e))
+* stub positions ([1d42364](https://github.com/permafacts/facts-kit/commit/1d423641a5ec6902eaaefeab1657a49d9dd2e1e9))
+
 ### [0.3.2](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.3.1...facts-sdk-0.3.2) (2023-03-23)
 
 ### [0.3.1](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.3.0...facts-sdk-0.3.1) (2023-03-23)

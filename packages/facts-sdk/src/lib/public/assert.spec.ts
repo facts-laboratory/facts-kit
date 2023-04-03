@@ -1,15 +1,22 @@
+import { setupGlobals } from '../mock/setup-globals';
 import { assert } from './assert';
 
 describe.skip('assert', () => {
+  beforeAll(() => {
+    setupGlobals();
+  });
   it('should work', async () => {
     const factMarket = await assert({
       data: {}, // Data will be stringified and used as the "contract data"
-      description: '<description>',
-      owner: '<wallet-address>',
-      title: '<title>',
-      rebutTx: '<tx>', // Optional
-      topic: 'test', // Optional
+      tags: {
+        description: '<description>',
+        title: '<title>',
+        topics: ['test'], // Optional
+        type: 'fact-post',
+      },
+      position: 'oppose',
     });
-    expect(typeof factMarket.tx).toBe('string');
+    console.log('FACT MARKET', factMarket);
+    expect(typeof (factMarket as { tx: string }).tx).toBe('string');
   });
 });

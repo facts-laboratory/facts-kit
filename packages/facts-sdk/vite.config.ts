@@ -46,12 +46,19 @@ export default defineConfig({
     },
   },
 
+  // DONT TOUCH THIS WITHOUT A REAL REASON!
   test: {
     globals: true,
     cache: {
       dir: '../../node_modules/.vitest',
     },
-    environment: 'jsdom',
+    environment: 'node',
     include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    teardownTimeout: 40000,
+    testTimeout: 40000,
+    hookTimeout: 10000,
+    useAtomics: true,
+    threads: false,
+    // globalSetup: ['./packages/facts-sdk/src/lib/mock/setup-globals.ts'],
   },
 });

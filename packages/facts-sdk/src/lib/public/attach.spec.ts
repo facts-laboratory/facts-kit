@@ -40,7 +40,7 @@ describe.skip('attach', () => {
     });
     expect(tx).toEqual({ tx: '' });
   });
-  it.skip('should create a fact market - arweaveWallet', async () => {
+  it('should create a fact market - arweaveWallet', async () => {
     const tx = await attach({
       tx: '07aXBLlXbo5onnWhBUOv20hpD3f6iSDfzcLo6uOwDtw',
       position: 'support',
