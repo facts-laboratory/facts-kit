@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.4.1](https://github.com/permafacts/facts-kit/compare/contract-kit-0.4.0...contract-kit-0.4.1) (2023-04-04)
+
+
+### Bug Fixes
+
+* stub flex; export getNode out of contract kit ([bfd72fe](https://github.com/permafacts/facts-kit/commit/bfd72feb5d83b5271f70681526b153f7b9ed93fd))
+
 ## [0.4.0](https://github.com/permafacts/facts-kit/compare/contract-kit-0.3.1...contract-kit-0.4.0) (2023-03-30)
 
 
