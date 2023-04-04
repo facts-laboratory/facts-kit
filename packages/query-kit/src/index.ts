@@ -1,1 +1,1 @@
-export * from './lib/query-kit';
+export * from './lib/functions/get-by-id';
