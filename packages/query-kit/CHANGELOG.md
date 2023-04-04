@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.1.4](https://github.com/permafacts/facts-kit/compare/query-kit-0.1.3...query-kit-0.1.4) (2023-04-04)
+
+
+### Bug Fixes
+
+* remove query; export only byid ([fb3dac8](https://github.com/permafacts/facts-kit/commit/fb3dac80a9410befa3c4a5de7148b098ccc0cbad))
+
 ### [0.1.3](https://github.com/permafacts/facts-kit/compare/query-kit-0.1.2...query-kit-0.1.3) (2023-04-04)
 
 ### [0.1.2](https://github.com/permafacts/facts-kit/compare/query-kit-0.1.1...query-kit-0.1.2) (2023-04-04)
