@@ -9,7 +9,6 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/query-kit",
-        "main": "packages/query-kit/src/index.ts",
         "tsConfig": "packages/query-kit/tsconfig.lib.json",
         "assets": ["packages/query-kit/*.md"]
       }
