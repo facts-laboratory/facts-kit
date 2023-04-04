@@ -1,1 +1,1 @@
-export * from './lib/functions/get-by-id';
+export * from './lib/queries/get-by-id';
