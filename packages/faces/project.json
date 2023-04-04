@@ -1,46 +1,41 @@
 {
-  "name": "facts-sdk",
+  "name": "faces",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/facts-sdk/src",
+  "sourceRoot": "packages/faces/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/vite:build",
+      "executor": "@nrwl/js:swc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/facts-sdk"
-      }
-    },
-    "test": {
-      "executor": "@nrwl/vite:test",
-      "outputs": ["coverage/packages/facts-sdk"],
-      "options": {
-        "passWithNoTests": true,
-        "reportsDirectory": "../../coverage/packages/facts-sdk"
+        "outputPath": "dist/packages/faces",
+        "main": "packages/faces/src/index.ts",
+        "tsConfig": "packages/faces/tsconfig.lib.json",
+        "assets": ["packages/faces/*.md"]
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/facts-sdk/**/*.ts"]
+        "lintFilePatterns": ["packages/faces/**/*.ts"]
       }
     },
-    "deploy:wp": {
-      "executor": "ngx-deploy-npm:deploy",
+    "test": {
+      "executor": "@nrwl/vite:test",
+      "outputs": ["coverage/packages/faces"],
       "options": {
-        "access": "public",
-        "packageVersion": "0.3.1-wp"
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/packages/faces"
       }
     },
     "typedoc": {
       "executor": "@enio.ai/typedoc:typedoc",
-      "outputs": ["docs/packages/facts-sdk"],
+      "outputs": ["docs/packages/faces"],
       "options": {
         "options": "typedoc.json"
       },
-      "configurations": {},
-      "dependsOn": ["remove-old-docs"]
+      "configurations": {}
     },
     "deploy": {
       "executor": "ngx-deploy-npm:deploy",

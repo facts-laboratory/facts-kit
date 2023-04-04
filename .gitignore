@@ -39,6 +39,8 @@ testem.log
 Thumbs.db
 
 #Project Docs
+docs/packages/faces
+docs/packages/query-kit
 docs/packages/flex
 docs/packages/render-kit
 docs/packages/facts-sdk
