@@ -2,6 +2,14 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.1.6](https://github.com/permafacts/facts-kit/compare/query-kit-0.1.5...query-kit-0.1.6) (2023-04-04)
+
+
+### Bug Fixes
+
+* export all funcs ([b1b7619](https://github.com/permafacts/facts-kit/commit/b1b76191f4e25510370d39de5818893dd896f621))
+* try swc again ([bbb3f5d](https://github.com/permafacts/facts-kit/commit/bbb3f5d4d427d780ca0505b7cea27853c422a842))
+
 ### [0.1.5](https://github.com/permafacts/facts-kit/compare/query-kit-0.1.4...query-kit-0.1.5) (2023-04-04)
 
 
