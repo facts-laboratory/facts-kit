@@ -339,6 +339,17 @@ export function getGraphqlUrl() {
 }
 
 /**
+ * Pulls the node from the edge of the gql query response.
+ *
+ * @author @jshaw-ar
+ * @param {{ node: Transaction }} edge
+ * @return {*}  {Transaction}
+ */
+export function getNode(edge: { node: Transaction }): Transaction {
+  return edge.node;
+}
+
+/**
  * @description Gets 'tx' from the query string
  * @todo MOVE TO RENDERER KIT
  * @example getTx(window?.location?.search);

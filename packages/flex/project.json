@@ -1,0 +1,76 @@
+{
+  "name": "flex",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/flex/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/flex",
+        "main": "packages/flex/src/index.ts",
+        "tsConfig": "packages/flex/tsconfig.lib.json",
+        "assets": ["packages/flex/*.md"]
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.mjs flex {args.ver} {args.tag}"
+      },
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/flex/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/vite:test",
+      "outputs": ["coverage/packages/flex"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/packages/flex"
+      }
+    },
+    "perma-deploy-docs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "node ./tools/scripts/perma-deploy.mjs ./docs/packages/facts-sdk"
+          }
+        ]
+      },
+      "dependsOn": ["typedoc"]
+    },
+    "remove-old-docs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "rm -rf ./docs/packages/facts-sdk"
+          }
+        ]
+      }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventional"
+      }
+    },
+    "typedoc": {
+      "executor": "@enio.ai/typedoc:typedoc",
+      "outputs": ["docs/packages/flex"],
+      "options": {
+        "options": "typedoc.json"
+      },
+      "configurations": {}
+    }
+  },
+  "tags": []
+}

@@ -18,6 +18,7 @@
     "paths": {
       "@facts-kit/contract-kit": ["packages/contract-kit/src/index.ts"],
       "@facts-kit/facts-sdk": ["packages/facts-sdk/src/index.ts"],
+      "@facts-kit/flex": ["packages/flex/src/index.ts"],
       "@facts-kit/render-kit": ["packages/render-kit/src/index.ts"]
     }
   },
