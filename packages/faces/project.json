@@ -48,7 +48,7 @@
       "options": {
         "commands": [
           {
-            "command": "node ./tools/scripts/perma-deploy.mjs ./docs/packages/facts-sdk"
+            "command": "node ./tools/scripts/perma-deploy.mjs ./docs/packages/faces"
           }
         ]
       },
@@ -59,7 +59,7 @@
       "options": {
         "commands": [
           {
-            "command": "rm -rf ./docs/packages/facts-sdk"
+            "command": "rm -rf ./docs/packages/faces"
           }
         ]
       }

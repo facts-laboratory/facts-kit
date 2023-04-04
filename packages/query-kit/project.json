@@ -43,6 +43,39 @@
         "options": "typedoc.json"
       },
       "configurations": {}
+    },
+    "deploy": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
+    },
+    "perma-deploy-docs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "node ./tools/scripts/perma-deploy.mjs ./docs/packages/query-kit"
+          }
+        ]
+      },
+      "dependsOn": ["typedoc"]
+    },
+    "remove-old-docs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "rm -rf ./docs/packages/query-kit"
+          }
+        ]
+      }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventional"
+      }
     }
   },
   "tags": []

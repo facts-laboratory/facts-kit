@@ -2,7 +2,7 @@
 import { Transaction } from '@facts-kit/faces';
 import { getEdges, getNode } from '@facts-kit/contract-kit';
 
-export default async function main(
+export async function getById(
   tx: string,
   // this doesnt do anything yet but should paginate
   cursor?: string

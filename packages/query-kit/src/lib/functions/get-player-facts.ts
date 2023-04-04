@@ -1,7 +1,7 @@
 import { Transaction } from '@facts-kit/faces';
 import { getEdges } from '@facts-kit/contract-kit';
 
-export default async function main(
+export async function getPlayerFacts(
   tx: string,
   cursor?: string
 ): Promise<Transaction[]> {

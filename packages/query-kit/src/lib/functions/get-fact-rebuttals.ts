@@ -2,7 +2,7 @@
 import { getEdges, getNode } from '@facts-kit/contract-kit';
 import { Transaction } from '@facts-kit/faces';
 
-export default async function main(
+export async function getFactRebuttals(
   tx: string
   // TODO: setup cursor func
   // cursor?: string
