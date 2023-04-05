@@ -2,6 +2,14 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.2.4](https://github.com/permafacts/facts-kit/compare/query-kit-0.2.3...query-kit-0.2.4) (2023-04-05)
+
+
+### Bug Fixes
+
+* eslint ([9a4cd0f](https://github.com/permafacts/facts-kit/commit/9a4cd0f39ae7fc64dca54cff397b6d7b39bd1827))
+* send back whole tx ([a21cefa](https://github.com/permafacts/facts-kit/commit/a21cefaa7c39b234eae75cf0db41a878d3218bd7))
+
 ### [0.2.3](https://github.com/permafacts/facts-kit/compare/query-kit-0.2.2...query-kit-0.2.3) (2023-04-05)
 
 
