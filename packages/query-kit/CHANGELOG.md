@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.2.3](https://github.com/permafacts/facts-kit/compare/query-kit-0.2.2...query-kit-0.2.3) (2023-04-05)
+
+
+### Bug Fixes
+
+* only 30 for player facts ([a3287f3](https://github.com/permafacts/facts-kit/commit/a3287f3854aaecfc72b536b64efef5968d9b14df))
+
 ### [0.2.2](https://github.com/permafacts/facts-kit/compare/query-kit-0.2.1...query-kit-0.2.2) (2023-04-05)
 
 
