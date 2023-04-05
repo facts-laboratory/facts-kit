@@ -3,9 +3,9 @@ import Transaction from 'arweave/node/lib/transaction';
 const WARP_SEQUENCER = 'https://gateway.warp.cc';
 
 export function getWarpFactory() {
-  if (process?.env['IS_LOCAL'] === 'true') {
-    return (globalThis as any)?.warp.WarpFactory.forMainnet();
-  }
+  // if (process?.env['IS_LOCAL'] === 'true') {
+  //   return (globalThis as any)?.warp.WarpFactory.forMainnet();
+  // }
 
   if ((window as any)?.warp) {
     return (window as any)?.warp.WarpFactory.forMainnet().use(
