@@ -1,5 +1,5 @@
 import { Transaction } from '@facts-kit/faces';
-import { getEdges } from '@facts-kit/contract-kit';
+import { getEdges, getNode } from '@facts-kit/contract-kit';
 
 export async function getPlayerFacts(
   tx: string,
@@ -16,6 +16,6 @@ export async function getPlayerFacts(
     body: cursor ? paginate : query,
     method: 'POST',
   });
-  const edges = getEdges(await res.json());
-  return edges;
+  const nodes = getEdges(await res.json()).map(getNode);
+  return nodes;
 }
