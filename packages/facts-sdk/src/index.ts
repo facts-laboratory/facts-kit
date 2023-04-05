@@ -7,3 +7,4 @@ export * from './lib/public/has-fact-market';
 export * from './lib/faces/';
 export * as query from './lib/query';
 export { FACTS_KIT_VERSION } from './lib/helpers/get-pf-version';
+export { newReadState } from './lib/helpers/read-state';
