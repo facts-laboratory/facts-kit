@@ -2,6 +2,18 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.0](https://github.com/permafacts/facts-kit/compare/query-kit-0.1.6...query-kit-0.2.0) (2023-04-05)
+
+
+### Features
+
+* player rebuttals queries ([1f7efa3](https://github.com/permafacts/facts-kit/commit/1f7efa3920bf38dc549e379da771ca8613b9daad))
+
+
+### Bug Fixes
+
+* use good query for player rebuttals ([b66b6ed](https://github.com/permafacts/facts-kit/commit/b66b6eda9c41b0d4fdc74ddb851356882b3a7dc6))
+
 ### [0.1.6](https://github.com/permafacts/facts-kit/compare/query-kit-0.1.5...query-kit-0.1.6) (2023-04-04)
 
 
