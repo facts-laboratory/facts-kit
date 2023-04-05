@@ -7,6 +7,11 @@ export function getWarpFactory() {
     return (globalThis as any)?.warp.WarpFactory.forMainnet();
   }
 
+  if ((window as any)?.warp) {
+    return (window as any)?.warp.WarpFactory.forMainnet().use(
+      new DeployPlugin()
+    );
+  }
   return fetch(
     'https://5t6kvshi7ih6e572itxnml4tlxw6qzakb3fpw67ibjcyuvfp6poq.arweave.net/7PyqyOj6D-J3-kTu1i-TXe3oZAoOyvt76ApFilSv890/warp.js'
   )
