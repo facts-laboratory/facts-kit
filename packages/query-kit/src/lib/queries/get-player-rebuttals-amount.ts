@@ -13,9 +13,9 @@ export async function getPlayerRebuttalsAmount(
       'accept-language': 'en-US,en;q=0.7',
       'content-type': 'application/json',
     },
-    body: `{\"operationName\":null,\"variables\":{},\"query\":\"{\\n  transactions(first: 100, tags: [{name: \\\"Fact-Rebuts\\\", values: [\\\"${tx}\\\"]}]) {\\n    edges {\\n      node {\\n        id\\n        owner {\\n          address\\n        }\\n        tags {\\n          name\\n          value\\n        }\\n      }\\n    }\\n  }\\n}\\n\"}`,
+    body: `{\"operationName\":null,\"variables\":{},\"query\":\"{\\n  transactions(\\n    first: 100\\n    owners: [\\\"${tx}\\\"]\\n    tags: [{name: \\\"Permafacts-Type\\\", values: [\\\"Rebuttal\\\"]}]\\n  ) {\\n    edges {\\n      node {\\n        id\\n      }\\n    }\\n  }\\n}\\n\"}`,
     method: 'POST',
   });
-  const edges = getEdges(await res.json()).map(getNode);
-  return edges;
+  const nodes = getEdges(await res.json()).map(getNode);
+  return nodes;
 }
