@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.7.4](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.7.3...facts-sdk-0.7.4) (2023-04-05)
+
+
+### Bug Fixes
+
+* remove procee ([e8c9468](https://github.com/permafacts/facts-kit/commit/e8c9468c688812814908a7022fae28a65630d43e))
+
 ### [0.7.3](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.7.2...facts-sdk-0.7.3) (2023-04-05)
 
 
