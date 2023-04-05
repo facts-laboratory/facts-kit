@@ -2,6 +2,14 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.7.2](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.7.1...facts-sdk-0.7.2) (2023-04-05)
+
+
+### Bug Fixes
+
+* try swc again ([bbb3f5d](https://github.com/permafacts/facts-kit/commit/bbb3f5d4d427d780ca0505b7cea27853c422a842))
+* use warp from window if its there ([d468fb0](https://github.com/permafacts/facts-kit/commit/d468fb057228dc238cc34c8cc7b3f75e8a4f1384))
+
 ### [0.7.1](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.7.0...facts-sdk-0.7.1) (2023-04-04)
 
 
