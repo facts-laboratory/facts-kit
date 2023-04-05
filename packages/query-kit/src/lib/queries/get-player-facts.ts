@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import { Transaction } from '@facts-kit/faces';
 import { getEdges, getNode } from '@facts-kit/contract-kit';
 
