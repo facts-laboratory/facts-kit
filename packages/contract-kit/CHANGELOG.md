@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.4.2](https://github.com/permafacts/facts-kit/compare/contract-kit-0.4.1...contract-kit-0.4.2) (2023-04-14)
+
+
+### Bug Fixes
+
+* call g8way for data ([22defc6](https://github.com/permafacts/facts-kit/commit/22defc6ffade1f6f4df8dd57a1e1447ed935dca0))
+
 ### [0.4.1](https://github.com/permafacts/facts-kit/compare/contract-kit-0.4.0...contract-kit-0.4.1) (2023-04-04)
 
 
