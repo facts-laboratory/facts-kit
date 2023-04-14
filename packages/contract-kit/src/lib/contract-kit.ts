@@ -120,10 +120,8 @@ export const readState = async (contract: string) => {
   return data;
 };
 
-export const getContent = async (contract: string) => {
-  const res = await fetch(
-    `https://d1o5nlqr4okus2.cloudfront.net/gateway/contract-data/${contract}`
-  );
+export const getContent = async (tx: string, host?: string) => {
+  const res = await fetch(`https://${host || 'g8way.io'}/${tx}`);
   /**
    * Detect 4xx - 5xx errors,
    * res.ok will be false on failure.
