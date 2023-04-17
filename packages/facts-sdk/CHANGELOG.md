@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.7.5](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.7.4...facts-sdk-0.7.5) (2023-04-17)
+
+
+### Bug Fixes
+
+* add Type tag as default ([3e98805](https://github.com/permafacts/facts-kit/commit/3e98805998ac9692e4f0c405b418d039dcd9a26c))
+
 ### [0.7.4](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.7.3...facts-sdk-0.7.4) (2023-04-05)
 
 
