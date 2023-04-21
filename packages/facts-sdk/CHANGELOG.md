@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.7.6](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.7.5...facts-sdk-0.7.6) (2023-04-21)
+
+
+### Bug Fixes
+
+* add optional isRebut ([8c4f7db](https://github.com/permafacts/facts-kit/commit/8c4f7db678e50fb3ddacc20bb31b81b3fa62aa27))
+
 ### [0.7.5](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.7.4...facts-sdk-0.7.5) (2023-04-17)
 
 
