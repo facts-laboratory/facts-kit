@@ -38,7 +38,6 @@ async function deployWithBundlr(input: DeployFactMarketInput) {
   const newTags = [
     ...tags,
     { name: 'Protocol-Name', value: 'Facts' },
-    { name: 'Render-With', value: `${'facts-card-renderer'}` },
     {
       name: 'Init-State',
       value: JSON.stringify({
@@ -67,11 +66,7 @@ async function deployWithBundlr(input: DeployFactMarketInput) {
 async function deployWithWarp(input: DeployFactMarketInput) {
   const { tags, rebutTx, position } = input;
 
-  const newTags = [
-    ...tags,
-    { name: 'Protocol-Name', value: 'Facts' },
-    { name: 'Render-With', value: `${'facts-card-renderer'}` },
-  ];
+  const newTags = [...tags, { name: 'Protocol-Name', value: 'Facts' }];
   if (rebutTx) tags.push({ name: 'Fact-Rebuts', value: rebutTx });
 
   const warp = getWarpFactory();
@@ -114,7 +109,6 @@ async function deployWithArweaveWallet(
   });
   tags.forEach((t) => tx.addTag(t.name, t.value));
   if (rebutTx) tx.addTag('Fact-Rebuts', rebutTx);
-  tx.addTag('Render-With', `${'facts-card-renderer'}`);
   // tx.addTag('Data-Source', attachTo);
   tx.addTag('Protocol-Name', 'Facts');
 
@@ -140,11 +134,12 @@ async function deployWithArweaveWallet(
   return register(id).then((tx) => tx);
 }
 
-export interface ANS110Tags {
+export interface PermafactsTags {
   topics?: string[];
   type: string;
   title: string;
   description: string;
+  renderWith?: string;
 }
 
 export async function deployAtomicFactMarket(
@@ -172,17 +167,21 @@ export async function deployAtomicFactMarket(
   }
 }
 
-function getAns110TagsFromUser(tags: ANS110Tags) {
+function getAns110TagsFromUser(tags: PermafactsTags) {
   const topics: { name: string; value: string }[] = [];
   if (tags.topics) {
     tags?.topics?.forEach((t) => {
       topics.push({ name: `Topic:${t}`, value: t });
     });
   }
+  const renderWith = tags.renderWith
+    ? [{ name: 'Render-With', value: tags.renderWith }]
+    : [];
   return [
     { name: 'Type', value: tags.type },
     { name: 'Title', value: tags.title },
     { name: 'Description', value: tags.description },
     ...topics,
+    ...renderWith,
   ];
 }

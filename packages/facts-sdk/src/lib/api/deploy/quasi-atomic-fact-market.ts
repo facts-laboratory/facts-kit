@@ -55,7 +55,6 @@ async function deployWithBundlr(input: DeployFactMarketInput) {
     ...tags,
     { name: 'Data-Source', value: attachTo },
     { name: 'Protocol-Name', value: 'Facts' },
-    { name: 'Render-With', value: `${'facts-card-renderer'}` },
     {
       name: 'Init-State',
       value: JSON.stringify({
@@ -94,7 +93,6 @@ async function deployWithWarp(input: DeployFactMarketInput) {
     ...tags,
     { name: 'Data-Source', value: attachTo },
     { name: 'Protocol-Name', value: 'Facts' },
-    { name: 'Render-With', value: `${'facts-card-renderer'}` },
   ];
   if (rebutTx) tags.push({ name: 'Fact-Rebuts', value: rebutTx });
 
@@ -138,7 +136,6 @@ async function deployWithArweaveWallet(
   });
   tags.forEach((t) => tx.addTag(t.name, t.value));
   if (rebutTx) tx.addTag('Fact-Rebuts', rebutTx);
-  tx.addTag('Render-With', `${'facts-card-renderer'}`);
   tx.addTag('Data-Source', attachTo);
   tx.addTag('Protocol-Name', 'Facts');
 

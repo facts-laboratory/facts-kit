@@ -2,10 +2,10 @@ export interface DeployAtomicFactMarketInput {
   rebutTx?: string;
   use?: Use;
   position: 'support' | 'oppose';
-  tags: ANS110Tags;
+  tags: PermafactsTags;
   data: any;
 }
-export interface ANS110Tags {
+export interface PermafactsTags {
   topics?: string[];
   type: string;
   title: string;
