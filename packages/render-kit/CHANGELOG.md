@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.2.1](https://github.com/permafacts/facts-kit/compare/render-kit-0.2.0...render-kit-0.2.1) (2023-04-24)
+
 ## [0.2.0](https://github.com/permafacts/facts-kit/compare/render-kit-0.1.0...render-kit-0.2.0) (2023-04-24)
 
 
