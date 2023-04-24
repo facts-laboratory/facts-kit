@@ -7,8 +7,8 @@ export async function getByAns110Type(
   // this doesnt do anything yet but should paginate
   cursor?: string
 ): Promise<Transaction[]> {
-  const query = `{\"operationName\":null,\"variables\":{},\"query\":\"{\\n  transactions(\\n    first: 100\\n    tags: [{name: \\\"Type\\\", values: [\\\"${renderForType}\\\"]}]\\n  ) {\\n    edges {\\n      node {\\n        id\\n        owner {\\n          address\\n        }\\n        tags {\\n          name\\n          value\\n        }\\n      }\\n    }\\n  }\\n}\\n\"}`;
-  const paginate = `{\"operationName\":null,\"variables\":{},\"query\":\"{\\n  transactions(\\n    first: 100\\n    tags: [{name: \\\"Type\\\", values: [\\\"${renderForType}\\\"]}]\\n  ) {\\n    edges {\\n      node {\\n        id\\n        owner {\\n          address\\n        }\\n        tags {\\n          name\\n          value\\n        }\\n      }\\n    }\\n  }\\n}\\n\"}`;
+  const query = `{\"operationName\":null,\"variables\":{},\"query\":\"{\\n  transactions(first: 100, tags: [{name: \\\"Type\\\", values: [\\\"${renderForType}\\\"]}]) {\\n    edges {\\n      node {\\n        block {\\n          timestamp\\n          height\\n        }\\n        id\\n        owner {\\n          address\\n        }\\n        tags {\\n          name\\n          value\\n        }\\n      }\\n    }\\n  }\\n}\\n\"}`;
+  const paginate = `{\"operationName\":null,\"variables\":{},\"query\":\"{\\n  transactions(first: 100, tags: [{name: \\\"Type\\\", values: [\\\"${renderForType}\\\"]}]) {\\n    edges {\\n      node {\\n        block {\\n          timestamp\\n          height\\n        }\\n        id\\n        owner {\\n          address\\n        }\\n        tags {\\n          name\\n          value\\n        }\\n      }\\n    }\\n  }\\n}\\n\"}`;
   const res = await fetch('https://arweave.net/graphql', {
     headers: {
       accept: '*/*',

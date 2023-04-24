@@ -1,12 +1,8 @@
-import { query } from './query-kit';
+import { getById } from './queries/get-by-id';
 
 describe('query', () => {
   it('should work', async () => {
-    const facts = await query(
-      'playerFacts',
-      '9x24zjvs9DA5zAz2DmqBWAg6XcxrrE-8w3EkpwRm4e4'
-    );
-    console.log('facts', facts);
-    expect('query').toEqual('query');
+    const tx = await getById('mYJEzm4D0SZ0gcfPAn4dh2x2ld8_yOKKz4wOHAT6cxg');
+    expect(tx[0].block.timestamp).toBeTruthy();
   });
 });
