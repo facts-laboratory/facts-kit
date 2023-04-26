@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.0.0](https://github.com/permafacts/facts-kit/compare/query-kit-0.2.7...query-kit-1.0.0) (2023-04-26)
+
 ### [0.2.7](https://github.com/permafacts/facts-kit/compare/query-kit-0.2.6...query-kit-0.2.7) (2023-04-24)
 
 ### [0.2.6](https://github.com/permafacts/facts-kit/compare/query-kit-0.2.5...query-kit-0.2.6) (2023-04-24)
