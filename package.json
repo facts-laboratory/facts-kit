@@ -18,6 +18,7 @@
     "generate:package": "nx generate @nrwl/js:library ${NAME} --unitTestRunner=vitest --bundler=vite --compiler=swc --publishable --importPath=@facts-kit/${NAME} && npm run install:ngx-deploy-npm",
     "prepare": "husky install",
     "version": "nx run-many --targets=version --parallel=false --all --releaseAs=${TYPE}",
+    "publish": "nx run-many --targets=deploy --parallel=false --all",
     "version:pre-release": "nx run workspace:version --releaseAs=prerelease --preid=${TYPE}"
   },
   "private": true,
