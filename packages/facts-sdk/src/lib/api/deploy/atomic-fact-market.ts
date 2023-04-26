@@ -5,7 +5,11 @@ import {
 } from '@facts-kit/contract-kit';
 import { getBundlrClient } from '../../common/bundlr';
 import { getWarpFactory, register } from '../../common/warp';
-import { DeployAtomicFactMarketInput, Use } from '../../faces/assert';
+import {
+  DeployAtomicFactMarketInput,
+  PermafactsTags,
+  Use,
+} from '../../faces/assert';
 import { FACT_MARKET_SRC, getPermafactsTags } from '../../helpers/get-pf-tags';
 import { getSmartweaveTags } from '../../helpers/get-smartweave-tags';
 import { initialState } from '../../faces';
@@ -109,7 +113,6 @@ async function deployWithArweaveWallet(
   });
   tags.forEach((t) => tx.addTag(t.name, t.value));
   if (rebutTx) tx.addTag('Fact-Rebuts', rebutTx);
-  // tx.addTag('Data-Source', attachTo);
   tx.addTag('Protocol-Name', 'Facts');
 
   if (!wallet) throw new Error('Unable to find arweave wallet.');
@@ -132,14 +135,6 @@ async function deployWithArweaveWallet(
   const id = await dispatch(tx);
   console.log(`Transaction id: ${id}`);
   return register(id).then((tx) => tx);
-}
-
-export interface PermafactsTags {
-  topics?: string[];
-  type: string;
-  title: string;
-  description: string;
-  renderWith?: string;
 }
 
 export async function deployAtomicFactMarket(
@@ -167,21 +162,20 @@ export async function deployAtomicFactMarket(
   }
 }
 
-function getAns110TagsFromUser(tags: PermafactsTags) {
-  const topics: { name: string; value: string }[] = [];
+export function getAns110TagsFromUser(tags: PermafactsTags) {
+  const newTags = [];
   if (tags.topics) {
     tags?.topics?.forEach((t) => {
-      topics.push({ name: `Topic:${t}`, value: t });
+      newTags.push({ name: `Topic:${t}`, value: t });
     });
   }
-  const renderWith = tags.renderWith
-    ? [{ name: 'Render-With', value: tags.renderWith }]
-    : [];
+  if (tags.renderWith)
+    newTags.push({ name: 'Render-With', value: tags.renderWith });
+  if (tags.cover) newTags.push({ name: 'Fact-Cover', value: tags.cover });
   return [
     { name: 'Type', value: tags.type },
     { name: 'Title', value: tags.title },
     { name: 'Description', value: tags.description },
-    ...topics,
-    ...renderWith,
+    ...newTags,
   ];
 }

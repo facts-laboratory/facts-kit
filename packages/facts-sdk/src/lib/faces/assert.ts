@@ -10,5 +10,7 @@ export interface PermafactsTags {
   type: string;
   title: string;
   description: string;
+  renderWith?: string;
+  cover?: string;
 }
 export type Use = 'bundlr' | 'warp' | 'arweaveWallet';

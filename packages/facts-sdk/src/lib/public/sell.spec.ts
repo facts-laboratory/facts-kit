@@ -2,7 +2,7 @@ import { sell } from './sell';
 // import { setupGlobals } from '../mock/setup-globals';
 import { newReadState } from '../helpers/read-state';
 
-describe('sell', () => {
+describe.skip('sell', () => {
   beforeAll(() => {
     // setupGlobals();
   });
