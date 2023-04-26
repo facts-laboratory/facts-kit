@@ -13,21 +13,11 @@ import `@facts-kit/facts-sdk` and use.
 ```js
 // some-file.<ts | js>
 
-import {
-  assert,
-  attach,
-  getAssets,
-  hasFactMarket,
-  getPrice,
-  buy,
-  sell,
-} from '@facts-kit/facts-sdk';
+import { assert, attach, getAssets, hasFactMarket, getPrice, buy, sell } from '@facts-kit/facts-sdk';
 
 // hasFactMarket
 // returns { tx: undefined, link: undefined } if no fact market exists.
-const factMarket = await hasFactMarket(
-  'cbOtLP1GPOgFQgQxQVXiM-fV2rAC1H-QW4b9dJkRVgs'
-); // {tx: "<tx>", "link": "<link>"}
+const factMarket = await hasFactMarket('cbOtLP1GPOgFQgQxQVXiM-fV2rAC1H-QW4b9dJkRVgs'); // {tx: "<tx>", "link": "<link>"}
 
 // getAssets
 const factsets = getAssets();
@@ -52,6 +42,7 @@ const factMarket = await assert({
     title: 'Test title',
     description: 'test description',
     topics: ['topic-1', 'topic-2'],
+    cover: '<tx>', // The <tx> is a transaction ID of a photo you have uploaded
   },
   position: 'support',
   // This tells the SDK to use the wallet that's connected.
