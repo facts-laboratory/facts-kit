@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.0.0](https://github.com/permafacts/facts-kit/compare/faces-0.1.3...faces-1.0.0) (2023-04-26)
+
 ### [0.1.3](https://github.com/permafacts/facts-kit/compare/faces-0.1.2...faces-0.1.3) (2023-04-24)
 
 ### [0.1.2](https://github.com/permafacts/facts-kit/compare/faces-0.1.1...faces-0.1.2) (2023-04-24)
