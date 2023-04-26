@@ -40,12 +40,12 @@
   "cleanOutputDir": true,
   "titleLink": "",
   "navigationLinks": {
-    "github": "https://github.com/permafacts/ar-kit", 
+    "github": "https://github.com/facts-lab/facts-kit",
     "dapp": "https://facts.g8way.io",
-    "twitter": "https://twitter.com/permafacts",
+    "twitter": "https://twitter.com/facts_labs",
     "discord": "https://discord.com/invite/uGg8VAvqU7"
   },
-  "sidebarLinks": {"sidebar-link": "http://example.com"},
+  "sidebarLinks": { "sidebar-link": "http://example.com" },
   "commentStyle": "all",
   "categorizeByGroup": true,
   "defaultCategory": "Other",

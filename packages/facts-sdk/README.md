@@ -1,6 +1,6 @@
 # facts-sdk
 
-Currently `attach`, `assert`, `buy`, `sell` are the only tested functions. Withdraw (and more) coming soon.
+Free the Truth.
 
 ## Install
 
