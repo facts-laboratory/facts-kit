@@ -42,6 +42,7 @@ const factMarket = await assert({
     title: 'Test title',
     description: 'test description',
     topics: ['topic-1', 'topic-2'],
+    renderWith: '<tx> or <arns>',
     cover: '<tx>', // The <tx> is a transaction ID of a photo you have uploaded
   },
   position: 'support',
