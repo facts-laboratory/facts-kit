@@ -17,6 +17,7 @@
     "esModuleInterop": true,
     "paths": {
       "@facts-kit/contract-kit": ["packages/contract-kit/src/index.ts"],
+      "@facts-kit/el-cap-kit": ["packages/el-cap-kit/src/index.js"],
       "@facts-kit/faces": ["packages/faces/src/index.ts"],
       "@facts-kit/facts-sdk": ["packages/facts-sdk/src/index.ts"],
       "@facts-kit/query-kit": ["packages/query-kit/src/index.ts"],
