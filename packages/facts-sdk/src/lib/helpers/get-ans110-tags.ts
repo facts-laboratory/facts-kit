@@ -1,32 +1,23 @@
-import { checkTag } from './check-tag';
-
 export function getAns110Tags(tags: { name: string; value: string }[]) {
   const topics = tags.filter((t) => t.name.includes('Topic'));
   const newTags = [
     {
       name: 'Title',
-      value: checkTag(
-        'Title',
-        tags?.filter((t) => t.name === 'Title')[0]?.value
-      ),
+      value: tags?.filter((t) => t.name === 'Title')[0]?.value || 'Untitled.',
     },
     {
       name: 'Type',
-      value: checkTag('Type', tags?.filter((t) => t.name === 'Type')[0]?.value),
+      value: tags?.filter((t) => t.name === 'Type')[0]?.value || 'no-type',
     },
     {
       name: 'Description',
-      value: checkTag(
-        'Description',
-        tags?.filter((t) => t.name === 'Description')[0]?.value
-      ),
+      value:
+        tags?.filter((t) => t.name === 'Description')[0]?.value ||
+        "Missing tag 'Description'.",
     },
     {
       name: 'Content-Type',
-      value: checkTag(
-        'Content-Type',
-        tags?.filter((t) => t.name === 'Content-Type')[0]?.value
-      ),
+      value: tags?.filter((t) => t.name === 'Content-Type')[0]?.value || '',
     },
   ];
 

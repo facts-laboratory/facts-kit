@@ -1,4 +1,4 @@
-describe.skip('calculate price', () => {
+describe('calculate price', () => {
   it('should calculate price', async () => {
     expect('facts-sdk').toEqual('facts-sdk');
   });

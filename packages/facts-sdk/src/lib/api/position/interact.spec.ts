@@ -1,6 +1,6 @@
 import { getSupply } from './get-price';
 
-describe.skip('calculate price', () => {
+describe('calculate price', () => {
   it('should calculate price', () => {
     expect('facts-sdk').toEqual('facts-sdk');
   });

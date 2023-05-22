@@ -1,7 +1,7 @@
 import { getArweave } from './contract-kit';
 import Arweave from 'arweave';
 
-describe.skip('contractKit', () => {
+describe('contractKit', () => {
   beforeAll(() => {
     // Setup so our arweave function can access Arweave in a node runtime.
     (globalThis as any).Arweave = Arweave;

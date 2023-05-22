@@ -1,26 +1,17 @@
 import { getAns110Tags } from './get-ans110-tags';
 
-describe.skip('get ans110 tags', () => {
-  it('should throw', () => {
-    expect(() => {
-      getAns110Tags([{ name: 'test', value: 'test' }]);
-    }).toThrow('Missing tag Title from ANS-110.');
+describe('get ans110 tags', () => {
+  it('should give default values', () => {
+    const tags = getAns110Tags([]);
+
+    expect(tags?.filter((t) => t.name === 'Type')[0]?.value).toBe('no-type');
+    expect(tags?.filter((t) => t.name === 'Title')[0]?.value).toBe('Untitled.');
+    expect(tags?.filter((t) => t.name === 'Description')[0]?.value).toBe(
+      "Missing tag 'Description'."
+    );
   });
-  it('should throw', () => {
-    expect(() => {
-      getAns110Tags([{ name: 'Title', value: 'test' }]);
-    }).toThrow('Missing tag Type from ANS-110.');
-  });
-  it('should throw', () => {
-    expect(() => {
-      getAns110Tags([
-        { name: 'Title', value: 'test' },
-        { name: 'Type', value: 'test' },
-      ]);
-    }).toThrow('Missing tag Description from ANS-110.');
-  });
-  it.skip('should work', () => {
-    const tx = getAns110Tags([
+  it('should work', () => {
+    const tags = getAns110Tags([
       {
         name: 'Permafacts-Type',
         value: 'Assertion-Alpha-v2-0.0.11',
@@ -68,7 +59,7 @@ describe.skip('get ans110 tags', () => {
       },
       {
         name: 'Description',
-        value: 'test',
+        value: 'description',
       },
       {
         name: 'Signing-Client',
@@ -79,5 +70,12 @@ describe.skip('get ans110 tags', () => {
         value: '0.5.2',
       },
     ]);
+    expect(tags?.filter((t) => t.name === 'Type')[0]?.value).toBe('fact-post');
+    expect(tags?.filter((t) => t.name === 'Title')[0]?.value).toBe(
+      'Compare tx value'
+    );
+    expect(tags?.filter((t) => t.name === 'Description')[0]?.value).toBe(
+      'description'
+    );
   });
 });

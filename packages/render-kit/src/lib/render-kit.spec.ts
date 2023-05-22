@@ -1,6 +1,6 @@
 import { renderKit } from './render-kit';
 
-describe.skip('renderKit', () => {
+describe('renderKit', () => {
   it('should work', () => {
     expect(renderKit()).toEqual('render-kit');
   });

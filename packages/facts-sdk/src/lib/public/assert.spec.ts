@@ -1,7 +1,7 @@
 import { setupGlobals } from '../mock/setup-globals';
 import { assert } from './assert';
 
-describe.skip('assert', () => {
+describe('assert', () => {
   beforeAll(() => {
     setupGlobals();
   });

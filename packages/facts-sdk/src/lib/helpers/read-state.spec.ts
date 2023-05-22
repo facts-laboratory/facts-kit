@@ -1,7 +1,7 @@
 import { setupGlobals } from '../mock/setup-globals';
 import { newReadState } from './read-state';
 
-describe.skip('read-state', () => {
+describe('read-state', () => {
   beforeAll(() => {
     setupGlobals();
   });
