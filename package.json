@@ -20,7 +20,8 @@
     "build-all": "nx run-many --targets=build --parallel=false --all",
     "version": "nx run-many --targets=version --parallel=false --all --releaseAs=${TYPE}",
     "publish": "npm run build-all && nx run-many --targets=deploy --parallel=false --all",
-    "version:pre-release": "nx run workspace:version --releaseAs=prerelease --preid=${TYPE}"
+    "version:pre-release": "nx run workspace:version --releaseAs=prerelease --preid=${TYPE}",
+    "generate:pure-js": "nx generate @nrwl/js:library ${NAME} --unitTestRunner=none --bundler=swc --publishable --importPath=@facts-kit/${NAME} --js --no-strict"
   },
   "private": true,
   "devDependencies": {
