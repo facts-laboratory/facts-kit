@@ -14,13 +14,13 @@ test('should not allow claiming without txId', () => {
 test('should fetch coin data from Coingecko API', async () => {
   const coinData = await fetchRemainingData();
   assert.instance(coinData, Array, 'Coin data should be an array');
-  // Add additional assertions to validate the coin data if needed
+  // Add additional assertions to validate the coin data 
 });
 
 test('should fetch data from Redstone API', async () => {
   const redstoneData = await fetchRedstoneData();
   assert.instance(redstoneData, Object, 'Redstone data should be an object');
-  // Add additional assertions to validate the Redstone data if needed
+  // Add additional assertions to validate the Redstone data 
 });
 
 test.after(async () => {});
