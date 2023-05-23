@@ -7,6 +7,6 @@
     "uvu": "0.5.6"
   },
   "scripts": {
-    "test": "uvu test"
-  }
+    "test": "node --loader=esmock --test",
+    "test-uvu": "NODE_OPTIONS=--loader=esmock uvu test" }
 }

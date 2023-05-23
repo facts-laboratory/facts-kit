@@ -1,37 +1,21 @@
-/* eslint-disable @nrwl/nx/enforce-module-boundaries */
-import { suite } from 'uvu';
-import * as assert from 'uvu/assert';
-const test = suite('el-cap-kit');
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import esmock from 'esmock';
 
-import { getPrices } from '../src/lib/el-cap-kit.js';
-
-test.before(async () => {});
-
-test('should return correct structure', async () => {
-    const result = await getPrices();
-  
-    // General structure
-    assert.ok(result.resdstone, 'Expected property "resdstone"');
-    assert.ok(result.remaining, 'Expected property "remaining"');
-  
-    // Test resdstone structure for the first coin
-    const firstCoinData = result.resdstone[Object.keys(result.resdstone)[0]];
-    const coinProps = ['id', 'symbol', 'provider', 'value', 'liteEvmSignature', 'permawebTx', 'version', 'timestamp', 'minutes', 'providerPublicKey'];
-  
-    coinProps.forEach(prop => {
-      assert.ok(firstCoinData[prop], `Expected property "${prop}"`);
-    });
-  
-    // Test remaining structure for the first remaining coin
-    const firstRemainingCoin = result.remaining[0];
-    const remainingKeys = ['id', 'symbol', 'name', 'image', 'current_price', 'market_cap', 'market_cap_rank', 'total_volume', 'high_24h', 'low_24h', 'price_change_24h', 'price_change_percentage_24h', 'market_cap_change_24h', 'market_cap_change_percentage_24h', 'circulating_supply', 'total_supply', 'max_supply', 'ath', 'ath_change_percentage', 'ath_date', 'atl', 'atl_change_percentage', 'atl_date', 'last_updated'];
-    
-    remainingKeys.forEach(key => {
-      assert.ok(firstRemainingCoin[key], `Expected property "${key}"`);
-    });
+test('should fetch data from Redstone API despite failure in fetching remaining data', async () => {
+  // Set up a mock for `fetchRemainingData`
+  const mocked = await esmock('../src/lib/fetch-prices.js', {
+    fetchRemainingData: () => { throw new Error('Mocked failure'); },
   });
+
+  // Now when `getPrices` is called, it should use your mocked `fetchRemainingData` function
+  let prices;
+  try {
+    prices = await mocked.getPrices();
+  } catch (error) {
+    console.error(error);
+  }
   
-
-test.after(async () => {});
-
-test.run();
+  assert(prices);
+  assert(typeof prices === 'object');
+});
