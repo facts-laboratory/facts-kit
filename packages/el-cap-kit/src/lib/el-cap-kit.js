@@ -1,6 +1,6 @@
 import Async from 'hyper-async';
 const { fromPromise, of } = Async;
-import { fetchRedstonePrices, fetchRemainingData } from './get-prices.js';    
+import { fetchRedstonePrices, fetchRemainingData } from './fetch-prices.js';    
 
 export async function getPrices() {
     return (
