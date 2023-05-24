@@ -2,7 +2,7 @@
   export async function fetchRedstonePrices() {
     const url = 'https://api.redstone.finance/prices?provider=redstone';
     try {
-      const data = await fetchData(url, 'Failed to fetch Redstone data');
+      const data = await fetch(url);
       const firstPriceItem = extractFirstThreeItems(data);
       console.log('First Price Item:', firstPriceItem);
       return firstPriceItem;
@@ -11,24 +11,23 @@
     }
   }
   
-
-
-  export async function fetchData(url, errorMessage) {
-    console.log('Fetching data from:', url);
+  export async function fetchRemainingData(prices) {
+    const firstPriceItem = extractFirstThreeItems(prices); 
+  
+    const url =
+      'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d&locale=en';
+  
     try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(errorMessage);
-      }
-      return await response.json();
+      const data = await fetch(url);
+      const secondPriceItem = extractFirstThreeItems(data); 
+      const combinedResult = { redstone: firstPriceItem, remaining: secondPriceItem }; 
+      return combinedResult;
     } catch (error) {
-      console.error(error);
-      throw error; 
+      return { redstone: firstPriceItem }; // if fetch fails, return the data from fetchRedstonePrices
     }
   }
-  
 
-export function extractFirstThreeItems(obj) {
+function extractFirstThreeItems(obj) {
     const keys = Object.keys(obj);
     const result = {};
   
