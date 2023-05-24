@@ -23,7 +23,7 @@
       const combinedResult = { redstone: firstPriceItem, remaining: secondPriceItem }; 
       return combinedResult;
     } catch (error) {
-      return { redstone: firstPriceItem }; // if fetch fails, return the data from fetchRedstonePrices
+      return { redstone: firstPriceItem, remaining: {} }; // if fetch fails, return the data from fetchRedstonePrices
     }
   }
 

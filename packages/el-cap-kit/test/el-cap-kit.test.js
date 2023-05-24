@@ -31,5 +31,5 @@ test('should fetch data from Redstone API despite failure in fetching remaining 
     console.log('Prices:', prices);
     assert(prices);
     assert(typeof prices === 'object');
-    assert.deepStrictEqual(prices, { redstone: mockedData });
+    assert.deepStrictEqual(prices, { redstone: mockedData, remaining: {} });
   });
