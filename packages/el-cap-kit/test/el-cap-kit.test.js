@@ -5,7 +5,6 @@ import { getPrices } from "../src/lib/el-cap-kit.js";
 
 test("should return correct structure", async () => {
   const result = await getPrices();
-  console.log("Result:", result);
 
   // General structure
   assert.ok(result.redstone, 'Expected property "redstone"');
@@ -14,12 +13,6 @@ test("should return correct structure", async () => {
   // Test redstone structure for the first coin
   const firstCoinKey = Object.keys(result.redstone)[0];
   const firstCoinData = result.redstone[firstCoinKey];
-  console.log(
-    "First Coin Data:",
-    firstCoinData,
-    "First Coin Key:",
-    firstCoinKey
-  );
 
   const coinProps = [
     "id",
@@ -37,8 +30,9 @@ test("should return correct structure", async () => {
   });
 
   // Test remaining structure for the first remaining coin, if it exists
-  if (result.remaining.length > 0) {
-    const firstRemainingCoin = result.remaining[0];
+  if (Object.keys(result.remaining).length > 0) {
+    const firstRemainingCoinKey = Object.keys(result.remaining)[0];
+    const firstRemainingCoin = result.remaining[firstRemainingCoinKey];
     const remainingKeys = [
       "id",
       "symbol",
@@ -105,7 +99,6 @@ test("should fetch data from Redstone API despite failure in fetching remaining 
     console.error(error);
   }
 
-  console.log("Prices:", prices);
   assert(prices);
   assert(typeof prices === "object");
   assert.deepStrictEqual(prices, { redstone: mockedData, remaining: {} });
