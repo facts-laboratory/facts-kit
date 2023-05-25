@@ -30,7 +30,6 @@ test("should return correct structure", async () => {
     "permawebTx",
     "version",
     "timestamp",
-    "minutes",
     "providerPublicKey",
   ];
   coinProps.forEach((prop) => {
