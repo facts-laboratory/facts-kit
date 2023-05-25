@@ -135,7 +135,6 @@ test("should fetch data from CoinGecko API despite failure in fetching Redstone 
     console.error(error);
   }
 
-  console.log("Prices:", prices);
   assert(prices);
   assert(typeof prices === "object");
   assert.deepStrictEqual(prices, mockedData);
@@ -165,7 +164,6 @@ test("should handle failure in fetching both Redstone and CoinGecko data", async
     console.error(error);
   }
 
-  console.log("Prices:", prices);
   assert(prices);
   assert(typeof prices === "object");
   // When both fetch operations fail, your function should return an object with 'redstone' and 'remaining' properties set to empty objects

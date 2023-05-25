@@ -10,7 +10,6 @@ export async function fetchRedstonePrices() {
 
     const data = await response.json();
     const firstPriceItem = extractFirstThreeItems(data);
-    console.log("First Price Item:", firstPriceItem);
 
     return firstPriceItem;
   } catch (error) {
