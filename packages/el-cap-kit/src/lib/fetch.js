@@ -5,7 +5,7 @@ export async function fetchData(url) {
         throw new Error('Failed to fetch data');
       }
   
-      return response;;
+      return response;
     } catch (error) {
       console.error(error);
       return null;
