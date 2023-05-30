@@ -1,7 +1,7 @@
 import { setupGlobals } from '../../mock/setup-globals';
 import { payFactMarket } from './pay-fact-market';
 
-describe.skip('pay-fact-market', () => {
+describe('pay-fact-market', () => {
   beforeAll(async () => {
     await setupGlobals();
   });

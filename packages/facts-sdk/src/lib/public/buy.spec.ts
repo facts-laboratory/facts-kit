@@ -1,7 +1,7 @@
 import { buy } from './buy';
 import { setupGlobals } from '../mock/setup-globals';
 
-describe.skip('buy', () => {
+describe('buy', () => {
   beforeAll(() => {
     setupGlobals();
   });

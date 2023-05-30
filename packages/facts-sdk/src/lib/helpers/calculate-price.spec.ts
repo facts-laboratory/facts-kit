@@ -1,6 +1,6 @@
 import { calculatePriceBits, calculateFeeBits } from './calculate-price';
 
-describe.skip('calculate price', () => {
+describe('calculate price', () => {
   it('should calculate price', async () => {
     const price = calculatePriceBits(1, 1, 0, 1);
     expect(price).toEqual(1);

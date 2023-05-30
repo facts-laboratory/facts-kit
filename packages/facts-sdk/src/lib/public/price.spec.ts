@@ -13,7 +13,7 @@ vi.mock('./common/bundlr', () => {
   };
 });
 
-describe.skip('attach', () => {
+describe('attach', () => {
   beforeAll(async () => {
     await setupGlobals();
   });

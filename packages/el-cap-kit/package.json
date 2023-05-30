@@ -1,0 +1,15 @@
+{
+  "name": "@facts-kit/el-cap-kit",
+  "version": "0.0.1",
+  "type": "module",
+  "dependencies": {
+    "esm": "^3.2.25",
+    "esmock": "^2.2.3",
+    "hyper-async": "1.1.0",
+    "uvu": "0.5.6"
+  },
+  "scripts": {
+    "test": "node --loader=esmock --test",
+    "test-uvu": "NODE_OPTIONS=--loader=esmock uvu test"
+  }
+}

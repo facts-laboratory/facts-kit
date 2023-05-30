@@ -2,6 +2,17 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.0.4](https://github.com/permafacts/facts-kit/compare/facts-sdk-1.0.3...facts-sdk-1.0.4) (2023-05-03)
+
+## [1.0.3](https://github.com/permafacts/facts-kit/compare/facts-sdk-1.0.2...facts-sdk-1.0.3) (2023-05-03)
+
+### [1.0.2](https://github.com/permafacts/facts-kit/compare/facts-sdk-1.0.1...facts-sdk-1.0.2) (2023-04-28)
+
+
+### Bug Fixes
+
+* use application/json ([a2d984d](https://github.com/permafacts/facts-kit/commit/a2d984de2728314d44c1b946dae2343bf6f270ea))
+
 ### [1.0.1](https://github.com/permafacts/facts-kit/compare/facts-sdk-1.0.0...facts-sdk-1.0.1) (2023-04-26)
 
 ## [1.0.0](https://github.com/permafacts/facts-kit/compare/facts-sdk-0.7.8...facts-sdk-1.0.0) (2023-04-26)

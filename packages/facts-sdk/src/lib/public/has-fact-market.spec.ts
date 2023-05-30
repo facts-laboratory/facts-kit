@@ -1,6 +1,6 @@
 import { hasFactMarket } from './has-fact-market';
 
-describe.skip('has fact market', () => {
+describe('has fact market', () => {
   it('should work', async () => {
     const factMarket = await hasFactMarket(
       'cbOtLP1GPOgFQgQxQVXiM-fV2rAC1H-QW4b9dJkRVgs'

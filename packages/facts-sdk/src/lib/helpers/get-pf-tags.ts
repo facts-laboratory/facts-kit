@@ -8,7 +8,7 @@ export function getPermafactsTags(isRebut?: boolean) {
     },
     { name: 'Permafacts-Version', value: 'Alpha-2' },
     { name: 'Contract-Src', value: FACT_MARKET_SRC },
-    { name: 'Content-Type', value: 'text/plain' },
+    { name: 'Content-Type', value: 'application/json' },
     { name: 'Type', value: 'fact-post' },
   ];
 }

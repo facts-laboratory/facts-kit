@@ -1,7 +1,7 @@
 import { getTx } from './get-tx';
 import Arweave from 'arweave';
 
-describe.skip('get tx', () => {
+describe('get tx', () => {
   beforeAll(() => {
     // Setup so our arweave function can access Arweave in a node runtime.
     (globalThis as any).Arweave = Arweave;

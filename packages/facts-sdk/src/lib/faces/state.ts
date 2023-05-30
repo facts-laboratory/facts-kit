@@ -1,6 +1,5 @@
 export interface State {
   creator_cut: number;
-  facts: number;
   pair: string;
   creator: string;
   name?: string;
@@ -10,8 +9,6 @@ export interface State {
   oppositionBalances: {
     [address: string]: number;
   };
-  canEvolve: boolean;
-  evolve: string | null;
   position: 'support' | 'oppose';
 }
 export interface FactMarketAction {
