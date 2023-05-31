@@ -3,6 +3,7 @@ export interface Transaction {
   owner: Owner;
   block: Block;
   tags: Tag[];
+  cursor?: string;
 }
 
 export interface Owner {
@@ -17,4 +18,9 @@ export interface Block {
 export interface Tag {
   name: string;
   value: string;
+}
+
+export interface TransactionEdge {
+  cursor: string;
+  node: Transaction;
 }
