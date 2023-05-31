@@ -1,7 +1,7 @@
-import { fetchData } from "./fetch.js";
+import { fetchData } from './fetch.js';
 
 export async function fetchRedstonePrices() {
-  const url = "https://api.redstone.finance/prices?provider=redstone";
+  const url = 'https://api.redstone.finance/prices?provider=redstone';
   try {
     const response = await fetchData(url);
     if (!response.ok) {
@@ -22,7 +22,7 @@ export async function fetchRemainingData(prices) {
   const firstPriceItem = extractFirstThreeItems(prices || {});
 
   const url =
-    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d&locale=en";
+    'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d&locale=en';
 
   try {
     const response = await fetchData(url);
