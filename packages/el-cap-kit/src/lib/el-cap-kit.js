@@ -12,9 +12,11 @@ export async function getPrices() {
     });
 }
 
-export async function get24hPrice() {
-  return of()
-    .chain((input) => fromPromise(fetchHistoricalPriceLast24Hours)(input))
+export async function get24hPrice(symbol) {
+  return of(symbol)
+    .chain((symbol, input) =>
+      fromPromise(fetchHistoricalPriceLast24Hours)(symbol, input)
+    )
     .fork(console.error, (result) => {
       return result;
     });

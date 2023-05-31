@@ -17,5 +17,3 @@ export const fetchHistoricalPriceLast24Hours = async (symbol) => {
     throw err;
   }
 };
-
-fetchHistoricalPriceLast24Hours('AR').then((prices) => {});
