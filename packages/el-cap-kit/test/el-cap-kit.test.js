@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import esmock from 'esmock';
 import { get24hPrice, getPrices } from '../src/lib/el-cap-kit.js';
 import { get } from 'node:https';
+import fs from 'fs';
 
 test('should return correct structure', async () => {
   const result = await getPrices();
@@ -174,7 +175,6 @@ test('should handle failure in fetching both Redstone and CoinGecko data', async
 test('should return historical prices for the last 24 hours', async () => {
   const symbol = 'AR';
   const prices = await get24hPrice(symbol);
-  console.log('prices', prices);
 
   assert(prices, 'Prices should not be null or undefined');
   assert(Array.isArray(prices), 'Prices should be an array');

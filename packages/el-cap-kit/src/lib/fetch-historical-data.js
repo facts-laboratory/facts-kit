@@ -11,9 +11,30 @@ export const fetchHistoricalPriceLast24Hours = async (symbol) => {
       interval: 3600 * 1000, // 1 hour
     });
 
-    return prices;
+    const trimmedPrices = trimData(prices);
+
+    return trimmedPrices;
   } catch (err) {
     console.error(`Failed to get historical price data: ${err}`);
     throw err;
   }
 };
+
+function trimData(inputArray) {
+  let outputArray = inputArray.map((item) => {
+    let timestamp = item.timestamp;
+    let date = timestamp ? new Date(timestamp) : null;
+    let humanReadableTimestamp = date
+      ? date.toLocaleString()
+      : 'Invalid timestamp';
+
+    return {
+      value: item.value,
+      timestamp: humanReadableTimestamp,
+      originalTimestamp: timestamp,
+      symbol: item.symbol,
+    };
+  });
+
+  return outputArray;
+}
